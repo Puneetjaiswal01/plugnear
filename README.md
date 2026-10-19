@@ -1,6 +1,6 @@
 # PlugNear · Mobile 0.5 development
 
-India-first peer-to-peer EV charging for Expo iOS, Android and web, with a separate React admin dashboard. This is a new codebase authorized after the v0.4 source could not be located. It is **not live or ready for store submission**.
+India-first peer-to-peer EV charging for Expo iOS, Android and web, with a separate React admin dashboard. This is a new codebase authorized after the v0.4 source could not be located. The public marketing website is deployed at **https://www.plugnear.in/**; the marketplace remains in early access and is **not ready for store submission**.
 
 The only allowed backend is **PlugNear**, `yxisoddhwlzetrnfbbno`, Mumbai (`ap-south-1`). Claim360's repository, database and deployment were not modified.
 
@@ -10,6 +10,7 @@ Use Node 24 and `npm ci`. Copy each app's `.env.example` to `.env.local`, then s
 
 - `npm run mobile` — Expo development server; native maps require a development build and a restricted Google Maps Android API key.
 - `npm run admin` — Vite admin dashboard.
+- `npm run build:website` — public website and embedded early-access app.
 - `npm run typecheck` — both applications.
 - `npm test` — domain and real PostgreSQL/PGlite authorization and reservation tests.
 - `npm run build` — admin production bundle.
@@ -33,3 +34,5 @@ Online payments are intentionally unavailable. There is no payment provider, UPI
 See [actual validation and blockers](docs/STATUS.md), [audit and security](docs/SECURITY.md), and [next stages](docs/ROADMAP.md).
 
 Pre-launch Vercel artifacts and domain assignments now exist. Custom DNS remains parked at Hostinger; see [infrastructure results](docs/INFRASTRUCTURE.md). These deployments do not establish a working booking/payment release.
+
+See [public website release results](docs/WEBSITE_RELEASE.md) for the latest verified deployment.

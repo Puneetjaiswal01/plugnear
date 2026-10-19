@@ -18,21 +18,8 @@ Team ID: `team_1u7aw5W8QOE1jWcv6odxACAV`. Node 24. Both projects currently accep
 - Browser smoke checks of the served pages returned HTTP 200, the correct page titles, visible email/login controls and no JavaScript page errors. The admin preview was accessed using the platform's temporary share-access mechanism; that token is not committed or included here.
 - No successful live booking/payment workflow has been demonstrated. Database migration, auth provider settings, payments, GitHub permissions and store signing remain outstanding as described in RELEASE.md.
 
-## Domain state and DNS changes still required
+## Domain state — updated after manual Hostinger changes
 
-Vercel accepted all three domain assignments with `verified: true`, but reports **DNS misconfigured**. Assignment verification is not DNS propagation or working HTTPS on the custom hostnames.
+The user applied the required records at Hostinger. Vercel confirmed `misconfigured: false` for `plugnear.in`, `www.plugnear.in` and `admin.plugnear.in`. The public site now serves over verified HTTPS, and the apex redirects to www. No DNS writes were performed by the assistant. Admin still requires a production release.
 
-Current public DNS: `plugnear.in` and `www.plugnear.in` resolve to Hostinger parking at `2.57.91.91`. Authoritative nameservers are `aster.dns-parking.com` and `helios.dns-parking.com`. The public site still shows Hostinger's parked-domain page.
-
-Vercel returned these project-specific recommendations:
-
-| Record type | Host  | Target                              |
-| ----------- | ----- | ----------------------------------- |
-| A           | @     | 216.198.79.1                        |
-| A           | @     | 64.29.17.1                          |
-| CNAME       | www   | f1c618b5cccdf237.vercel-dns-017.com |
-| CNAME       | admin | 2d2eb3ea66d90d57.vercel-dns-017.com |
-
-Replace the parked apex address and current www CNAME; preserve unrelated MX/TXT records and the nameservers. Re-fetch Vercel's recommendations before changes if deployment configuration has changed. Promote the tested admin release before sending public traffic to admin.
-
-No DNS writes were made. The Hostinger connector’s nine servers have now been registered successfully using the authorized configuration permissions. Restart the host once to load them; the first Hostinger call will initiate account consent if needed. Authentication and DNS access are not yet verified. No domain purchase or registrar transfer is required.
+See [public website release](WEBSITE_RELEASE.md) for the current deployment, smoke checks and remaining product limits. Earlier artifact deployment IDs above are retained as history; they are superseded for the public web project.
