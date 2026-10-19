@@ -2056,3 +2056,23 @@ dialog p {
     font-size: 29px;
   }
 }
+
+/* Neighbourhood marketplace journeys, alongside the broader fleet vision. */
+.journeys { padding-top: 80px; }
+.journeys-heading { max-width: 650px; }
+.journeys h2 { font-size: clamp(28px, 3vw, 38px); margin: 18px 0; letter-spacing: -1.2px; }
+.journeys-heading > p { color: var(--muted); line-height: 1.8; }
+.journey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+.journey-card { position: relative; display: block; padding: 38px; border-radius: 18px; color: inherit; text-decoration: none; border: 1px solid var(--line); }
+.journey-find { background: #eef1ff; }
+.journey-host { background: #eff6cf; }
+.journey-card h3 { font-size: clamp(23px, 2.3vw, 30px); margin: 22px 0 14px; letter-spacing: -1px; }
+.journey-card p { max-width: 360px; font-size: 14px; line-height: 1.8; margin-bottom: 28px; }
+.journey-card strong { font-size: 13px; }
+.journey-symbol { position: absolute; top: 25px; right: 28px; font-size: 30px; color: var(--blue); }
+.journey-card:hover { border-color: var(--blue); }
+.journey-card:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+.journey-footnote { font-size: 12px; line-height: 1.9; margin-top: 22px; }
+.journey-footnote a { color: var(--blue); font-weight: 600; }
+.journey-footnote > span { display: block; color: var(--muted); font-size: 10px; }
+@media (max-width: 640px) { .journeys { padding-top: 50px; } .journey-grid { grid-template-columns: 1fr; gap: 16px; } .journey-card { padding: 30px 24px; } .journey-card .eyebrow { max-width: 85%; display: block; } }
