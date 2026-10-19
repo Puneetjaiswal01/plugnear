@@ -6,8 +6,8 @@
 | Dedicated Supabase              | PlugNear / yxisoddhwlzetrnfbbno / ap-south-1 / healthy                                                         |
 | Claim360 changes                | None                                                                                                           |
 | TypeScript                      | Mobile and admin pass                                                                                          |
-| Domain + PostgreSQL tests       | 28 pass locally, including fleet-planning model validation                                                     |
-| Desktop/mobile browser tests    | 22 pass: app/admin access plus website assets, navigation, FAQs, privacy and app-route checks                  |
+| Domain + PostgreSQL tests       | 30 pass locally, including fleet-planning model validation                                                     |
+| Desktop/mobile browser tests    | 24 pass: app/admin access plus website assets, navigation, FAQs, privacy and app-route checks                  |
 | Admin production build          | Pass; Vite dist generated                                                                                      |
 | Marketplace web export          | Pass; Metro bundle generated                                                                                   |
 | Android and iOS exports         | Pass; Hermes bundles generated, no AAB/IPA                                                                     |

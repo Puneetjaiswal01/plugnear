@@ -33,8 +33,8 @@ Online payments are intentionally unavailable. There is no payment provider, UPI
 
 See [actual validation and blockers](docs/STATUS.md), [audit and security](docs/SECURITY.md), and [next stages](docs/ROADMAP.md).
 
-Pre-launch Vercel artifacts and domain assignments now exist. Custom DNS remains parked at Hostinger; see [infrastructure results](docs/INFRASTRUCTURE.md). These deployments do not establish a working booking/payment release.
+Pre-launch Vercel artifacts and domain assignments now exist. Custom DNS is configured at Hostinger; see [infrastructure results](docs/INFRASTRUCTURE.md). These deployments do not establish a working booking/payment release.
 
 See [public website release results](docs/WEBSITE_RELEASE.md) for the latest verified deployment.
 
-The current direction prioritises electric 2W/3W neighbourhood micro-hosts, then fleet operations. The public [fleet pilot planner](https://www.plugnear.in/fleet-pilot/) is a local planning aid, not a deployed fleet-management service. See [strategy](docs/STRATEGY.md) and [micro-host requirements](docs/MICROHOST_REQUIREMENTS.md).
+The current direction covers electric cars, taxis, bikes and scooters, three-wheelers, commercial vehicles and mixed fleets, supported by neighbourhood hosts and destination/depot charging. The public [fleet pilot planner](https://www.plugnear.in/fleet-pilot/) is a local planning aid, not a deployed fleet-management service. See [strategy](docs/STRATEGY.md) and [micro-host requirements](docs/MICROHOST_REQUIREMENTS.md).
