@@ -35,4 +35,4 @@ Vercel returned these project-specific recommendations:
 
 Replace the parked apex address and current www CNAME; preserve unrelated MX/TXT records and the nameservers. Re-fetch Vercel's recommendations before changes if deployment configuration has changed. Promote the tested admin release before sending public traffic to admin.
 
-No DNS writes were made. Hostinger tools are unavailable in this environment. Attempting to register its connector failed because the managed Codex configuration is read-only. Hostinger DNS access must be connected, or these records must be applied in hPanel, before propagation/HTTPS can be verified. No domain purchase or registrar transfer is required.
+No DNS writes were made. The Hostinger connector’s nine servers have now been registered successfully using the authorized configuration permissions. Restart the host once to load them; the first Hostinger call will initiate account consent if needed. Authentication and DNS access are not yet verified. No domain purchase or registrar transfer is required.
