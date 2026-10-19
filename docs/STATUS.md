@@ -6,8 +6,8 @@
 | Dedicated Supabase              | PlugNear / yxisoddhwlzetrnfbbno / ap-south-1 / healthy                                                         |
 | Claim360 changes                | None                                                                                                           |
 | TypeScript                      | Mobile and admin pass                                                                                          |
-| Domain + PostgreSQL tests       | 30 pass locally, including fleet-planning model validation                                                     |
-| Desktop/mobile browser tests    | 24 pass: app/admin access plus website assets, navigation, FAQs, privacy and app-route checks                  |
+| Domain + PostgreSQL tests       | 32 pass locally, including fleet-planning model validation                                                     |
+| Desktop/mobile browser tests    | 32 pass: app/admin access plus website assets, navigation, FAQs, privacy and app-route checks                  |
 | Admin production build          | Pass; Vite dist generated                                                                                      |
 | Marketplace web export          | Pass; Metro bundle generated                                                                                   |
 | Android and iOS exports         | Pass; Hermes bundles generated, no AAB/IPA                                                                     |
@@ -24,3 +24,5 @@ Latest Android/iOS Hermes exports and isolated native prebuild passed. Branded l
 The codebase, migration, tests and generated bundles can be reviewed locally. Pre-launch deployment URLs and remaining DNS records are recorded in [infrastructure results](INFRASTRUCTURE.md). See [release procedure](RELEASE.md), [security findings](SECURITY.md), and [next stages](ROADMAP.md).
 
 Latest public website deployment: see [website release](WEBSITE_RELEASE.md). Booking/payment launch remains pending.
+
+Registration update: email/password plus provider-aware Google/Apple OAuth (PKCE) and phone OTP flows implemented. Live public Auth settings were checked: email enabled; Google, Apple and phone disabled. No provider secrets were available and no live provider was enabled. The 32 browser tests include mocked OTP, OAuth and email confirmation requests, not external provider end-to-end verification. See [authentication setup](AUTHENTICATION_SETUP.md) and [store uploads](STORE_UPLOAD.md).

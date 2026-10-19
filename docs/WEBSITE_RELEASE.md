@@ -3,8 +3,8 @@
 - **URL:** https://www.plugnear.in/
 - **Project:** plugnear-web (`prj_meecuEpYoXLlnlDD7GOIXaXAu8xe`)
 - **Team:** existing approved team `team_1u7aw5W8QOE1jWcv6odxACAV`; no Claim360 project was changed.
-- **Deployment:** `dpl_E1nXRwznZmq7psUi5Zw1DZ1sQ8G7`, production target, **READY**.
-- **Source commit:** `e0c389358791c7ba7af6b71cb6061c369717643b`.
+- **Deployment:** `dpl_5EsZfPf9ZKefTifLh9rEFi5Fxdxt`, production target, **READY**.
+- **Source commit:** `b2a1b16782c70f1bf71c7c4298c3ad546338cbde`.
 - **Build:** `npm run build:website` exports the Expo web app and builds the static landing site. Compiled files were uploaded by content hash to Vercel; no credentials or environment files were uploaded.
 
 ## Included
@@ -52,3 +52,9 @@ Static website build passed; all 24 browser tests passed, followed by 8 website 
 ## Responsive release verification
 
 Checked the deployed homepage at 320, 375, 390, 430, 768, 820, 1024, 1280, 1440 and 1920 CSS pixels. Every width returned HTTP 200 with no horizontal overflow, broken images, out-of-bounds headings/cards/actions or JavaScript page errors. Visually inspected full-page phone, tablet and desktop screenshots. At 320, 390 and 768px the mobile navigation opens and closes on selection. At 820 and 1440px desktop navigation does not overlap the logo or app action. FAQ disclosure, privacy dialog dismissal, fleet planner layout and taxi calculation passed at 320, 390, 768, 820 and 1440px. No website code changes or redeployment were needed. These are Chromium viewport checks; physical-device Safari/Android browser verification remains outstanding.
+
+## Registration entry-point release
+
+Updated `/app/` to the website-aligned mobile brand and provider-aware Google/email/phone registration UI. Production deployment READY. Live public Auth settings confirm only email is enabled; Google, Apple and phone are disabled pending setup. No provider secrets or environment files were uploaded. Local validation: 32 tests and 32 browser tests; native Android/iOS bundle exports and isolated prebuild passed. External Google/SMS authentication and real registrations were not exercised. See AUTHENTICATION_SETUP.md and STORE_UPLOAD.md.
+
+Deployed registration controls were checked at 320, 390 and 1440px: HTTP 200, email signup form reachable, Google/phone correctly disabled with setup messages, no horizontal overflow or JavaScript errors. No live accounts or SMS requests were created.

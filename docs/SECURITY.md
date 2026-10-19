@@ -33,3 +33,7 @@ Tests execute actual PostgreSQL through PGlite 18 with btree_gist, emulated auth
 - [uuid advisory](https://github.com/advisories/GHSA-w5hq-g745-h8pq)
 
 Production requires a fresh audit, live RLS and API verification, physical-device tests, private verification documents, payment reconciliation and privacy/account-deletion controls. This review does not certify production security.
+
+## Registration review · 19 October 2026
+
+Social login uses PKCE, native system-browser authentication and an exact scheme/host/path callback check. Duplicate callback delivery shares a single exchange promise. OAuth secrets are not client configuration. Optional providers fail closed when unavailable; live public settings show Google/Apple/phone disabled. OTPs are verified by Supabase against the number that received the request; changing form input removes the verification state. Client cooldown is UX only: server rate limits, anti-abuse controls and SMS spend limits must be configured before enabling phone login. Contact phone updates are not represented as verified identities. No profile grants, RLS, database functions or admin authorization were modified. Identity linking and account merging are not implemented. Unit and mocked browser tests passed; external-provider and device verification remain required.

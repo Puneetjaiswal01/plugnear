@@ -5,7 +5,7 @@
 The PlugNear Expo app uses bundle/package ID `in.plugnear.mobile`, foreground location, native maps, dedicated Supabase client configuration, Find/List journeys, profiles and booking UI. The blue/lime brand and welcome copy now match the website. The app icon is a generated adaptation of the approved smiling plug mark; template artwork is no longer used for the launcher.
 
 - Android and iOS Metro/Hermes exports: passed, under `apps/mobile/dist-native`. These bundles are not installable apps.
-- TypeScript checks: passed. Domain/database/planner tests: 30 passed.
+- TypeScript checks: passed. Domain/database/planner tests: 32 passed.
 - Expo native generation: Android and iOS prebuild passed in an isolated temporary copy; no native project directories were added to the source checkout. This checks config plugins, manifest/plist generation and icon generation, not Gradle/Xcode compilation.
 - EAS Android preview APK build: attempted; stopped before queueing with “An Expo user account is required to proceed.”
 - EAS iOS simulator build: attempted; stopped with the same authentication error.
@@ -29,3 +29,7 @@ The PlugNear Expo app uses bundle/package ID `in.plugnear.mobile`, foreground lo
 ## Release gate
 
 Public booking/payment launch remains blocked by the unapplied marketplace migration, payment-provider setup, live authorization/concurrency verification and real-device checks. Password recovery, account deletion and its web request route, actual privacy/support disclosures and store review requirements also remain outstanding. Do not submit the current early-access app as a completed marketplace. See STATUS.md and RELEASE.md.
+
+## Registration follow-up
+
+Google/Apple OAuth and phone OTP UI, PKCE callback handling and Account identity indicators are implemented. TypeScript, 32 tests and 32 browser tests pass; latest Android/iOS bundles and isolated prebuild also pass. Provider login browser tests use fixtures. Live Google, Apple and SMS remain disabled pending configuration. Follow [authentication setup](AUTHENTICATION_SETUP.md) before building for testers, then [store upload instructions](STORE_UPLOAD.md).
