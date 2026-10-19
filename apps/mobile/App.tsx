@@ -65,11 +65,11 @@ function Auth() {
   }
   return (
     <>
-      <Text style={s.text}>CHARGING, CLOSER TO HOME</Text>
-      <Text style={s.title}>{"Good neighbours.\nGreat connections."}</Text>
+      <Text style={s.text}>EVERY EV. EVERY JOURNEY.</Text>
+      <Text style={s.title}>{"One PlugNear.\nFor the way you move."}</Text>
       <Text style={s.text}>
-        Find a nearby charger or share yours. A better way to move through
-        India, together.
+        Cars, taxis, bikes, scooters and fleets. Find a nearby charger or share
+        yours — one connected charging community for India.
       </Text>
       <View style={{ flexDirection: "row", gap: 12 }}>
         <View style={{ flex: 1 }}>

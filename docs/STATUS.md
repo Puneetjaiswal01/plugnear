@@ -16,10 +16,10 @@
 | GitHub repository               | Local checkout exists; remote create denied by integration permission, subsequent lookup 404                   |
 | Vercel project/deployment       | Public website READY at https://www.plugnear.in; HTTPS and deployed browser checks pass; admin remains preview |
 | Payments / UPI                  | Not provisioned or implemented; checkout unavailable                                                           |
-| EAS / stores                    | Profiles prepared; no project/signing access, build or submission                                              |
+| EAS / stores                    | Android/iOS native exports + prebuild passed; EAS builds attempted, blocked by Expo authentication; no APK/AAB/IPA                                              |
 | Live booking/payment end-to-end | Not performed; pending schema and payment setup                                                                |
 
-Earlier native Hermes exports passed. The latest host/brand copy changes passed TypeScript checks and web export; signed native builds and physical-device checks remain outstanding.
+Latest Android/iOS Hermes exports and isolated native prebuild passed. Branded launcher icon, website-aligned blue/lime theme, dedicated-project configuration and preview/simulator/production profiles are prepared. Both cloud build attempts stopped before queueing because Expo is not authenticated. Signed builds and physical-device checks remain outstanding. See [mobile build results](MOBILE_BUILDS.md).
 
 The codebase, migration, tests and generated bundles can be reviewed locally. Pre-launch deployment URLs and remaining DNS records are recorded in [infrastructure results](INFRASTRUCTURE.md). See [release procedure](RELEASE.md), [security findings](SECURITY.md), and [next stages](ROADMAP.md).
 

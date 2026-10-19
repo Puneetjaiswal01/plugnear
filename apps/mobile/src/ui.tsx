@@ -8,11 +8,11 @@ import {
 } from "react-native";
 import type { ReactNode } from "react";
 export const palette = {
-  ink: "#14382d",
-  green: "#235e46",
-  lime: "#d7ef88",
-  paper: "#f5f6f0",
-  muted: "#6b796e",
+  ink: "#172925",
+  green: "#2449eb",
+  lime: "#d4f54a",
+  paper: "#fafaf5",
+  muted: "#65716c",
   line: "#dce3d9",
 };
 export function Button({
@@ -89,7 +89,7 @@ export const s = StyleSheet.create({
     color: palette.ink,
   },
   button: { backgroundColor: palette.green, padding: 16, borderRadius: 12 },
-  quiet: { backgroundColor: "#e9eedf" },
+  quiet: { backgroundColor: "#eef1ff" },
   card: {
     backgroundColor: "#fff",
     borderRadius: 20,

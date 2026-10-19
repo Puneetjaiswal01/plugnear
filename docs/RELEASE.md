@@ -6,7 +6,7 @@ Backend allowlist: `yxisoddhwlzetrnfbbno` only. Never run commands from a Claim3
 
 GitHub: attempted private `Puneetjaiswal01/plugnear` creation failed with `Resource not accessible by integration (createRepository)`. A subsequent lookup returned 404. Create the dedicated empty repository with an account authorized to do so, grant repository access, then push this checkout to its `main` branch. No remote source was published during this session.
 
-Vercel: separate `plugnear-web` and `plugnear-admin` projects now exist in the existing team, following the user’s explicit approval to share that team account. Domain assignments were accepted, but authoritative DNS still points to Hostinger parking. See [infrastructure results](INFRASTRUCTURE.md) for project IDs, READY deployment URLs, exact DNS records and verification limits. No Claim360 project was changed.
+Vercel: separate `plugnear-web` and `plugnear-admin` projects now exist in the existing team, following the user’s explicit approval to share that team account. The public website is verified at https://www.plugnear.in with DNS configured at Hostinger. See [infrastructure results](INFRASTRUCTURE.md) for project IDs, READY deployment URLs, exact DNS records and verification limits. No Claim360 project was changed.
 
 ## Database rollout
 
@@ -29,8 +29,8 @@ Use only the dedicated project's publishable key as `VITE_SUPABASE_PUBLISHABLE_K
 
 ## Store builds
 
-The checked-in bundle identifiers `in.plugnear.mobile` are proposed and need ownership confirmation. Configure a PlugNear-owned Expo/EAS project, Android Maps key restricted to the package and signing certificate, and Apple/Google developer accounts. Replace default template assets with approved branded icons, splash and store screenshots.
+The checked-in bundle identifiers `in.plugnear.mobile` are proposed and need ownership confirmation. Configure a PlugNear-owned Expo/EAS project, Android Maps key restricted to the package and signing certificate, and Apple/Google developer accounts. A branded launcher icon is now configured; complete the remaining splash/store screenshot review.
 
-From `apps/mobile`, link EAS to that dedicated project, configure signing, then use the production profiles in `eas.json` for Android AAB and iOS IPA builds. No EAS project ID, Expo token, signing material, Apple team or Play service account is configured here. No AAB/IPA was built or submitted.
+From `apps/mobile`, link EAS to that dedicated project, configure signing, then use the production profiles in `eas.json` for Android AAB and iOS IPA builds. No EAS project ID, Expo token, signing material, Apple team or Play service account is configured here. Cloud build attempts stop at Expo authentication; no APK/AAB/IPA was built or submitted. See [current mobile build results](MOBILE_BUILDS.md).
 
 Before submission implement and test password recovery, in-app account deletion and its web request route, privacy/terms/support pages, accessibility, notifications, physical-device permission and map checks, booking completion/metering, settled pricing/tax/refund policy and India regulatory requirements. Complete Apple privacy labels and Google Data Safety disclosures based on actual data collection. Do not claim background location; the app requests foreground location only.
