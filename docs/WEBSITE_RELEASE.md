@@ -3,8 +3,8 @@
 - **URL:** https://www.plugnear.in/
 - **Project:** plugnear-web (`prj_meecuEpYoXLlnlDD7GOIXaXAu8xe`)
 - **Team:** existing approved team `team_1u7aw5W8QOE1jWcv6odxACAV`; no Claim360 project was changed.
-- **Deployment:** `dpl_Etx4vxmmgcAF8qGFPMgMwkGnHiYh`, production target, **READY**.
-- **Source commit:** `68237e241dd216ed06638b788abfb98d88681c15`.
+- **Deployment:** `dpl_BekQLzNVjepWVW1eekuFWUHzSMoS`, production target, **READY**.
+- **Source commit:** `35f694f43df31fa469cd89fd6e57e48e9e178d77`.
 - **Build:** `npm run build:website` exports the Expo web app and builds the static landing site. Compiled files were uploaded by content hash to Vercel; no credentials or environment files were uploaded.
 
 ## Included
@@ -32,3 +32,9 @@ The public site covers private cars, taxis, bikes and scooters, three-wheelers, 
 30 domain/PostgreSQL/planner tests and 24 desktop/mobile browser tests pass, alongside TypeScript checks and the website/Expo web export. The production deployment is READY. Deployed desktop and mobile checks verified all six audience sections, intact images, no horizontal overflow, four car/taxi/van/bus calculations, downloaded brief contents and no JavaScript page errors. No live Supabase schema was changed.
 
 See [strategy](STRATEGY.md), [next-stage requirements](MICROHOST_REQUIREMENTS.md) and [revised roadmap](ROADMAP.md).
+
+## Combined website revision
+
+Merged the original neighbourhood identity, “Just around the corner” hero and simpler three-step journey with the newer all-EV coverage and fleet planning sections. Added prominent Find / Rent a Charger and List a Charger entry cards; retained both car and scooter imagery, approved branding, host onboarding and early-access disclosures.
+
+Static website build and all 24 desktop/mobile browser tests pass. Production deployment READY. Live desktop (1440px) and mobile (390px) checks returned HTTP 200, verified both new journey cards route to app sign-in with the correct mode, and confirmed the fleet planner works. No broken images, horizontal overflow or JavaScript page errors were found. Booking/payment end-to-end verification remains pending; these checks verify the public site and early-access entry points.
