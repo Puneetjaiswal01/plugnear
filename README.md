@@ -31,3 +31,5 @@ The first two SQL migrations were retrieved from the existing PlugNear migration
 Online payments are intentionally unavailable. There is no payment provider, UPI checkout, signature verification or webhook deployed. This stage does not collect money.
 
 See [actual validation and blockers](docs/STATUS.md), [audit and security](docs/SECURITY.md), and [next stages](docs/ROADMAP.md).
+
+Pre-launch Vercel artifacts and domain assignments now exist. Custom DNS remains parked at Hostinger; see [infrastructure results](docs/INFRASTRUCTURE.md). These deployments do not establish a working booking/payment release.

@@ -6,7 +6,7 @@ Backend allowlist: `yxisoddhwlzetrnfbbno` only. Never run commands from a Claim3
 
 GitHub: attempted private `Puneetjaiswal01/plugnear` creation failed with `Resource not accessible by integration (createRepository)`. A subsequent lookup returned 404. Create the dedicated empty repository with an account authorized to do so, grant repository access, then push this checkout to its `main` branch. No remote source was published during this session.
 
-Vercel: `plugnear-admin` is the proposed project name; root `apps/admin`, Vite, Node 24, build `npm run build`, output `dist`. Only the Claim360 CRM team was exposed by the connector. Automatic approval review rejected creating a project in that team because of the separation instruction. No Vercel project was created. Connect a dedicated PlugNear team, or explicitly authorize that team as the owner of an otherwise separate PlugNear project. No Claim360 project may be changed.
+Vercel: separate `plugnear-web` and `plugnear-admin` projects now exist in the existing team, following the user’s explicit approval to share that team account. Domain assignments were accepted, but authoritative DNS still points to Hostinger parking. See [infrastructure results](INFRASTRUCTURE.md) for project IDs, READY deployment URLs, exact DNS records and verification limits. No Claim360 project was changed.
 
 ## Database rollout
 
