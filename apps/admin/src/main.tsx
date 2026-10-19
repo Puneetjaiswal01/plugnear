@@ -234,7 +234,7 @@ function App() {
       <main className="auth">
         <div className="auth-story">
           <div className="brand">
-            <Zap /> plugnear<span>.</span>
+            <img src="/brand/logo.png" alt="PlugNear" />
           </div>
           <span className="eyebrow">THE NEIGHBOURHOOD CHARGING NETWORK</span>
           <h1>
@@ -248,6 +248,9 @@ function App() {
           <small>BUILT FOR INDIA. POWERED BY PEOPLE.</small>
         </div>
         <div className="auth-form">
+          <div className="brand mobile-brand">
+            <img src="/brand/logo.png" alt="PlugNear" />
+          </div>
           <span className="eyebrow">PLUGNEAR OPERATIONS</span>
           <h2>
             Welcome to your
@@ -311,7 +314,7 @@ function App() {
     <div className="shell">
       <aside>
         <div className="brand">
-          <Zap fill="currentColor" /> plugnear<span>.</span>
+          <img src="/brand/logo.png" alt="PlugNear" />
         </div>
         <span className="sidebar-label">WORKSPACE</span>
         <nav>

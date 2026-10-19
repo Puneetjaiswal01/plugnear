@@ -1,0 +1,10 @@
+{
+  "name": "@plugnear/website",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "python -m http.server 4175 --directory public"
+  }
+}

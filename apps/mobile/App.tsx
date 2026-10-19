@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  Image,
   ScrollView,
   Text,
   View,
@@ -17,6 +18,13 @@ import { Discover } from "./src/Discover";
 import { Host } from "./src/Host";
 import { Bookings } from "./src/Bookings";
 import { Account } from "./src/Account";
+function entryTab(): "Find a charger" | "List a charger" {
+  return Platform.OS === "web" &&
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("mode") === "host"
+    ? "List a charger"
+    : "Find a charger";
+}
 const tabs = [
   "Find a charger",
   "List a charger",
@@ -130,7 +138,7 @@ function Auth() {
 export default function App() {
   const [session, setSession] = useState<Session | null>(null),
     [ready, setReady] = useState(false),
-    [tab, setTab] = useState<(typeof tabs)[number]>("Find a charger"),
+    [tab, setTab] = useState<(typeof tabs)[number]>(entryTab),
     [authError, setAuthError] = useState("");
   useEffect(() => {
     if (!db) {
@@ -147,7 +155,7 @@ export default function App() {
       data: { subscription },
     } = client.auth.onAuthStateChange((_event, value) => {
       setSession(value);
-      setTab("Find a charger");
+      setTab(entryTab());
     });
     async function handle(url: string) {
       try {
@@ -192,17 +200,32 @@ export default function App() {
             justifyContent: "space-between",
           }}
         >
-          <Text
-            style={{
-              fontSize: 25,
-              fontWeight: "900",
-              color: palette.ink,
-              letterSpacing: -1,
-            }}
-          >
-            ϟ plugnear<Text style={{ color: "#79a64a" }}>.</Text>
-          </Text>
+          <View style={{ width: 180, height: 42, overflow: "hidden" }}>
+            <Image
+              source={require("./assets/brand/logo.png")}
+              accessibilityLabel="PlugNear"
+              style={{
+                width: 184,
+                height: 77,
+                position: "absolute",
+                top: -17,
+                left: -2,
+              }}
+              resizeMode="contain"
+            />
+          </View>
           <Text style={s.label}>MADE FOR INDIA</Text>
+        </View>
+        <View
+          style={{
+            backgroundColor: "#eef1ff",
+            paddingVertical: 9,
+            paddingHorizontal: 22,
+          }}
+        >
+          <Text style={{ fontSize: 10, color: "#2449eb", textAlign: "center" }}>
+            Early access · Booking and online payments are being prepared.
+          </Text>
         </View>
         <ScrollView
           keyboardShouldPersistTaps="handled"
