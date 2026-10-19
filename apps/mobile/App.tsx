@@ -13,11 +13,13 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import type { Session } from "@supabase/supabase-js";
 import { db, configured } from "./src/client";
-import { Button, Field, Card, s, palette } from "./src/ui";
+import { Card, s, palette } from "./src/ui";
 import { Discover } from "./src/Discover";
 import { Host } from "./src/Host";
 import { Bookings } from "./src/Bookings";
 import { Account } from "./src/Account";
+import { Auth } from "./src/Auth";
+import { completeNativeAuth } from "./src/oauth";
 function entryTab(): "Find a charger" | "List a charger" {
   return Platform.OS === "web" &&
     typeof window !== "undefined" &&
@@ -31,110 +33,6 @@ const tabs = [
   "Bookings",
   "Account",
 ] as const;
-function Auth() {
-  const [email, setEmail] = useState(""),
-    [password, setPassword] = useState(""),
-    [message, setMessage] = useState(""),
-    [busy, setBusy] = useState(false),
-    [mode, setMode] = useState<"signin" | "signup">("signin");
-  async function submit() {
-    setBusy(true);
-    setMessage("");
-    try {
-      const result =
-        mode === "signin"
-          ? await db!.auth.signInWithPassword({ email: email.trim(), password })
-          : await db!.auth.signUp({
-              email: email.trim(),
-              password,
-              options: {
-                emailRedirectTo:
-                  Platform.OS === "web"
-                    ? window.location.origin
-                    : "plugnear://auth/callback",
-              },
-            });
-      if (result.error) throw result.error;
-      if (!result.data.session)
-        setMessage("Check your email to confirm your account, then sign in.");
-    } catch (e) {
-      setMessage((e as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  }
-  return (
-    <>
-      <Text style={s.text}>EVERY EV. EVERY JOURNEY.</Text>
-      <Text style={s.title}>{"One PlugNear.\nFor the way you move."}</Text>
-      <Text style={s.text}>
-        Cars, taxis, bikes, scooters and fleets. Find a nearby charger or share
-        yours — one connected charging community for India.
-      </Text>
-      <View style={{ flexDirection: "row", gap: 12 }}>
-        <View style={{ flex: 1 }}>
-          <Card>
-            <Text style={s.h2}>Find / rent</Text>
-            <Text style={s.text}>Your next charge, around the corner.</Text>
-          </Card>
-        </View>
-        <View style={{ flex: 1 }}>
-          <Card>
-            <Text style={s.h2}>List a charger</Text>
-            <Text style={s.text}>Turn your charger into opportunity.</Text>
-          </Card>
-        </View>
-      </View>
-      <Card>
-        <Text style={s.h2}>
-          {mode === "signin" ? "Welcome back." : "Join the neighbourhood."}
-        </Text>
-        <Field
-          label="Email"
-          autoCapitalize="none"
-          autoComplete="email"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <Field
-          label="Password"
-          secureTextEntry
-          autoCapitalize="none"
-          autoComplete={mode === "signin" ? "current-password" : "new-password"}
-          value={password}
-          onChangeText={setPassword}
-        />
-        <Button
-          disabled={busy || !email || password.length < 8}
-          onPress={() => void submit()}
-        >
-          {busy
-            ? "Connecting…"
-            : mode === "signin"
-              ? "Sign in"
-              : "Create account"}
-        </Button>
-        <Button
-          quiet
-          onPress={() => setMode(mode === "signin" ? "signup" : "signin")}
-        >
-          {mode === "signin"
-            ? "New here? Create an account"
-            : "Already registered? Sign in"}
-        </Button>
-        <Text style={s.text}>
-          Use at least 8 characters. Confirm your email before booking.
-        </Text>
-      </Card>
-      {!!message && (
-        <Text accessibilityRole="alert" style={s.text}>
-          {message}
-        </Text>
-      )}
-    </>
-  );
-}
 export default function App() {
   const [session, setSession] = useState<Session | null>(null),
     [ready, setReady] = useState(false),
@@ -159,19 +57,7 @@ export default function App() {
     });
     async function handle(url: string) {
       try {
-        if (!url.startsWith("plugnear://auth/callback")) return;
-        const params = new URLSearchParams(url.split("#")[1] || "");
-        if (params.get("error_description"))
-          throw Error(params.get("error_description")!);
-        const access_token = params.get("access_token"),
-          refresh_token = params.get("refresh_token");
-        if (access_token && refresh_token) {
-          const { error } = await client.auth.setSession({
-            access_token,
-            refresh_token,
-          });
-          if (error) throw error;
-        }
+        await completeNativeAuth(url);
       } catch (e) {
         setAuthError((e as Error).message);
       }

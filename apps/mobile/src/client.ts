@@ -54,6 +54,7 @@ export const db = configured
   ? createClient(url, key, {
       auth: {
         storage,
+        flowType: "pkce",
         lock: processLock,
         persistSession: true,
         autoRefreshToken: true,
@@ -66,4 +67,21 @@ if (Platform.OS !== "web" && db) {
     if (s === "active") db.auth.startAutoRefresh();
     else db.auth.stopAutoRefresh();
   });
+}
+
+export async function publicAuthSettings(): Promise<{
+  google: boolean;
+  apple: boolean;
+  phone: boolean;
+}> {
+  const response = await fetch(`${url}/auth/v1/settings`, {
+    headers: { apikey: key },
+  });
+  if (!response.ok) throw new Error("Authentication settings unavailable.");
+  const settings = await response.json();
+  return {
+    google: settings.external?.google === true,
+    apple: settings.external?.apple === true,
+    phone: settings.external?.phone === true,
+  };
 }
