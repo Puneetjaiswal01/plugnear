@@ -2076,3 +2076,21 @@ dialog p {
 .journey-footnote a { color: var(--blue); font-weight: 600; }
 .journey-footnote > span { display: block; color: var(--muted); font-size: 10px; }
 @media (max-width: 640px) { .journeys { padding-top: 50px; } .journey-grid { grid-template-columns: 1fr; gap: 16px; } .journey-card { padding: 30px 24px; } .journey-card .eyebrow { max-width: 85%; display: block; } }
+
+.offerings { padding-top: 80px; scroll-margin-top: 110px; }
+.offerings h2 { font-size: clamp(29px, 3vw, 40px); letter-spacing: -1.3px; margin: 18px 0; }
+.offerings-intro { max-width: 660px; line-height: 1.8; color: var(--muted); }
+.offerings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 32px; }
+.offerings-grid > a { display: flex; flex-direction: column; padding: 28px; border: 1px solid var(--line); border-radius: 14px; text-decoration: none; color: inherit; background: #fff; }
+.offerings-grid > a:first-child { background: #eef1ff; }
+.offerings-grid > a:nth-child(2) { background: #eff6cf; }
+.offerings-grid > a > span { font-size: 10px; color: var(--blue); font-weight: 600; letter-spacing: .5px; }
+.offerings-grid h3 { font-size: 22px; letter-spacing: -.7px; margin: 20px 0 12px; }
+.offerings-grid p { font-size: 13px; line-height: 1.8; margin-bottom: 24px; }
+.offerings-grid strong { font-size: 12px; margin-top: auto; color: var(--blue); }
+.offerings-grid small { display: block; font-size: 10px; margin-top: 16px; color: var(--muted); line-height: 1.6; }
+.offerings-grid > a:hover { border-color: var(--blue); }
+.offerings-grid > a:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+.offerings-note { font-size: 11px; line-height: 1.9; color: var(--muted); margin-top: 24px; max-width: 850px; }
+@media(max-width: 900px) { .offerings-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 580px) { .offerings { padding-top: 50px; } .offerings-grid { grid-template-columns: 1fr; } .offerings-grid > a { padding: 25px; } }

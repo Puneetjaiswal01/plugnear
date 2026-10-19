@@ -11,7 +11,7 @@ test("public website renders its approved brand and both journeys without broken
   });
   await page.goto("http://localhost:4175");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Your next charge.",
+    "Every EV.",
   );
   await expect(
     page.getByRole("link", { name: "Find a charger", exact: true }),
