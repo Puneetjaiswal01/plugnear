@@ -1,4 +1,4 @@
-import { planFleet, pilotBrief } from "./model.mjs";
+import { planFleet, pilotBrief, VEHICLE_PRESETS } from "./model.mjs";
 const form = document.querySelector("#fleet-form"),
   error = document.querySelector("#planner-error"),
   download = document.querySelector("#download-brief");
@@ -12,6 +12,8 @@ function calculate() {
         Number(data.get(k)),
       ]),
     );
+    input.vehicleGroup =
+      document.querySelector("#vehicle-type").selectedOptions[0].textContent;
     const plan = planFleet(input);
     latest = { input, plan };
     error.textContent = "";
@@ -44,12 +46,7 @@ form.addEventListener("input", () => {
     "Inputs changed or invalid. Recalculate before using these results.";
 });
 document.querySelector("#vehicle-type").addEventListener("change", (e) => {
-  const preset =
-    e.target.value === "2w"
-      ? { whPerKm: 35, powerKw: 0.6 }
-      : e.target.value === "3w"
-        ? { whPerKm: 70, powerKw: 1.5 }
-        : null;
+  const preset = VEHICLE_PRESETS[e.target.value];
   if (preset) {
     for (const [k, v] of Object.entries(preset))
       form.elements.namedItem(k).value = String(v);

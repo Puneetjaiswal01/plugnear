@@ -51,3 +51,30 @@ test("fleet presets require recalculation and pilot download stays local", async
     }),
   ).toBeVisible();
 });
+
+test("car, taxi and commercial fleet presets calculate without implying universal compatibility", async ({
+  page,
+}) => {
+  await page.goto("http://localhost:4175/fleet-pilot/");
+  for (const [type, energy] of [
+    ["car", "128.0 kWh"],
+    ["taxi", "144.0 kWh"],
+    ["van", "176.0 kWh"],
+    ["bus", "880.0 kWh"],
+  ]) {
+    await page.getByLabel("Vehicle type").selectOption(type);
+    await expect(
+      page.getByRole("button", { name: "Download your pilot brief" }),
+    ).toBeDisabled();
+    await page
+      .getByRole("button", { name: "Calculate pilot assumptions" })
+      .click();
+    await expect(page.locator("#vehicle-energy")).toHaveText(energy);
+    await expect(
+      page.getByRole("button", { name: "Download your pilot brief" }),
+    ).toBeEnabled();
+  }
+  await expect(
+    page.getByText("Plan one vehicle group at a time", { exact: false }),
+  ).toBeVisible();
+});

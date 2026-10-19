@@ -6,7 +6,7 @@
     <title>Fleet Pilot Planner — PlugNear</title>
     <meta
       name="description"
-      content="Explore the energy and charging-window assumptions for a small electric two- or three-wheeler fleet pilot. Planning tool, not a charging quote."
+      content="Explore the energy and charging-window assumptions for an electric car, taxi, bike, three-wheeler, van or bus fleet pilot. Planning tool, not a charging quote."
     />
     <link rel="canonical" href="https://www.plugnear.in/fleet-pilot/" />
     <link rel="icon" href="/favicon.svg" />
@@ -25,7 +25,9 @@
       ><a class="text-link" href="/#for-fleets">← Back to PlugNear</a>
     </header>
     <main class="section-wrap planner">
-      <span class="eyebrow">EXPLORATORY FLEET PILOTS · ELECTRIC 2W / 3W</span>
+      <span class="eyebrow"
+        >FLEET PILOT PLANNING · CARS, TAXIS, BIKES & COMMERCIAL EVS</span
+      >
       <h1>
         Start with your routes.<br /><span class="blue"
           >Make the assumptions clear.</span
@@ -33,17 +35,23 @@
       </h1>
       <p class="planner-intro">
         Estimate daily energy and the parallel charging points implied by a
-        simple charging-window model. These are planning assumptions, not
-        measured vehicle specifications, site approval or a service quote.
+        simple charging-window model. Plan one vehicle group at a time; for
+        mixed fleets, prepare a separate brief for each group. These are
+        planning assumptions, not measured vehicle specifications, site approval
+        or a service quote.
       </p>
       <div class="planner-grid">
         <form id="fleet-form">
           <h2>Your pilot assumptions</h2>
           <label
             >Vehicle type<select id="vehicle-type">
-              <option value="2w">Electric two-wheelers</option>
+              <option value="2w">Electric bikes & scooters</option>
               <option value="3w">Electric three-wheelers</option>
-              <option value="custom">Other / custom assumptions</option>
+              <option value="car">Private electric cars</option>
+              <option value="taxi">Electric taxis</option>
+              <option value="van">Electric delivery vans</option>
+              <option value="bus">Electric buses / larger vehicles</option>
+              <option value="custom">Custom vehicle group</option>
             </select></label
           >
           <div class="input-grid">
@@ -61,7 +69,7 @@
                 name="kmPerDay"
                 type="number"
                 min="1"
-                max="300"
+                max="600"
                 step="any"
                 value="40"
                 required /></label
@@ -70,7 +78,7 @@
                 name="whPerKm"
                 type="number"
                 min="10"
-                max="500"
+                max="2000"
                 step="any"
                 value="35"
                 required /></label
@@ -79,7 +87,7 @@
                 name="powerKw"
                 type="number"
                 min="0.1"
-                max="22"
+                max="350"
                 step="any"
                 value="0.6"
                 required
@@ -144,7 +152,8 @@
           <article>
             <h3>Route & shift fit</h3>
             <p>
-              Actual stops, rider schedules, energy needs and fleet permissions.
+              Actual stops, driver/rider schedules, energy needs and fleet
+              permissions.
             </p>
           </article>
           <article>
@@ -169,7 +178,7 @@
     </main>
     <footer class="section-wrap">
       <div class="footer-bottom">
-        <a href="/">PlugNear · Local charging, built around riders.</a
+        <a href="/">PlugNear · Charging for drivers, riders and fleets.</a
         ><span>Early access · Not an infrastructure design tool</span>
       </div>
     </footer>

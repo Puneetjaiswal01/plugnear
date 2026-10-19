@@ -73,8 +73,9 @@ export function Host({ uid }: { uid: string }) {
       <Text style={s.text}>NEIGHBOURHOOD HOST PILOT</Text>
       <Text style={s.title}>{"Your charger.\nSomeone’s next stop."}</Text>
       <Text style={s.text}>
-        We’re prioritising local businesses and parking operators for a future
-        electric 2W/3W micro-host pilot.
+        We’re building for private cars, taxis, bikes, three-wheelers and
+        commercial fleets, with homes, businesses, parking operators and depots
+        as potential hosts.
       </Text>
       <Card>
         <Text style={s.h2}>01 · Get verified</Text>

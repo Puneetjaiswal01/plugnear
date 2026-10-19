@@ -1,4 +1,4 @@
-# Micro-host and fleet implementation requirements
+# Vehicle, charging-host and fleet implementation requirements
 
 This is the next implementation contract. These fields and controls are **not yet deployed**. Preserve the dedicated PlugNear Supabase project and existing migration history; use additive, versioned schema changes after the pending baseline is reconciled.
 
@@ -6,7 +6,7 @@ This is the next implementation contract. These fields and controls are **not ye
 
 A charging point must describe the **site, independently reservable point and connected charging equipment** separately. Host categories include local shop/kirana, tea/food stop, parking operator, workplace and residential society. Ownership/permission evidence is reviewed privately.
 
-Record parking dimensions/access restrictions for 2W/3W, opening hours and timezone, point count, rated supply voltage/current, protection/earthing/inspection evidence, site aggregate load, metering capability and tariff basis. A generic 16A socket label alone does not establish electrical suitability or vehicle compatibility.
+Record parking dimensions/access restrictions for bikes/scooters, three-wheelers, cars/taxis, vans, buses and other commercial vehicles, opening hours and timezone, point count, rated supply voltage/current, protection/earthing/inspection evidence, site aggregate load, metering capability and tariff basis. A generic 16A socket label alone does not establish electrical suitability or vehicle compatibility.
 
 Record supported vehicle/OEM-charger models and whether a compatible charger is host-provided or must be brought by the rider. Use an explicit reviewed compatibility relationship; do not infer suitability solely from the existing Type 2/CCS2/Bharat AC/CHAdeMO field. Avoid catch-all adapters or unsupported vehicle claims. Battery swapping is outside the initial scope.
 
@@ -24,7 +24,7 @@ Consolidated invoicing derives from immutable verified session lines and provide
 
 ## Pilot planner limits
 
-The public tool accepts 1–500 whole vehicles, 1–300 daily km/vehicle, 10–500 Wh/km, 0.1–22 kW per vehicle and 0.5–24 hours per point. These are tool bounds, not approved installation ratings.
+The public tool accepts 1–500 whole vehicles, 1–600 daily km/vehicle, 10–2000 Wh/km, 0.1–350 kW per vehicle and 0.5–24 hours per point. These are tool bounds, not approved installation ratings.
 
 Battery-side daily energy = vehicles × daily km × Wh/km ÷ 1000.
 
@@ -33,3 +33,5 @@ Modelled input energy = battery-side energy ÷ assumed charging efficiency (85%)
 Modelled parallel points = ceil(input energy ÷ (per-vehicle kW × usable hours per point)).
 
 The energy-only model ignores queues, taper, downtime, equipment compatibility, arrival distributions and site electrical capacity. All presets are illustrative. The downloaded brief stays local and is not a booking, quote, submission or infrastructure design.
+
+Vehicle classes must be explicit but must never substitute for verified connector/protocol, power, voltage/current and physical-access compatibility. Taxi is an operational use case in addition to a vehicle class. Mixed-fleet planning remains per vehicle group; the public tool does not optimise shared depot load or schedules.

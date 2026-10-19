@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   planFleet,
+  VEHICLE_PRESETS,
   pilotBrief,
 } from "../apps/website/public/fleet-pilot/model.mjs";
 const input = {
@@ -32,9 +33,9 @@ test("fleet inputs reject non-finite, fractional counts and unsupported bounds",
     { kmPerDay: 0 },
     { kmPerDay: Infinity },
     { whPerKm: NaN },
-    { whPerKm: 501 },
+    { whPerKm: 2001 },
     { powerKw: 0 },
-    { powerKw: 23 },
+    { powerKw: 351 },
     { hours: 0 },
     { hours: 25 },
     { vehicles: "20" },
@@ -49,4 +50,34 @@ test("pilot export includes assumptions and distinguishes a local plan from a su
   assert.match(text, /not submitted to PlugNear/);
   assert.match(text, /Not a quote, booking, submission or site design/);
   assert.match(text, /not live PlugNear services/);
+});
+
+test("car, taxi, bike, three-wheeler, van and bus presets are valid editable scenarios", () => {
+  assert.deepEqual(Object.keys(VEHICLE_PRESETS), [
+    "2w",
+    "3w",
+    "car",
+    "taxi",
+    "van",
+    "bus",
+  ]);
+  for (const [name, preset] of Object.entries(VEHICLE_PRESETS)) {
+    const p = planFleet({ ...input, ...preset });
+    assert.ok(Number.isFinite(p.inputEnergyKwh), name);
+    assert.ok(p.modelledPoints > 0, name);
+  }
+  assert.equal(
+    planFleet({ ...input, ...VEHICLE_PRESETS.car }).vehicleEnergyKwh,
+    128,
+  );
+  assert.equal(
+    planFleet({ ...input, ...VEHICLE_PRESETS.bus }).vehicleEnergyKwh,
+    880,
+  );
+});
+test("export names the vehicle group and explains mixed-fleet limits", () => {
+  const i = { ...input, vehicleGroup: "Electric taxis" };
+  const text = pilotBrief(i, planFleet(i));
+  assert.match(text, /Vehicle group: Electric taxis/);
+  assert.match(text, /separate brief per vehicle group/);
 });
