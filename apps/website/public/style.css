@@ -1978,105 +1978,6 @@ dialog p {
     transition: none !important;
   }
 }
-/* The platform spans private drivers and commercial vehicle groups. */
-.hero-inset {
-  position: absolute;
-  width: 28%;
-  height: 28%;
-  object-fit: cover;
-  right: 18px;
-  bottom: 34px;
-  border: 4px solid var(--paper);
-  border-radius: 12px;
-  box-shadow: 0 8px 25px #13262925;
-}
-.coverage {
-  padding-top: 72px;
-}
-.coverage > h2 {
-  font-size: 35px;
-  margin: 18px 0 30px;
-}
-.coverage-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-.coverage-grid article {
-  padding: 24px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-}
-.coverage-grid article > span {
-  color: var(--blue);
-  font-size: 10px;
-}
-.coverage-grid h3 {
-  font-size: 19px;
-  margin: 14px 0 9px;
-}
-.coverage-grid p {
-  font-size: 12px;
-}
-.coverage > small {
-  display: block;
-  font-size: 10px;
-  color: var(--muted);
-  margin-top: 20px;
-  line-height: 1.8;
-}
-@media (max-width: 800px) {
-  .coverage-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .coverage > h2 {
-    font-size: 30px;
-  }
-  .coverage {
-    padding-top: 55px;
-  }
-}
-@media (max-width: 580px) {
-  .hero-inset {
-    display: none;
-  }
-  .coverage-grid {
-    gap: 12px;
-  }
-  .coverage-grid article {
-    padding: 18px 14px;
-  }
-  .coverage-grid h3 {
-    font-size: 16px;
-  }
-  .coverage-grid p {
-    font-size: 11px;
-  }
-  .coverage > h2 {
-    font-size: 29px;
-  }
-}
-
-/* Neighbourhood marketplace journeys, alongside the broader fleet vision. */
-.journeys { padding-top: 80px; }
-.journeys-heading { max-width: 650px; }
-.journeys h2 { font-size: clamp(28px, 3vw, 38px); margin: 18px 0; letter-spacing: -1.2px; }
-.journeys-heading > p { color: var(--muted); line-height: 1.8; }
-.journey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
-.journey-card { position: relative; display: block; padding: 38px; border-radius: 18px; color: inherit; text-decoration: none; border: 1px solid var(--line); }
-.journey-find { background: #eef1ff; }
-.journey-host { background: #eff6cf; }
-.journey-card h3 { font-size: clamp(23px, 2.3vw, 30px); margin: 22px 0 14px; letter-spacing: -1px; }
-.journey-card p { max-width: 360px; font-size: 14px; line-height: 1.8; margin-bottom: 28px; }
-.journey-card strong { font-size: 13px; }
-.journey-symbol { position: absolute; top: 25px; right: 28px; font-size: 30px; color: var(--blue); }
-.journey-card:hover { border-color: var(--blue); }
-.journey-card:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
-.journey-footnote { font-size: 12px; line-height: 1.9; margin-top: 22px; }
-.journey-footnote a { color: var(--blue); font-weight: 600; }
-.journey-footnote > span { display: block; color: var(--muted); font-size: 10px; }
-@media (max-width: 640px) { .journeys { padding-top: 50px; } .journey-grid { grid-template-columns: 1fr; gap: 16px; } .journey-card { padding: 30px 24px; } .journey-card .eyebrow { max-width: 85%; display: block; } }
-
 .offerings { padding-top: 80px; scroll-margin-top: 110px; }
 .offerings h2 { font-size: clamp(29px, 3vw, 40px); letter-spacing: -1.3px; margin: 18px 0; }
 .offerings-intro { max-width: 660px; line-height: 1.8; color: var(--muted); }
@@ -2094,3 +1995,29 @@ dialog p {
 .offerings-note { font-size: 11px; line-height: 1.9; color: var(--muted); margin-top: 24px; max-width: 850px; }
 @media(max-width: 900px) { .offerings-grid { grid-template-columns: repeat(2, 1fr); } }
 @media(max-width: 580px) { .offerings { padding-top: 50px; } .offerings-grid { grid-template-columns: 1fr; } .offerings-grid > a { padding: 25px; } }
+
+.business-entry { display: inline-flex; margin-top: 22px; font-size: 12px; gap: 12px; }
+.product-preview { min-height: 220px; background: #eef1ff; border: 1px solid #dce2ff; border-radius: 14px; padding: 22px; margin: 8px 0 24px; display: flex; flex-direction: column; gap: 18px; }
+.preview-tag { font-size: 9px; font-weight: 700; color: var(--blue); letter-spacing: .8px; }
+.preview-chips { display: flex; gap: 7px; flex-wrap: wrap; }
+.preview-chips span { background: white; border-radius: 20px; padding: 7px 10px; font-size: 10px; }
+.preview-route { color: var(--blue); font-size: 25px; padding: 16px 0; white-space: nowrap; }
+.product-preview > strong { font-size: 15px; }
+.product-preview > small { margin-top: auto; font-size: 9px; color: var(--muted); line-height: 1.6; }
+.product-preview dl { margin: 0; font-size: 11px; }
+.product-preview dl > div { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; }
+.product-preview dd { margin: 0; text-align: right; }
+.preview-timeline { margin: 0; padding-left: 18px; font-size: 12px; line-height: 2; }
+.hero-inset {
+  position: absolute;
+  width: 28%;
+  height: 28%;
+  object-fit: cover;
+  right: 18px;
+  bottom: 34px;
+  border: 4px solid var(--paper);
+  border-radius: 12px;
+  box-shadow: 0 8px 25px #13262925;
+}
+
+@media (max-width:580px) { .hero-inset { display:none; } }
