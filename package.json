@@ -1,0 +1,26 @@
+{
+  "name": "plugnear",
+  "version": "0.5.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "mobile": "npm run start -w @plugnear/mobile",
+    "admin": "npm run dev -w @plugnear/admin",
+    "build": "npm run build -w @plugnear/admin",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "node --test --test-isolation=none supabase/tests/*.test.mjs packages/core/*.test.mjs",
+    "test:e2e": "playwright test",
+    "export:web": "npm exec -w @plugnear/mobile -- expo export --platform web --output-dir dist-web"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.10",
+    "@playwright/test": "1.58.2",
+    "prettier": "3.9.10"
+  }
+}

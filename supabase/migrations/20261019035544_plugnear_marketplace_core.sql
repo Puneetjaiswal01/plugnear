@@ -1,0 +1,14 @@
+create extension if not exists pgcrypto;
+create table public.profiles (id uuid primary key references auth.users(id) on delete cascade, display_name text, phone text, created_at timestamptz not null default now());
+create table public.chargers (id uuid primary key default gen_random_uuid(), owner_id uuid not null references public.profiles(id), title text not null, address text not null, latitude double precision not null check(latitude between -90 and 90), longitude double precision not null check(longitude between -180 and 180), connector text not null, power_kw numeric(8,2) not null check(power_kw>0), price_per_kwh numeric(10,2) not null check(price_per_kwh>=0), status text not null default 'pending' check(status in ('pending','approved','rejected','suspended')), created_at timestamptz not null default now());
+create table public.bookings (id uuid primary key default gen_random_uuid(), charger_id uuid not null references public.chargers(id), driver_id uuid not null references public.profiles(id), starts_at timestamptz not null, ends_at timestamptz not null, status text not null default 'requested' check(status in ('requested','confirmed','cancelled','completed','declined')), created_at timestamptz not null default now(), check(ends_at>starts_at));
+create index on public.chargers(status); create index on public.chargers(owner_id); create index on public.bookings(driver_id); create index on public.bookings(charger_id);
+alter table public.profiles enable row level security; alter table public.chargers enable row level security; alter table public.bookings enable row level security;
+create policy profiles_read_self on public.profiles for select to authenticated using(id=(select auth.uid()));
+create policy profiles_insert_self on public.profiles for insert to authenticated with check(id=(select auth.uid()));
+create policy profiles_update_self on public.profiles for update to authenticated using(id=(select auth.uid())) with check(id=(select auth.uid()));
+create policy chargers_read on public.chargers for select to authenticated using(status='approved' or owner_id=(select auth.uid()));
+create policy chargers_insert on public.chargers for insert to authenticated with check(owner_id=(select auth.uid()) and status='pending');
+create policy chargers_owner_update on public.chargers for update to authenticated using(owner_id=(select auth.uid()) and status='pending') with check(owner_id=(select auth.uid()) and status='pending');
+create policy bookings_read on public.bookings for select to authenticated using(driver_id=(select auth.uid()) or exists(select 1 from public.chargers c where c.id=charger_id and c.owner_id=(select auth.uid())));
+create policy bookings_insert on public.bookings for insert to authenticated with check(driver_id=(select auth.uid()) and status='requested' and exists(select 1 from public.chargers c where c.id=charger_id and c.status='approved' and c.owner_id<>(select auth.uid())));
