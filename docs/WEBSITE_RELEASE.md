@@ -3,8 +3,8 @@
 - **URL:** https://www.plugnear.in/
 - **Project:** plugnear-web (`prj_meecuEpYoXLlnlDD7GOIXaXAu8xe`)
 - **Team:** existing approved team `team_1u7aw5W8QOE1jWcv6odxACAV`; no Claim360 project was changed.
-- **Deployment:** `dpl_BekQLzNVjepWVW1eekuFWUHzSMoS`, production target, **READY**.
-- **Source commit:** `35f694f43df31fa469cd89fd6e57e48e9e178d77`.
+- **Deployment:** `dpl_1CJ7bJnJpRCvjJGkmnNuSJ6hsKY7`, production target, **READY**.
+- **Source commit:** `7b1d1ee16e31650016845e62003a464c86c7be74`.
 - **Build:** `npm run build:website` exports the Expo web app and builds the static landing site. Compiled files were uploaded by content hash to Vercel; no credentials or environment files were uploaded.
 
 ## Included
@@ -38,3 +38,7 @@ See [strategy](STRATEGY.md), [next-stage requirements](MICROHOST_REQUIREMENTS.md
 Merged the original neighbourhood identity, “Just around the corner” hero and simpler three-step journey with the newer all-EV coverage and fleet planning sections. Added prominent Find / Rent a Charger and List a Charger entry cards; retained both car and scooter imagery, approved branding, host onboarding and early-access disclosures.
 
 Static website build and all 24 desktop/mobile browser tests pass. Production deployment READY. Live desktop (1440px) and mobile (390px) checks returned HTTP 200, verified both new journey cards route to app sign-in with the correct mode, and confirmed the fleet planner works. No broken images, horizontal overflow or JavaScript page errors were found. Booking/payment end-to-end verification remains pending; these checks verify the public site and early-access entry points.
+
+## Unified platform revision
+
+Homepage now leads with “Every EV. Every journey. One PlugNear.” A six-part platform overview connects charging discovery, charger hosting, fleet planning, destination businesses, societies/workplaces and depot operations. All sections remain on the same public website; each offering links to its relevant driver, host or fleet section. Availability labels distinguish the early-access prototype, functioning local planner and planned operations. No live-service claims, backend changes or Claim360 changes were introduced. Website build and all 24 desktop/mobile browser tests pass; production deployment READY.
