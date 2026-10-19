@@ -4,10 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#2449eb" />
-    <title>PlugNear — Your next charge. Just around the corner.</title>
+    <title>
+      PlugNear — Local charging for electric 2W/3W riders and fleets
+    </title>
     <meta
       name="description"
-      content="Meet PlugNear, India’s neighbourhood EV charging community. Find a nearby charger or share your own. Explore the early-access platform."
+      content="PlugNear is building neighbourhood charging for electric two- and three-wheelers, local micro-hosts and commercial fleet pilots across India."
     />
     <link rel="canonical" href="https://www.plugnear.in/" />
     <meta
@@ -22,7 +24,7 @@
     <meta property="og:url" content="https://www.plugnear.in/" />
     <meta
       property="og:image"
-      content="https://www.plugnear.in/assets/neighbourhood-charging.webp"
+      content="https://www.plugnear.in/assets/microhost-scooter.webp"
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,6 +34,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/fleet-pilot/planner.css" />
     <script src="/script.js" defer></script>
   </head>
   <body>
@@ -90,8 +93,9 @@
       /></a>
       <nav aria-label="Main navigation" id="navigation">
         <a href="#how-it-works">How it works</a
-        ><a href="#for-drivers">For drivers</a
-        ><a href="#for-hosts">Become a host</a><a href="#questions">FAQs</a>
+        ><a href="#for-drivers">For riders</a
+        ><a href="#for-hosts">Become a host</a
+        ><a href="#for-fleets">For fleets</a><a href="#questions">FAQs</a>
       </nav>
       <a class="nav-cta" href="/app/"
         >Explore the app <svg><use href="#diagonal" /></svg></a
@@ -108,17 +112,17 @@
       <section class="hero section-wrap">
         <div class="hero-copy">
           <div class="eyebrow">
-            <span class="small-line"></span> GOOD NEIGHBOURS. GREAT CONNECTIONS.
+            <span class="small-line"></span> LOCAL CHARGING. FOR THE PEOPLE WHO
+            KEEP INDIA MOVING.
           </div>
           <h1>
-            Your next charge.<br />Just <span class="underline">around</span
-            ><br />the corner<span class="blue">.</span>
+            Your next charge.<br />On <span class="underline">your route.</span
+            ><br />Keep moving<span class="blue">.</span>
           </h1>
           <p class="hero-description">
-            A charger nearby. A neighbour happy to share.<br
-              class="desktop-break"
-            />
-            PlugNear brings EV charging closer to everyday life.
+            Building local charging for electric two- and three-wheelers, with
+            kirana stores, neighbourhood shops and parking operators as
+            micro-hosts.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="/app/?mode=find"
@@ -131,20 +135,20 @@
           <div class="hero-note">
             <span class="note-icon"
               ><svg><use href="#heart" /></svg></span
-            ><span>Made for India. Powered by people.</span>
+            ><span>Riders. Micro-hosts. Local fleet pilots.</span>
           </div>
         </div>
         <div class="hero-visual">
           <img
             class="hero-photo"
-            src="/assets/neighbourhood-charging.webp"
+            src="/assets/microhost-scooter.webp"
             width="1448"
             height="1086"
-            alt="An electric vehicle connected to a blue wall charger in a leafy residential driveway"
+            alt="Illustrative electric delivery scooter charging beside a neighbourhood kirana store"
             fetchpriority="high"
           />
           <div class="photo-label">
-            <span class="status-dot"></span> LESS DETOUR. MORE EVERYDAY.
+            <span class="status-dot"></span> SMALL STOPS. BIG WORKDAYS.
           </div>
           <div class="floating-card">
             <div class="floating-icon">
@@ -177,10 +181,8 @@
             </h2>
           </div>
           <p>
-            We’re building a simpler connection between<br
-              class="desktop-break"
-            />
-            people who need a charge and people who can share one.
+            Our first focus is useful local charging density along everyday
+            delivery and last-mile routes.
           </p>
         </div>
         <div class="steps">
@@ -190,8 +192,9 @@
             </div>
             <h3>Find your nearby.</h3>
             <p>
-              Explore chargers around your location. Look for the connector,
-              power and price that fit your EV.
+              Look for a compatible charging point near your route, with the
+              right parking access and opening hours. Micro-host discovery is
+              planned for the pilot.
             </p>
           </article>
           <article>
@@ -200,8 +203,9 @@
             </div>
             <h3>Make a connection.</h3>
             <p>
-              Choose a host’s available window and request a session. The host
-              reviews your request before confirming.
+              Pilot hosts will need permission to operate, electrical checks and
+              clear vehicle compatibility before their charging point is made
+              bookable.
             </p>
           </article>
           <article>
@@ -210,8 +214,9 @@
             </div>
             <h3>Get on with your day.</h3>
             <p>
-              Follow directions to your charging spot. Less time planning a
-              detour, more time for what’s ahead.
+              We’re designing around rider shifts and repeat charging needs.
+              Session booking, metering and settlement must be verified before
+              launch.
             </p>
           </article>
         </div>
@@ -248,28 +253,29 @@
           </div>
         </div>
         <div class="driver-copy">
-          <span class="eyebrow">FOR THE WAY YOU ACTUALLY DRIVE</span>
+          <span class="eyebrow">FOR DELIVERY RIDERS & LAST-MILE OPERATORS</span>
           <h2>
-            Range anxiety?<br />Let’s make it<br /><span class="blue"
-              >a little smaller.</span
+            More of your day.<br />Less time<br /><span class="blue"
+              >off your route.</span
             >
           </h2>
           <p>
-            Your next charging spot could be near home, work, or somewhere along
-            the way. We’re connecting those little possibilities.
+            A neighbourhood point near a regular stop could make charging fit
+            your shift. We’re starting with electric 2W/3W use cases, not
+            assuming every public charger works for every rider.
           </p>
           <ul class="benefits">
             <li>
-              <svg><use href="#check" /></svg> Search by distance, connector and
-              charging power
+              <svg><use href="#check" /></svg> Pilot priority: vehicle, OEM
+              charger and supply compatibility
             </li>
             <li>
-              <svg><use href="#check" /></svg> See the host’s rate before
-              requesting a session
+              <svg><use href="#check" /></svg> Pilot priority: shop hours,
+              parking and repeat rider needs
             </li>
             <li>
-              <svg><use href="#check" /></svg> Choose from the availability a
-              host publishes
+              <svg><use href="#check" /></svg> Pilot priority: verified energy
+              and clear session pricing
             </li>
           </ul>
           <a class="text-link" href="/app/?mode=find"
@@ -281,23 +287,22 @@
         <div class="host-inner section-wrap">
           <div class="host-copy">
             <span class="eyebrow"
-              >GOT A CHARGER? YOU’RE ALREADY HALFWAY THERE.</span
+              >KIRANA STORES. TEA SHOPS. PARKING OPERATORS.</span
             >
             <h2>
-              Your spare socket.<br />Someone’s<br /><span
-                >next adventure.</span
-              >
+              Your local stop.<br />A rider’s<br /><span>next connection.</span>
             </h2>
             <p>
-              A charger at your home, apartment or workplace can be more than
-              your own pit stop. Share your setup, set your availability, and
-              help a neighbour go further.
+              We’re planning a dense micro-host network around local businesses.
+              Suitable sites need operating permission, compatible equipment,
+              protected electrical supply and safe vehicle parking — not just an
+              available wall socket.
             </p>
             <a class="button dark" href="/app/?mode=host"
               >Become a PlugNear host <svg><use href="#diagonal" /></svg></a
             ><small
-              >Host and charger approval required. Earnings are not
-              guaranteed.</small
+              >Micro-host onboarding is planned, not live. Site/electrical
+              review required. Earnings are not guaranteed.</small
             >
           </div>
           <div class="host-poster" aria-hidden="true">
@@ -311,10 +316,58 @@
           </div>
         </div>
       </section>
+      <section class="fleet-section section-wrap" id="for-fleets">
+        <div>
+          <span class="eyebrow">FOR SMALL COMMERCIAL FLEETS</span>
+          <h2>
+            Plan for shifts.<br /><span class="blue">Build around routes.</span>
+          </h2>
+          <p>
+            We’re exploring route-based charging pilots with delivery and
+            last-mile operators. Start by sizing the energy and charging-window
+            assumptions for your own fleet.
+          </p>
+          <a class="button primary" href="/fleet-pilot/"
+            >Build a fleet pilot brief <svg><use href="#arrow" /></svg></a
+          ><small
+            >Planning tool available now. Fleet management services are not
+            live.</small
+          >
+        </div>
+        <div class="fleet-priorities">
+          <span class="eyebrow">PROPOSED PILOT WORKFLOWS</span>
+          <article>
+            <span>01</span>
+            <div>
+              <h3>Repeat routes & charging windows</h3>
+              <p>Scope where riders stop and when vehicles can charge.</p>
+            </div>
+          </article>
+          <article>
+            <span>02</span>
+            <div>
+              <h3>Verified sessions & cost visibility</h3>
+              <p>
+                Metered sessions, permissions and settlement need validation.
+              </p>
+            </div>
+          </article>
+          <article>
+            <span>03</span>
+            <div>
+              <h3>One operational view</h3>
+              <p>
+                Monthly billing and access policies are planned capabilities,
+                not available services.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
       <section class="trust section-wrap">
         <div>
           <span class="eyebrow">A BETTER NETWORK STARTS WITH TRUST</span>
-          <h2>Real people.<br />Thoughtful connections.</h2>
+          <h2>Local density.<br />Verified connections.</h2>
         </div>
         <div class="trust-points">
           <article>
@@ -322,8 +375,8 @@
             <div>
               <h3>A review before a listing.</h3>
               <p>
-                Hosts submit their details and charging setup for review before
-                a charger can be approved.
+                Pilot hosts must supply site, electrical and compatibility
+                evidence for review before a charger can be approved.
               </p>
             </div>
           </article>
@@ -361,9 +414,10 @@
           <details open>
             <summary>What exactly is PlugNear?<span>+</span></summary>
             <p>
-              PlugNear is an India-first peer-to-peer EV charging platform in
-              development. It connects EV drivers with people who want to share
-              a charger at their home, apartment or workplace.
+              PlugNear is building an India-first neighbourhood charging network
+              for electric two- and three-wheelers. The first proposed supply is
+              local micro-hosts; fleet pilots are the next audience. We are not
+              claiming an integrated national CPO network.
             </p>
           </details>
           <details>
@@ -378,21 +432,25 @@
             </p>
           </details>
           <details>
-            <summary>Can I list my home charger?<span>+</span></summary>
+            <summary>
+              Can a shop or parking operator become a micro-host?<span>+</span>
+            </summary>
             <p>
-              You can start a listing in the early-access app if you own the
-              charger or have permission to host. You’ll need to provide its
-              location, connector, power, rate and hosting details. Public
-              listings require review and approval.
+              Micro-host onboarding is being designed. Sites will need hosting
+              permission, suitable parking, reviewed electrical supply, approved
+              equipment and a vehicle compatibility declaration. The current
+              early-access listing form is a charger-registration prototype;
+              socket-based micro-host listings are not enabled yet.
             </p>
           </details>
           <details>
             <summary>Will a charger work with my EV?<span>+</span></summary>
             <p>
-              Check your vehicle’s connector and charging specifications against
-              the host’s listing. The app supports discovery filters for Type 2,
-              CCS2, Bharat AC and CHAdeMO. Compatibility and access should be
-              checked before any session.
+              Two- and three-wheelers have different OEM charger and supply
+              requirements; a Type 2 or CCS2 listing does not establish
+              compatibility. Never assume a generic socket or adapter is
+              suitable. The current app supports its listed connector types;
+              2W/3W compatibility-aware discovery is still planned.
             </p>
           </details>
           <details>
@@ -417,7 +475,7 @@
       <section class="closing section-wrap" id="early-access">
         <span class="eyebrow">THE FUTURE IS NEAR.</span>
         <h2>A little more connected.<br />A lot more <span>charged.</span></h2>
-        <p>Be part of a better way to power everyday journeys.</p>
+        <p>Help build local charging around the routes riders already use.</p>
         <div class="closing-actions">
           <a class="button lime" href="/app/?mode=find"
             >Find / rent a charger <svg><use href="#arrow" /></svg></a

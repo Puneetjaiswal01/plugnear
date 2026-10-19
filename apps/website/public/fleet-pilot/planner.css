@@ -1,0 +1,237 @@
+.planner {
+  padding-top: 45px;
+}
+.planner > h1 {
+  font-size: 52px;
+  letter-spacing: -2.6px;
+  margin: 22px 0;
+}
+.planner-intro {
+  max-width: 780px;
+}
+.planner-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 35px;
+  margin-top: 45px;
+}
+.planner form,
+.planner-results {
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: white;
+}
+.planner-grid h2 {
+  font-size: 25px;
+  letter-spacing: -1px;
+  margin-bottom: 24px;
+}
+.planner label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 550;
+  margin-bottom: 19px;
+}
+.planner input,
+.planner select {
+  font: inherit;
+  padding: 13px;
+  border: 1px solid #ccd3c5;
+  border-radius: 7px;
+  background: #fff;
+  color: var(--ink);
+  width: 100%;
+  min-height: 45px;
+}
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 18px;
+}
+.planner-note {
+  font-size: 11px;
+  margin-bottom: 20px;
+}
+.planner-results {
+  background: #eef1ff;
+  border-color: #dce2fe;
+}
+.planner-results .eyebrow {
+  color: var(--blue);
+  font-size: 8px;
+  margin-bottom: 15px;
+}
+#results > div {
+  padding: 20px 0;
+  border-bottom: 1px solid #d5dcfb;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#results span {
+  font-size: 11px;
+  color: #6671a2;
+}
+#results strong {
+  font-size: 35px;
+  letter-spacing: -1.5px;
+  color: var(--blue);
+}
+.planner-results > p {
+  font-size: 11px;
+  line-height: 1.9;
+  margin: 24px 0;
+}
+.planner-results small {
+  font-size: 10px;
+  display: block;
+  line-height: 1.8;
+  margin-top: 17px;
+  color: #7580ac;
+}
+#planner-error {
+  font-size: 12px;
+  color: #a12b23;
+  margin-top: 14px;
+}
+.planner button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+.fleet-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  padding-top: 90px;
+}
+.fleet-section .eyebrow {
+  margin-bottom: 22px;
+  font-size: 8px;
+}
+.fleet-section p {
+  font-size: 13px;
+  margin: 22px 0;
+  max-width: 430px;
+}
+.fleet-section small {
+  display: block;
+  margin-top: 14px;
+  font-size: 9px;
+  color: var(--muted);
+}
+.fleet-priorities {
+  background: #edf1ff;
+  border-radius: 12px;
+  padding: 30px;
+}
+.fleet-priorities article {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+.fleet-priorities article > span {
+  font-size: 12px;
+  color: var(--blue);
+  margin-top: 3px;
+}
+.fleet-priorities h3 {
+  font-size: 18px;
+}
+.fleet-priorities article p {
+  font-size: 12px;
+  margin: 8px 0;
+}
+.pilot-next {
+  padding: 70px 0;
+}
+.pilot-next h2 {
+  font-size: 33px;
+}
+.pilot-next > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 35px;
+  margin: 30px 0;
+}
+.pilot-next h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.pilot-next p {
+  font-size: 12px;
+}
+.pilot-next > p {
+  padding-top: 25px;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 800px) {
+  .planner > h1 {
+    font-size: 38px;
+    letter-spacing: -1.8px;
+  }
+  .planner-grid {
+    gap: 20px;
+  }
+  .planner form,
+  .planner-results {
+    padding: 24px;
+  }
+  .fleet-section {
+    gap: 35px;
+  }
+  .fleet-priorities {
+    padding: 24px;
+  }
+  .fleet-priorities h3 {
+    font-size: 15px;
+  }
+}
+@media (max-width: 580px) {
+  .planner {
+    padding-top: 25px;
+  }
+  .planner > h1 {
+    font-size: 34px;
+  }
+  .planner-grid {
+    grid-template-columns: 1fr;
+    margin-top: 30px;
+  }
+  .planner-intro {
+    font-size: 13px;
+  }
+  .input-grid {
+    gap: 0 12px;
+  }
+  .planner label {
+    font-size: 11px;
+  }
+  .planner-grid h2 {
+    font-size: 23px;
+  }
+  .pilot-next > div {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .pilot-next h2 {
+    font-size: 29px;
+  }
+  .fleet-section {
+    grid-template-columns: 1fr;
+    padding-top: 55px;
+    gap: 30px;
+  }
+  .fleet-section h2 {
+    font-size: 34px;
+  }
+  .fleet-section p {
+    font-size: 12px;
+  }
+  .fleet-priorities h3 {
+    font-size: 17px;
+  }
+}

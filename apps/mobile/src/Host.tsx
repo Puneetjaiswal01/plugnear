@@ -70,10 +70,11 @@ export function Host({ uid }: { uid: string }) {
   }
   return (
     <>
-      <Text style={s.text}>SHARE YOUR SOCKET</Text>
+      <Text style={s.text}>NEIGHBOURHOOD HOST PILOT</Text>
       <Text style={s.title}>{"Your charger.\nSomeone’s next stop."}</Text>
       <Text style={s.text}>
-        Make your parking space part of a more connected India.
+        We’re prioritising local businesses and parking operators for a future
+        electric 2W/3W micro-host pilot.
       </Text>
       <Card>
         <Text style={s.h2}>01 · Get verified</Text>
@@ -87,7 +88,7 @@ export function Host({ uid }: { uid: string }) {
             <Field
               label="Hosting evidence and contact details"
               multiline
-              placeholder="Describe your right to host, charger installation and how our team can verify it. Do not enter Aadhaar or bank details."
+              placeholder="Describe your site type, hosting permission, electrical inspection evidence, parking access and operating hours. Do not enter Aadhaar or bank details."
               value={evidence}
               onChangeText={setEvidence}
             />
@@ -114,6 +115,12 @@ export function Host({ uid }: { uid: string }) {
       </Card>
       <Card>
         <Text style={s.h2}>02 · List a charger</Text>
+        <Text style={s.text}>
+          This prototype accepts only the connector types shown below.
+          Socket-based micro-host listings and 2W/3W compatibility checks are
+          not enabled yet. A general wall socket is not an approved charging
+          point.
+        </Text>
         <Field label="Charger name" value={title} onChangeText={setTitle} />
         <Field label="Full address" value={address} onChangeText={setAddress} />
         <Text style={s.label}>Connector</Text>

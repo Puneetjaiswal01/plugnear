@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Fleet Pilot Planner — PlugNear</title>
+    <meta
+      name="description"
+      content="Explore the energy and charging-window assumptions for a small electric two- or three-wheeler fleet pilot. Planning tool, not a charging quote."
+    />
+    <link rel="canonical" href="https://www.plugnear.in/fleet-pilot/" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/fleet-pilot/planner.css" />
+    <script type="module" src="/fleet-pilot/planner.mjs"></script>
+  </head>
+  <body>
+    <header class="header">
+      <a class="logo" href="/" aria-label="PlugNear home"
+        ><img
+          src="/assets/brand/logo.png"
+          alt="PlugNear"
+          width="200"
+          height="83" /></a
+      ><a class="text-link" href="/#for-fleets">← Back to PlugNear</a>
+    </header>
+    <main class="section-wrap planner">
+      <span class="eyebrow">EXPLORATORY FLEET PILOTS · ELECTRIC 2W / 3W</span>
+      <h1>
+        Start with your routes.<br /><span class="blue"
+          >Make the assumptions clear.</span
+        >
+      </h1>
+      <p class="planner-intro">
+        Estimate daily energy and the parallel charging points implied by a
+        simple charging-window model. These are planning assumptions, not
+        measured vehicle specifications, site approval or a service quote.
+      </p>
+      <div class="planner-grid">
+        <form id="fleet-form">
+          <h2>Your pilot assumptions</h2>
+          <label
+            >Vehicle type<select id="vehicle-type">
+              <option value="2w">Electric two-wheelers</option>
+              <option value="3w">Electric three-wheelers</option>
+              <option value="custom">Other / custom assumptions</option>
+            </select></label
+          >
+          <div class="input-grid">
+            <label
+              >Number of vehicles<input
+                name="vehicles"
+                type="number"
+                min="1"
+                max="500"
+                step="1"
+                value="20"
+                required /></label
+            ><label
+              >Km per vehicle per day<input
+                name="kmPerDay"
+                type="number"
+                min="1"
+                max="300"
+                step="any"
+                value="40"
+                required /></label
+            ><label
+              >Energy use (Wh/km)<input
+                name="whPerKm"
+                type="number"
+                min="10"
+                max="500"
+                step="any"
+                value="35"
+                required /></label
+            ><label
+              >Charging power per vehicle (kW)<input
+                name="powerKw"
+                type="number"
+                min="0.1"
+                max="22"
+                step="any"
+                value="0.6"
+                required
+            /></label>
+          </div>
+          <label
+            >Daily usable window per point (hours)<input
+              name="hours"
+              type="number"
+              min="0.5"
+              max="24"
+              step="any"
+              value="6"
+              required
+          /></label>
+          <p class="planner-note">
+            Presets are illustrative and editable. Replace them with your
+            vehicle’s measured energy use and OEM charger rating. This model
+            assumes 85% charging efficiency.
+          </p>
+          <button class="button primary" type="submit">
+            Calculate pilot assumptions →
+          </button>
+          <p id="planner-error" role="alert"></p>
+        </form>
+        <section class="planner-results" aria-labelledby="results-heading">
+          <span class="eyebrow">PLANNING TOOL · NOT A QUOTE</span>
+          <h2 id="results-heading">An energy-first view.</h2>
+          <div id="results" aria-live="polite">
+            <div>
+              <span>Vehicle energy per day</span
+              ><strong id="vehicle-energy">—</strong>
+            </div>
+            <div>
+              <span>Input energy per day at 85% efficiency</span
+              ><strong id="input-energy">—</strong>
+            </div>
+            <div>
+              <span>Modelled parallel charging points</span
+              ><strong id="charging-points">—</strong>
+            </div>
+          </div>
+          <p id="planner-state" role="status">
+            Calculated from the assumptions shown.
+          </p>
+          <p>
+            This assumes every point operates for the full selected window. It
+            excludes arrival queues, charging taper, downtime, equipment
+            compatibility and site electrical-load limits.
+          </p>
+          <button id="download-brief" class="button secondary" type="button">
+            Download your pilot brief ↓</button
+          ><small
+            >Your inputs stay in this browser. Downloading does not submit an
+            enquiry or book charging.</small
+          >
+        </section>
+      </div>
+      <section class="pilot-next">
+        <h2>What a pilot needs to validate.</h2>
+        <div>
+          <article>
+            <h3>Route & shift fit</h3>
+            <p>
+              Actual stops, rider schedules, energy needs and fleet permissions.
+            </p>
+          </article>
+          <article>
+            <h3>Site readiness</h3>
+            <p>
+              Hosting permission, reviewed equipment, electrical protection and
+              safe parking.
+            </p>
+          </article>
+          <article>
+            <h3>Measured sessions</h3>
+            <p>Energy metering, availability, costs, settlement and support.</p>
+          </article>
+        </div>
+        <p>
+          Consolidated monthly billing, priority access, fleet dashboards and
+          CPO roaming integrations are planned workflows. They are not available
+          services. Host-management SaaS is a later direction, not a current
+          offering.
+        </p>
+      </section>
+    </main>
+    <footer class="section-wrap">
+      <div class="footer-bottom">
+        <a href="/">PlugNear · Local charging, built around riders.</a
+        ><span>Early access · Not an infrastructure design tool</span>
+      </div>
+    </footer>
+  </body>
+</html>
