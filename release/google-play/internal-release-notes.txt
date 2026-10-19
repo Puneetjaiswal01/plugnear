@@ -1,0 +1,5 @@
+PlugNear early-access testing build.
+Explore the Find a Charger and List a Charger journeys, email registration and profile experience.
+Google and phone sign-in are subject to provider setup.
+Live charging bookings and payments are not available.
+Please report issues through the support contact provided with your test invitation.
