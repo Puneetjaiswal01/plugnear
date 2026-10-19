@@ -19,6 +19,6 @@
 | EAS / stores                    | Profiles prepared; no project/signing access, build or submission                                           |
 | Live booking/payment end-to-end | Not performed; pending schema and payment setup                                                             |
 
-Native exports preceded final text and maps-plugin adjustments. Final type/config checks cover those changes; signed native builds and physical-device checks remain outstanding.
+Native exports and Expo config checks were repeated after the final source/config changes. Signed native builds and physical-device checks remain outstanding.
 
 The codebase, migration, tests and generated bundles can be reviewed locally. No deployment URL exists. See [release procedure](RELEASE.md), [security findings](SECURITY.md), and [next stages](ROADMAP.md).
