@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { androidAssetLinks } from "../../tools/twa/assetlinks.mjs";
 import { fileURLToPath } from "node:url";
 import { generateImageAsync } from "@expo/image-utils";
 import { cp, mkdir, rm, readdir, writeFile, readFile } from "node:fs/promises";
@@ -7,6 +8,21 @@ const root = new URL("./", import.meta.url),
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 await cp(new URL("./public/", root), dist, { recursive: true });
+const twaConfig = JSON.parse(
+  await readFile(new URL("../../android/twa/twa-manifest.json", root), "utf8"),
+);
+await mkdir(new URL("./.well-known/", dist), { recursive: true });
+await writeFile(
+  new URL("./.well-known/assetlinks.json", dist),
+  JSON.stringify(
+    androidAssetLinks(
+      twaConfig,
+      process.env.PLUGNEAR_ANDROID_SHA256_FINGERPRINTS || "",
+    ),
+    null,
+    2,
+  ),
+);
 const app = new URL("../mobile/dist-web/", root);
 await mkdir(new URL("./app/", dist), { recursive: true });
 await cp(new URL("index.html", app), new URL("./app/index.html", dist));
@@ -41,6 +57,8 @@ await writeFile(
   new URL("./app/manifest.webmanifest", dist),
   JSON.stringify({
     id: "/app/",
+    lang: "en-IN",
+    prefer_related_applications: false,
     name: "PlugNear",
     short_name: "PlugNear",
     description:
@@ -116,6 +134,13 @@ await writeFile(
         { source: "/app/auth/callback", destination: "/app/index.html" },
       ],
       headers: [
+        {
+          source: "/.well-known/assetlinks.json",
+          headers: [
+            { key: "Content-Type", value: "application/json" },
+            { key: "Cache-Control", value: "public, max-age=300" },
+          ],
+        },
         {
           source: "/app/sw.js",
           headers: [

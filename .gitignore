@@ -11,3 +11,14 @@ dist/
 **/dist-*/
 test-results/
 playwright-report/
+
+# Android SDK/build outputs and signing material must stay local.
+**/.gradle/
+android/twa/local.properties
+android/twa/**/build/
+*.keystore
+*.jks
+*.aab
+*.apk
+*.apks
+*.idsig

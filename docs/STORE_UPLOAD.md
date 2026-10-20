@@ -1,3 +1,5 @@
+> **Web-first Android option:** Bubblewrap TWA source is now prepared; see [TWA_ANDROID.md](TWA_ANDROID.md). It wraps the deployed PWA and uses the same intended Android package. No AAB exists yet; SDK, signing and Digital Asset Links remain required. The Expo instructions below are the alternative native path.
+
 # Upload PlugNear to Google Play and the App Store
 
 The code is not yet store-ready. EAS build attempts are blocked by missing Expo authentication; no APK/AAB/IPA exists. Complete the functionality, account deletion, password recovery, privacy/support pages, live authorization and payment tests listed in MOBILE_BUILDS.md before submitting a production release. Uploading a binary does not make an app publicly available: testing, metadata and store review are separate steps.
