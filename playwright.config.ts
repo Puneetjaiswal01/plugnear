@@ -7,7 +7,7 @@ export default defineConfig({
   use: { headless: true, screenshot: "only-on-failure" },
   webServer: [
     {
-      command: "python -m http.server 4175 --directory apps/website/dist",
+      command: "python tests/serve-website.py",
       url: "http://localhost:4175",
       reuseExistingServer: true,
     },

@@ -41,3 +41,7 @@ Only public shell/code/style/icon assets are precached. API/auth calls, QR check
 ## Deferred
 
 Fleet/billing features, enhanced future-slot scheduling, physical QR standee/sticker generation and crowd-sourced broken-socket reporting are outside this sprint. Existing availability guards remain to prevent unsafe/double reservations; advanced scheduling stays out of the main driver flow. Account/support/privacy controls remain because they are needed for a usable pilot.
+
+## Deployment-specific offline fix
+
+Production verification found that Vercel clean-URL redirects make the precached offline response carry a redirected URL. The service worker now reconstructs a fresh Response for offline navigation. The Playwright static server emulates clean-HTML redirects so this behaviour is exercised locally. Public privacy disclosure includes OpenStreetMap tile-request metadata.

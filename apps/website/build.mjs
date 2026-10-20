@@ -88,14 +88,14 @@ const staticPaths = (await publicAssets(dist)).filter(
 const version = createHash("sha256");
 for (const path of staticPaths)
   version.update(await readFile(new URL(path, dist)));
-const cacheName = "plugnear-shell-" + version.digest("hex").slice(0, 16);
+const cacheName = "plugnear-shell-v2-" + version.digest("hex").slice(0, 16);
 await writeFile(
   new URL("./app/sw.js", dist),
   `const CACHE=${JSON.stringify(cacheName)};const ASSETS=${JSON.stringify(staticPaths.map((p) => "/" + p))};
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS))));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('plugnear-shell-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{const request=event.request;const url=new URL(request.url);if(request.method!=='GET'||url.origin!==self.location.origin)return;
-if(request.mode==='navigate'){event.respondWith(fetch(request).catch(()=>caches.match('/app/offline.html')));return;}
+if(request.mode==='navigate'){event.respondWith(fetch(request).catch(async()=>{const cached=await caches.match('/app/offline.html');return cached?new Response(cached.body,{status:200,headers:cached.headers}):new Response('Offline. Reconnect to use PlugNear.',{status:503,headers:{'Content-Type':'text/plain'}});}));return;}
 if(url.search||!ASSETS.includes(url.pathname))return;event.respondWith(caches.open(CACHE).then(cache=>cache.match(url.pathname).then(hit=>hit||fetch(request))));});`,
 );
 await writeFile(
