@@ -12,9 +12,9 @@
 | Marketplace web export          | Pass; Metro bundle generated                                                                                   |
 | Android and iOS exports         | Pass; Hermes bundles generated, no AAB/IPA                                                                     |
 | Live migration                  | Applied with explicit owner approval; live history, RLS, grants, constraints and rollback smoke verified                   |
-| Dependency audit                | 35 high, 7 moderate unresolved Expo toolchain findings                                                         |
+| Dependency audit                | Fresh audit: 16 high, 7 moderate unresolved findings (23 total), mainly Expo/RN toolchain                                                         |
 | GitHub repository               | Source pushed to public Puneetjaiswal01/plugnear after explicit owner approval; remote main verified                   |
-| Vercel project/deployment       | Public website READY at https://www.plugnear.in; HTTPS and deployed browser checks pass; admin remains preview |
+| Vercel project/deployment       | Public website READY at https://www.plugnear.in; Public website and login-gated admin.plugnear.in READY; live browser checks pass |
 | Payments / UPI                  | Not provisioned or implemented; checkout unavailable                                                           |
 | EAS / stores                    | Android/iOS native exports + prebuild passed; EAS builds attempted, blocked by Expo authentication; no APK/AAB/IPA                                              |
 | Live booking/payment end-to-end | Not performed; pending schema and payment setup                                                                |
@@ -32,3 +32,5 @@ Registration update: email/password plus provider-aware Google/Apple OAuth (PKCE
 Marketplace migration applied as `20261020075219_marketplace_expansion`. RLS is enabled on all seven public tables. Anonymous reservation RPC execution, direct authenticated booking INSERT and client access-table SELECT are denied. A live rollback-only transaction passed reservation, retry idempotency, overlapping-request rejection and member admin denial; temporary fixtures were rolled back. This is SQL-level verification, not browser-to-Auth-to-payment end-to-end testing.
 
 Security advisor: leaked-password protection remains disabled; the private access table has no policies intentionally and no client table grants. Performance advisor: two unindexed review/audit foreign keys and multiple own/admin SELECT policies remain, plus expected unused indexes before traffic. Password recovery and public privacy/terms/support/deletion-request pages are implemented. Deletion requests prepare an email for manual ownership review and processing; no automated deletion API or guaranteed completion SLA is claimed. Payment-provider approval, Google/Apple/SMS setup, verified first admin, Expo authentication, device signing and physical-device tests remain required. The owner has no incorporated company; individual/sole-proprietor merchant eligibility must be checked with the marketplace payment provider.
+
+GitHub Actions CI passed on 20 October 2026 for `973849c41a1debee98b0bc5cc63bdfdd9031b8a3` (run 39390477645). Web and admin production deployments are READY. 38 browser checks and 32 unit/database checks passed. Current merchant onboarding brief is in release/merchant/INDIVIDUAL_ONBOARDING.md; no merchant account/KYC submission has been made.

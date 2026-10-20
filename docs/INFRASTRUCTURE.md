@@ -23,3 +23,7 @@ Team ID: `team_1u7aw5W8QOE1jWcv6odxACAV`. Node 24. Both projects currently accep
 The user applied the required records at Hostinger. Vercel confirmed `misconfigured: false` for `plugnear.in`, `www.plugnear.in` and `admin.plugnear.in`. The public site now serves over verified HTTPS, and the apex redirects to www. No DNS writes were performed by the assistant. Admin still requires a production release.
 
 See [public website release](WEBSITE_RELEASE.md) for the current deployment, smoke checks and remaining product limits. Earlier artifact deployment IDs above are retained as history; they are superseded for the public web project.
+
+## Updated production state · 20 October 2026
+
+Public web production: `dpl_AFgfoBmpdrJ7Wi2P39Accr8AjuQ8` READY. Separate admin production: `dpl_HqPreUJi1VeziQb8YXh6auWLiUz7` READY at https://admin.plugnear.in. Current source is on public GitHub main (owner-approved visibility). The owner-approved marketplace migration is deployed to the dedicated Supabase project. No Claim360 resource changed. Third-party identity/SMS, merchant activation, first verified admin, store signing and full live transaction testing remain separate launch blockers. Earlier preview-only and pending-migration notes above are historical.

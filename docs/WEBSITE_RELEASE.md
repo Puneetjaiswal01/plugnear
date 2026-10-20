@@ -3,8 +3,8 @@
 - **URL:** https://www.plugnear.in/
 - **Project:** plugnear-web (`prj_meecuEpYoXLlnlDD7GOIXaXAu8xe`)
 - **Team:** existing approved team `team_1u7aw5W8QOE1jWcv6odxACAV`; no Claim360 project was changed.
-- **Deployment:** `dpl_DrFMnoDm9ioyQeNENniQb3Yk8LiN`, production target, **READY**.
-- **Source commit:** `ec617c64d6fd2a6bcbf8445355a1e9ba7d4541e4`.
+- **Deployment:** `dpl_AFgfoBmpdrJ7Wi2P39Accr8AjuQ8`, production target, **READY**.
+- **Source commit:** `973849c41a1debee98b0bc5cc63bdfdd9031b8a3`.
 - **Build:** `npm run build:website` exports the Expo web app and builds the static landing site. Compiled files were uploaded by content hash to Vercel; no credentials or environment files were uploaded.
 
 ## Included
@@ -62,3 +62,13 @@ Deployed registration controls were checked at 320, 390 and 1440px: HTTP 200, em
 ## Business contacts · 20 October 2026
 
 Added business enquiry mailto link `puneetjaiswal@zohomail.in` and contacts Puneet Jaiswal (`+91 96502 38165`) and Shani Kumar (`+91 82781 36027`) with tel links. The footer links to `/#contact`. Owner expressly supplied these details for public display. Eight local website browser tests passed after installing the missing Chromium executable. Production deployment READY; live checks at 320, 390 and 1440px verified HTTP 200, correct mailto/tel targets, contact navigation, no horizontal overflow and no JavaScript errors. GitHub main was pushed and verified separately; a successful push is not a Codex cloud-environment setup or automatic Vercel Git deployment integration.
+
+## Recovery, support and live backend rollout · 20 October 2026
+
+Web production `dpl_AFgfoBmpdrJ7Wi2P39Accr8AjuQ8` READY. Admin production `dpl_HqPreUJi1VeziQb8YXh6auWLiUz7` READY at https://admin.plugnear.in, showing the login gate; no initial admin assignment was made. Public privacy, terms, support and email-based account-deletion initiation pages are deployed. Password-reset requests and recovery-session password replacement UI are implemented. SMTP delivery, real recovery links and native device flows still need verification; deletion requests require manual verification/processing and are not a deployed automatic deletion API.
+
+38 browser tests, 32 unit/database/input tests, TypeScript, web/admin builds and latest native exports passed. GitHub CI on source `973849c41a1debee98b0bc5cc63bdfdd9031b8a3` passed: https://github.com/Puneetjaiswal01/plugnear/actions/runs/39390477645 . CI uses invalid public fixture keys and blocks unmocked backend network requests.
+
+The owner-approved marketplace schema migration was applied and live RLS/grants/overlap constraints verified, including a rolled-back SQL reservation/overlap/admin-denial smoke test. Paid booking/payment end-to-end launch remains incomplete. Google/Apple/SMS provider setup, first-admin verification, merchant approval, signed builds and physical-device testing remain pending.
+
+Live checks at 390 and 1440px confirmed all five public pages returned 200 without overflow, recovery/deletion controls were visible, and the admin login gate exposed no approval controls to anonymous users. No JavaScript page errors were observed. These checks did not send email or mutate accounts.
