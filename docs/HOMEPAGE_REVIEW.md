@@ -16,3 +16,11 @@
 Stored waitlist with delivery/abuse/retention controls; verified vehicle-model catalogue and compatibility checker; provisioned domain email and WhatsApp Business; real photos, approved inventory and genuine feedback; Hindi translation; consent-reviewed funnel analytics; standalone About/company details beyond confirmed team contacts; genuine city/charger pages and eligible business listings; native stores, payment gateway, independent metering and legal review. No invented address, incorporated company, guarantee, listing or testimonial was added.
 
 Existing PWA remains available. Search Console verification/indexing and real host/device/payment launch gates remain as documented in LAUNCH_HANDOFF.md. FAQ schema is not treated as a ranking shortcut; Google restricts FAQ rich-result eligibility and no rich result is promised.
+
+## Actual release results
+
+Production deployment `dpl_CMPdDEq3eRVswnCjJmuy8xJGiFng` is READY, source `9c5b456`. www and app aliases are assigned. Live homepage browser checks passed at 390px and 1440px: HTTP 200, Delhi NCR hero, visible working announcement anchor, enquiry draft generation, no horizontal overflow or JavaScript page errors.
+
+Twelve targeted desktop/mobile homepage browser tests passed, covering assets, app reachability, navigation, privacy, public canonical URLs, hash targets, required enquiry consent, correctly encoded city/role/vehicle email draft and no form-data submission. Lighthouse 13.5.0 mobile lab run on the local static build scored Performance 77, Best Practices 96 and SEO 100. After fixing its remaining contrast finding, an accessibility-only rerun scored 100 and passed the contrast audit. These are separate local lab runs, not production field Core Web Vitals or proof of complete accessibility; performance remains a follow-up opportunity. Browser and Lighthouse artifacts are in the execution workspace under `/tmp/plugnear-home-*` and `/tmp/plugnear-lighthouse-*`.
+
+Source-release CI: https://github.com/Puneetjaiswal01/plugnear/actions/runs/39449432098 (check the actual run result; not assumed from local tests). No Supabase schema, authentication provider or Claim360 changes were made for this homepage release.
