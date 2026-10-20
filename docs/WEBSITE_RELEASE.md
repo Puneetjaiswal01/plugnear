@@ -3,8 +3,8 @@
 - **URL:** https://www.plugnear.in/
 - **Project:** plugnear-web (`prj_meecuEpYoXLlnlDD7GOIXaXAu8xe`)
 - **Team:** existing approved team `team_1u7aw5W8QOE1jWcv6odxACAV`; no Claim360 project was changed.
-- **Deployment:** `dpl_5EsZfPf9ZKefTifLh9rEFi5Fxdxt`, production target, **READY**.
-- **Source commit:** `b2a1b16782c70f1bf71c7c4298c3ad546338cbde`.
+- **Deployment:** `dpl_DrFMnoDm9ioyQeNENniQb3Yk8LiN`, production target, **READY**.
+- **Source commit:** `ec617c64d6fd2a6bcbf8445355a1e9ba7d4541e4`.
 - **Build:** `npm run build:website` exports the Expo web app and builds the static landing site. Compiled files were uploaded by content hash to Vercel; no credentials or environment files were uploaded.
 
 ## Included
@@ -58,3 +58,7 @@ Checked the deployed homepage at 320, 375, 390, 430, 768, 820, 1024, 1280, 1440 
 Updated `/app/` to the website-aligned mobile brand and provider-aware Google/email/phone registration UI. Production deployment READY. Live public Auth settings confirm only email is enabled; Google, Apple and phone are disabled pending setup. No provider secrets or environment files were uploaded. Local validation: 32 tests and 32 browser tests; native Android/iOS bundle exports and isolated prebuild passed. External Google/SMS authentication and real registrations were not exercised. See AUTHENTICATION_SETUP.md and STORE_UPLOAD.md.
 
 Deployed registration controls were checked at 320, 390 and 1440px: HTTP 200, email signup form reachable, Google/phone correctly disabled with setup messages, no horizontal overflow or JavaScript errors. No live accounts or SMS requests were created.
+
+## Business contacts · 20 October 2026
+
+Added business enquiry mailto link `puneetjaiswal@zohomail.in` and contacts Puneet Jaiswal (`+91 96502 38165`) and Shani Kumar (`+91 82781 36027`) with tel links. The footer links to `/#contact`. Owner expressly supplied these details for public display. Eight local website browser tests passed after installing the missing Chromium executable. Production deployment READY; live checks at 320, 390 and 1440px verified HTTP 200, correct mailto/tel targets, contact navigation, no horizontal overflow and no JavaScript errors. GitHub main was pushed and verified separately; a successful push is not a Codex cloud-environment setup or automatic Vercel Git deployment integration.

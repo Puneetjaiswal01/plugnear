@@ -1,9 +1,9 @@
 # PlugNear GitHub connection · 20 October 2026
 
-Local project: `/workspace/plugnear`, branch `main`. Only PlugNear is in scope.
+Repository: https://github.com/Puneetjaiswal01/plugnear
 
-Authenticated GitHub identity was verified as `Puneetjaiswal01` using both the connected app and CLI. Search and direct repository lookup found no accessible `Puneetjaiswal01/plugnear`. Dedicated private repository creation was attempted through `gh repo create`; GitHub returned `Resource not accessible by integration (createRepository)`. No remote repository was created and no source was pushed. There is no origin remote configured.
+The owner created the empty public repository after integration-based creation failed. The user explicitly authorised publishing the source publicly. GitHub denied the integration's attempted visibility change; the repository remains public by owner instruction. A credential-pattern scan across local commit history found no matches, and no tracked non-example environment/signing files were found. These bounded checks do not replace an independent security audit.
 
-Next required owner action: create an empty private repository named `plugnear` under `Puneetjaiswal01` at https://github.com/new, without initial README, license or gitignore. Grant the connected GitHub integration access to that repository. Then re-inspect the remote, scan tracked files for credentials and push `main` without force. Never use or modify a Claim360 repository.
+The checkout `/workspace/plugnear` now has `origin` pointing only to that repository. `main` was pushed successfully and the remote commit verified as `ec617c64d6fd2a6bcbf8445355a1e9ba7d4541e4` for the contact release. Documentation updates follow on main. No Claim360 repository was changed.
 
-A GitHub repository connection is not a Codex cloud-environment connection. Once source is pushed, select the dedicated repository in Codex and configure its environment; this chat cannot claim a Codex UI project has been created merely from a local checkout or git remote.
+GitHub Actions validation started after push; verify its run before relying on remote CI results. The source connection does not establish a Codex cloud environment or a Vercel Git integration. This local Codex checkout is open and linked to GitHub; any additional Codex UI environment configuration must be verified separately.

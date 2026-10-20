@@ -13,7 +13,7 @@
 | Android and iOS exports         | Pass; Hermes bundles generated, no AAB/IPA                                                                     |
 | Live migration                  | Not applied; two MCP write attempts returned expired request state; remote history rechecked                   |
 | Dependency audit                | 35 high, 7 moderate unresolved Expo toolchain findings                                                         |
-| GitHub repository               | Local checkout exists; remote create denied by integration permission, subsequent lookup 404                   |
+| GitHub repository               | Source pushed to public Puneetjaiswal01/plugnear after explicit owner approval; remote main verified                   |
 | Vercel project/deployment       | Public website READY at https://www.plugnear.in; HTTPS and deployed browser checks pass; admin remains preview |
 | Payments / UPI                  | Not provisioned or implemented; checkout unavailable                                                           |
 | EAS / stores                    | Android/iOS native exports + prebuild passed; EAS builds attempted, blocked by Expo authentication; no APK/AAB/IPA                                              |
