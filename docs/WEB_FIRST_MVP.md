@@ -45,3 +45,9 @@ Fleet/billing features, enhanced future-slot scheduling, physical QR standee/sti
 ## Deployment-specific offline fix
 
 Production verification found that Vercel clean-URL redirects make the precached offline response carry a redirected URL. The service worker now reconstructs a fresh Response for offline navigation. The Playwright static server emulates clean-HTML redirects so this behaviour is exercised locally. Public privacy disclosure includes OpenStreetMap tile-request metadata.
+
+## Actual deployment results
+
+Production deployment `dpl_3Qi5qjg1rwC9xhSbkBVqS7UZeje4` is READY, source `32ef83f2359c797c53b32235b62a94a5285b3cf4`. The existing fallback https://www.plugnear.in/app/ is verified live. app.plugnear.in is assigned but its DNS remains misconfigured pending the owner CNAME change; assignment/READY is not proof that the hostname works.
+
+Live Chromium checks at 390 and 1440px passed HTTP 200, manifest/icons, active v2 worker, offline navigation, no horizontal overflow or JavaScript page errors, no API/map-tile caches, and phone OTP disabled as configured. Initial production testing found the clean-URL offline response issue; it was fixed and the real deployment retested successfully. Fourteen targeted browser tests passed against the redirect-emulating local server in addition to the previous complete 44-test pass. CI passed for the MVP source and the follow-up fix: https://github.com/Puneetjaiswal01/plugnear/actions/runs/39403007980 .

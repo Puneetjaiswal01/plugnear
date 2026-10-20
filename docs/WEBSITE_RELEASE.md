@@ -3,8 +3,8 @@
 - **URL:** https://www.plugnear.in/
 - **Project:** plugnear-web (`prj_meecuEpYoXLlnlDD7GOIXaXAu8xe`)
 - **Team:** existing approved team `team_1u7aw5W8QOE1jWcv6odxACAV`; no Claim360 project was changed.
-- **Deployment:** `dpl_AFgfoBmpdrJ7Wi2P39Accr8AjuQ8`, production target, **READY**.
-- **Source commit:** `973849c41a1debee98b0bc5cc63bdfdd9031b8a3`.
+- **Deployment:** `dpl_3Qi5qjg1rwC9xhSbkBVqS7UZeje4`, production target, **READY**.
+- **Source commit:** `32ef83f2359c797c53b32235b62a94a5285b3cf4`.
 - **Build:** `npm run build:website` exports the Expo web app and builds the static landing site. Compiled files were uploaded by content hash to Vercel; no credentials or environment files were uploaded.
 
 ## Included
@@ -65,10 +65,16 @@ Added business enquiry mailto link `puneetjaiswal@zohomail.in` and contacts Pune
 
 ## Recovery, support and live backend rollout · 20 October 2026
 
-Web production `dpl_AFgfoBmpdrJ7Wi2P39Accr8AjuQ8` READY. Admin production `dpl_HqPreUJi1VeziQb8YXh6auWLiUz7` READY at https://admin.plugnear.in, showing the login gate; no initial admin assignment was made. Public privacy, terms, support and email-based account-deletion initiation pages are deployed. Password-reset requests and recovery-session password replacement UI are implemented. SMTP delivery, real recovery links and native device flows still need verification; deletion requests require manual verification/processing and are not a deployed automatic deletion API.
+Web production `dpl_3Qi5qjg1rwC9xhSbkBVqS7UZeje4` READY. Admin production `dpl_HqPreUJi1VeziQb8YXh6auWLiUz7` READY at https://admin.plugnear.in, showing the login gate; no initial admin assignment was made. Public privacy, terms, support and email-based account-deletion initiation pages are deployed. Password-reset requests and recovery-session password replacement UI are implemented. SMTP delivery, real recovery links and native device flows still need verification; deletion requests require manual verification/processing and are not a deployed automatic deletion API.
 
 38 browser tests, 32 unit/database/input tests, TypeScript, web/admin builds and latest native exports passed. GitHub CI on source `973849c41a1debee98b0bc5cc63bdfdd9031b8a3` passed: https://github.com/Puneetjaiswal01/plugnear/actions/runs/39390477645 . CI uses invalid public fixture keys and blocks unmocked backend network requests.
 
 The owner-approved marketplace schema migration was applied and live RLS/grants/overlap constraints verified, including a rolled-back SQL reservation/overlap/admin-denial smoke test. Paid booking/payment end-to-end launch remains incomplete. Google/Apple/SMS provider setup, first-admin verification, merchant approval, signed builds and physical-device testing remain pending.
 
 Live checks at 390 and 1440px confirmed all five public pages returned 200 without overflow, recovery/deletion controls were visible, and the admin login gate exposed no approval controls to anonymous users. No JavaScript page errors were observed. These checks did not send email or mutate accounts.
+
+## Web-first PWA MVP · 20 October 2026
+
+The latest production deployment is `dpl_3Qi5qjg1rwC9xhSbkBVqS7UZeje4`, READY. Source: `32ef83f2359c797c53b32235b62a94a5285b3cf4`. PWA at https://www.plugnear.in/app/ verified on mobile/desktop, including service worker and offline fallback. app.plugnear.in is attached but DNS remains pending. 41 unit/database/input tests and the full 44 browser tests passed; the clean-URL offline fix also passed 14 targeted tests with production-like redirects. Latest native exports passed; no signed store build exists.
+
+PostGIS nearby search, indexed geography, realtime publication/revision updates, verified-host-only editing and guarded direct-UPI request/receipt/session lifecycle are applied to the dedicated backend. Live SQL smoke was rolled back; no real money was sent. No SMS provider is configured, phone auth is disabled, and real host/charger inventory is zero. See WEB_FIRST_MVP.md for manual-payment semantics, deployment-specific offline fix, deferred features and exact launch gates. Earlier gateway/pending-state notes above are historical; this release deliberately uses direct-to-host manual UPI rather than a verified payment gateway.

@@ -27,3 +27,7 @@ See [public website release](WEBSITE_RELEASE.md) for the current deployment, smo
 ## Updated production state · 20 October 2026
 
 Public web production: `dpl_AFgfoBmpdrJ7Wi2P39Accr8AjuQ8` READY. Separate admin production: `dpl_HqPreUJi1VeziQb8YXh6auWLiUz7` READY at https://admin.plugnear.in. Current source is on public GitHub main (owner-approved visibility). The owner-approved marketplace migration is deployed to the dedicated Supabase project. No Claim360 resource changed. Third-party identity/SMS, merchant activation, first verified admin, store signing and full live transaction testing remain separate launch blockers. Earlier preview-only and pending-migration notes above are historical.
+
+## PWA hostname and backend · 20 October 2026
+
+app.plugnear.in is attached to the dedicated PlugNear web project. Required Hostinger CNAME: `app` → `f1c618b5cccdf237.vercel-dns-017.com`. Current Vercel DNS inspection reports no CNAME/A record and `misconfigured: true`; hostname reachability remains unverified. Production `dpl_3Qi5qjg1rwC9xhSbkBVqS7UZeje4` is READY and the www `/app/` fallback passed live PWA/offline checks. PostGIS 3.3.7 and the MVP/checkout-hardening migrations are applied only to PlugNear. No Claim360 resource was changed.

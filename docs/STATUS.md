@@ -38,3 +38,5 @@ GitHub Actions CI passed on 20 October 2026 for `973849c41a1debee98b0bc5cc63bdfd
 ## Web-first pilot scope
 
 The new PostGIS/Realtime/manual-UPI migrations are applied. PWA installation/offline shell and selectable charger map are implemented; the latest build passed 41 unit/database tests and 44 browser tests. These use fixtures/rollback transactions, not real transfers. User confirms there is no SMS provider; phone OTP remains disabled. app.plugnear.in is attached but Hostinger DNS is missing. Live verified-host/charger inventory remains zero. See WEB_FIRST_MVP.md for exact delivery, manual payment semantics and remaining launch gates. Historical statements above about payment integration refer to gateways; this pilot deliberately uses direct-to-host UPI with manual receipt confirmation, not independently verified online payment processing.
+
+PWA fix deployment `dpl_3Qi5qjg1rwC9xhSbkBVqS7UZeje4` READY; live mobile/desktop manifest, offline fallback and non-caching of backend responses verified. CI fix run 39403007980 passed. The custom app hostname still needs DNS; phone OTP and pilot-host setup remain blocked by missing owner/provider setup.
