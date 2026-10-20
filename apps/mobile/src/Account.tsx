@@ -1,3 +1,4 @@
+import { SupportLinks } from "./SupportLinks";
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
 import { db } from "./client";
@@ -102,6 +103,7 @@ export function Account({ uid }: { uid: string }) {
         </Text>
       </Card>
       {!!message && <Text style={s.text}>{message}</Text>}
+      <SupportLinks />
     </>
   );
 }

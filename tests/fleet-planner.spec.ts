@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 test("fleet journey is available with bounded editable assumptions", async ({
   page,
 }) => {

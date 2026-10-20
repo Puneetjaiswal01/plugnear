@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 test("admin dashboard is gated and responsive", async ({ page }) => {
   await page.goto("http://localhost:4173");
   await expect(

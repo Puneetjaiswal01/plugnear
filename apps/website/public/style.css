@@ -2032,3 +2032,6 @@ dialog p {
 .contact-people a { display: inline-flex; align-items: center; min-height: 44px; color: var(--blue); font-size: 17px; font-weight: 600; }
 .contact a:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
 @media(max-width: 700px) { .contact { grid-template-columns: 1fr; gap: 30px; padding-top: 45px; padding-bottom: 55px; } }
+/* Legal and support links wrap on narrow screens. */
+.footer-bottom > div { flex-wrap: wrap; }
+@media (max-width:580px) { .footer-bottom > div { margin-left: 0; width: 100%; line-height: 2; gap: 12px 18px; } }

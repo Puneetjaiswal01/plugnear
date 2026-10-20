@@ -13,16 +13,21 @@ const exchanges = new Map<string, Promise<void>>();
 export async function completeNativeAuth(url: string): Promise<void> {
   const code = nativeCallbackCode(url);
   if (!code) return;
-  let exchange = exchanges.get(code);
+  const flowId = new URL(url).searchParams.get("sb_flow_id");
+  const exchangeKey = `${flowId || ""}:${code}`;
+  let exchange = exchanges.get(exchangeKey);
   if (!exchange) {
     exchange = (async () => {
-      const { error } = await db!.auth.exchangeCodeForSession(code);
+      const { error } = await db!.auth.exchangeCodeForSession(
+        code,
+        flowId ? { flowId } : undefined,
+      );
       if (error)
         throw new Error(
           "Sign-in link expired or could not be verified. Please try signing in again.",
         );
     })();
-    exchanges.set(code, exchange);
+    exchanges.set(exchangeKey, exchange);
     if (exchanges.size > 10) exchanges.delete(exchanges.keys().next().value!);
   }
   await exchange;

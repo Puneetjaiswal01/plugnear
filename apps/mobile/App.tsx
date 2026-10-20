@@ -19,6 +19,7 @@ import { Host } from "./src/Host";
 import { Bookings } from "./src/Bookings";
 import { Account } from "./src/Account";
 import { Auth } from "./src/Auth";
+import { PasswordRecovery } from "./src/PasswordRecovery";
 import { completeNativeAuth } from "./src/oauth";
 function entryTab(): "Find a charger" | "List a charger" {
   return Platform.OS === "web" &&
@@ -37,7 +38,8 @@ export default function App() {
   const [session, setSession] = useState<Session | null>(null),
     [ready, setReady] = useState(false),
     [tab, setTab] = useState<(typeof tabs)[number]>(entryTab),
-    [authError, setAuthError] = useState("");
+    [authError, setAuthError] = useState(""),
+    [recovering, setRecovering] = useState(false);
   useEffect(() => {
     if (!db) {
       setReady(true);
@@ -51,7 +53,9 @@ export default function App() {
     });
     const {
       data: { subscription },
-    } = client.auth.onAuthStateChange((_event, value) => {
+    } = client.auth.onAuthStateChange((event, value) => {
+      if (event === "PASSWORD_RECOVERY") setRecovering(true);
+      if (event === "SIGNED_OUT") setRecovering(false);
       setSession(value);
       setTab(entryTab());
     });
@@ -129,6 +133,8 @@ export default function App() {
             </Card>
           ) : !session ? (
             <Auth />
+          ) : recovering ? (
+            <PasswordRecovery onDone={() => setRecovering(false)} />
           ) : tab === "Find a charger" ? (
             <Discover />
           ) : tab === "List a charger" ? (
@@ -140,7 +146,7 @@ export default function App() {
           )}{" "}
           {!!authError && <Text style={s.error}>{authError}</Text>}
         </ScrollView>
-        {session && (
+        {session && !recovering && (
           <View
             style={{
               flexDirection: "row",

@@ -17,7 +17,7 @@ Use Node 24 and `npm ci`. Copy each app's `.env.example` to `.env.local`, then s
 - `npm run export:web` — marketplace web bundle.
 - `npx playwright install chromium && npm run test:e2e` — desktop/mobile access and responsiveness checks. These are browser smoke tests; they are not a live booking or payment test.
 
-The first two SQL migrations were retrieved from the existing PlugNear migration history. `20261019042055_marketplace_expansion.sql` is the new migration, generated with Supabase CLI and tested locally, **not applied remotely**. Do not replay the existing migrations against the live project. See [release instructions](docs/RELEASE.md).
+The first two SQL migrations were retrieved from the existing PlugNear migration history. `20261020075219_marketplace_expansion.sql` is the reviewed marketplace migration, now **applied to PlugNear** after explicit approval on 20 October 2026. Do not replay the existing migrations against the live project. See [release instructions](docs/RELEASE.md).
 
 ## Implemented locally
 

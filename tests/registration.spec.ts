@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 const app = 'http://localhost:4174';
 async function settings(page: import('@playwright/test').Page, enabled: boolean) {
  await page.route('**/auth/v1/settings', route => route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({external:{google:enabled,apple:false,phone:enabled,email:true}})}));

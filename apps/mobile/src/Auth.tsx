@@ -1,3 +1,4 @@
+import { SupportLinks } from "./SupportLinks";
 import { useEffect, useState } from "react";
 import { Platform, Text, View } from "react-native";
 import { db, publicAuthSettings } from "./client";
@@ -207,6 +208,26 @@ export function Auth() {
                 ? "New here? Create an account"
                 : "Already registered? Sign in"}
             </Button>
+            {mode === "signin" && (
+              <Button
+                quiet
+                disabled={busy || !email.trim()}
+                onPress={() =>
+                  void run(async () => {
+                    const { error } = await db!.auth.resetPasswordForEmail(
+                      email.trim(),
+                      { redirectTo: authRedirect() },
+                    );
+                    if (error) throw error;
+                    setMessage(
+                      "If an account exists for this email, a password reset link will be sent. Open it in the same app or browser where you requested it.",
+                    );
+                  })
+                }
+              >
+                Forgot password?
+              </Button>
+            )}
             <Text style={s.text}>
               Use at least 8 characters. Confirm your email before booking. A
               contact phone can be saved in Account; it is not automatically
@@ -273,6 +294,7 @@ export function Auth() {
           {message}
         </Text>
       )}
+      <SupportLinks />
     </>
   );
 }

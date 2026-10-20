@@ -7,6 +7,13 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    env:
+      # Public test fixtures, intentionally invalid against the real service.
+      # All browser backend requests are denied unless a test mocks them.
+      EXPO_PUBLIC_SUPABASE_URL: https://yxisoddhwlzetrnfbbno.supabase.co
+      EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_fixture_not_a_real_key
+      VITE_SUPABASE_URL: https://yxisoddhwlzetrnfbbno.supabase.co
+      VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_fixture_not_a_real_key
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:

@@ -10,6 +10,8 @@ Vercel: separate `plugnear-web` and `plugnear-admin` projects now exist in the e
 
 ## Database rollout
 
+The reviewed baseline migration is now applied (20 October 2026). The following steps remain the rollout reference for subsequent changes; do not replay it.
+
 1. Back up PlugNear, re-inspect its schema and verify only the two audited migrations exist. Resolve any drift or active overlapping bookings before rollout.
 2. Review the third migration. It revokes broad client grants, routes booking changes through guarded functions and changes the exclusion constraint to reserve pending requests too.
 3. Apply only the pending migration through authenticated Supabase tooling, explicitly targeting `yxisoddhwlzetrnfbbno`. The MCP write attempts in this session failed with an expired request state. No Supabase CLI access token or database password was provisioned. Reconnect the write integration or provision credentials securely; never put them in chat or public environment variables.

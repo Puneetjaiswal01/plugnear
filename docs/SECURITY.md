@@ -2,13 +2,13 @@
 
 The workspace contained no source repository or archives. GitHub searches found no PlugNear repository. The user authorized a new application. The dedicated Supabase project was inspected read-only: healthy, Mumbai, PostgreSQL 17.11.
 
-## Existing remote state
+## Historical remote state before rollout
 
 Three public tables (`profiles`, `chargers`, `bookings`) with RLS and zero rows at audit; two migrations, no Edge Functions. The existing exclusion constraint protects only confirmed bookings. Existing RPCs check driver/owner identity and use an empty search path, but are exposed security-definer functions. Default grants include broad table privileges, including TRUNCATE, for client roles.
 
-The security advisor reported [`btree_gist` in public](https://supabase.com/docs/guides/database/database-linter?lint=0014_extension_in_public) and [two exposed security-definer booking RPCs](https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable). These remain remotely: both migration write attempts returned `Invalid or expired requestState`; remote history was rechecked and still contains only the original two migrations.
+The security advisor reported [`btree_gist` in public](https://supabase.com/docs/guides/database/database-linter?lint=0014_extension_in_public) and [two exposed security-definer booking RPCs](https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable). Initial write attempts failed; the reviewed migration was subsequently applied with explicit owner approval on 20 October 2026. The current security advisor no longer reports these baseline findings.
 
-## Pending migration safeguards
+## Applied migration safeguards
 
 Every new application table has RLS. Exact column grants replace default grants. Anonymous, unconfirmed and blocked accounts are excluded. Private `account_access` cannot be edited by clients; user-editable metadata never grants authority.
 
@@ -37,3 +37,9 @@ Production requires a fresh audit, live RLS and API verification, physical-devic
 ## Registration review · 19 October 2026
 
 Social login uses PKCE, native system-browser authentication and an exact scheme/host/path callback check. Duplicate callback delivery shares a single exchange promise. OAuth secrets are not client configuration. Optional providers fail closed when unavailable; live public settings show Google/Apple/phone disabled. OTPs are verified by Supabase against the number that received the request; changing form input removes the verification state. Client cooldown is UX only: server rate limits, anti-abuse controls and SMS spend limits must be configured before enabling phone login. Contact phone updates are not represented as verified identities. No profile grants, RLS, database functions or admin authorization were modified. Identity linking and account merging are not implemented. Unit and mocked browser tests passed; external-provider and device verification remain required.
+
+## Live verification · 20 October 2026
+
+Confirmed live RLS, restricted grants and requested/confirmed overlap protection. A rollback-only SQL transaction exercised guarded reservation creation, idempotent retries, overlap exclusion and non-admin denial without persisting fixture accounts/listings/bookings. This is not independent concurrent-client/payment verification. Security advisor still reports [leaked password protection disabled](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection); enable it through an authorised Auth settings session. The private `account_access` table is deliberately deny-by-default with RLS/no policies and no client table grants, as reflected by the [informational advisor](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy).
+
+The original GitHub CI failure was caused by missing test client configuration. CI now uses explicit invalid fixture keys, and browser fixtures deny unmocked requests to the real backend. No live credentials are needed by CI. Password recovery uses Supabase PKCE and the PASSWORD_RECOVERY event; native callbacks preserve the SDK flow ID when supplied. New support and deletion entry points do not add a privileged account-deletion endpoint.

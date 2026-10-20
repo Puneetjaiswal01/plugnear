@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 test("public website renders its approved brand and both journeys without broken assets", async ({
   page,
 }, info) => {
