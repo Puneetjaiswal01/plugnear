@@ -19,12 +19,15 @@ export function Host({ uid }: { uid: string }) {
     [slotCharger, setSlotCharger] = useState(""),
     [start, setStart] = useState(""),
     [end, setEnd] = useState(""),
+    [vpa, setVpa] = useState(""),
+    [payee, setPayee] = useState(""),
+    [advanced, setAdvanced] = useState(false),
     [slots, setSlots] = useState<
       { id: string; charger_id: string; starts_at: string; ends_at: string }[]
     >([]);
   async function refresh() {
     if (!db) return;
-    const [c, h] = await Promise.all([
+    const [c, h, payment] = await Promise.all([
       db
         .from("chargers")
         .select("*")
@@ -35,9 +38,13 @@ export function Host({ uid }: { uid: string }) {
         .select("status")
         .eq("user_id", uid)
         .maybeSingle(),
+      db.rpc("my_host_upi"),
     ]);
     if (c.error) throw c.error;
     if (h.error) throw h.error;
+    if (payment.error) throw payment.error;
+    setVpa(payment.data?.upi_vpa || "");
+    setPayee(payment.data?.payee_name || "");
     setChargers(c.data as Charger[]);
     setVerification(h.data?.status || null);
     if (c.data.length) {
@@ -114,10 +121,50 @@ export function Host({ uid }: { uid: string }) {
           </>
         )}
       </Card>
+      {verification === "verified" && (
+        <Card>
+          <Text style={s.h2}>Direct UPI for your charging sessions</Text>
+          <Text style={s.text}>
+            Enter only a VPA you control. Drivers see a fixed recipient and
+            server-priced amount after you accept their request. We do not
+            verify your bank account ownership or transfer. Check receipt
+            yourself before confirming.
+          </Text>
+          <Field
+            label="Your UPI VPA"
+            value={vpa}
+            onChangeText={setVpa}
+            autoCapitalize="none"
+          />
+          <Field
+            label="UPI recipient name"
+            value={payee}
+            onChangeText={setPayee}
+          />
+          <Button
+            disabled={busy}
+            onPress={() =>
+              void run(async () => {
+                const { error } = await db!.rpc("save_host_upi", {
+                  p_vpa: vpa.trim(),
+                  p_name: payee.trim(),
+                });
+                if (error) throw error;
+                setMessage(
+                  "UPI details saved. Existing checkout recipients stay unchanged.",
+                );
+              })
+            }
+          >
+            Save host UPI details
+          </Button>
+        </Card>
+      )}
       <Card>
         <Text style={s.h2}>02 · List a charger</Text>
         <Text style={s.text}>
-          This prototype accepts only the connector types shown below.
+          Verification must be approved before you can register or edit a
+          charger. This pilot accepts only the connector types shown below.
           Socket-based micro-host listings and 2W/3W compatibility checks are
           not enabled yet. A general wall socket is not an approved charging
           point.
@@ -153,7 +200,7 @@ export function Host({ uid }: { uid: string }) {
           directions.
         </Text>
         <Button
-          disabled={busy}
+          disabled={busy || verification !== "verified"}
           onPress={() =>
             void run(async () => {
               if (
@@ -193,36 +240,92 @@ export function Host({ uid }: { uid: string }) {
         <Card key={c.id}>
           <Text style={s.h2}>{c.title}</Text>
           <Text style={s.text}>
+            Accepting requests: {c.operational_status || "available"}
+          </Text>
+          <Button
+            quiet
+            disabled={busy}
+            onPress={() =>
+              void run(async () => {
+                const { error } = await db!.rpc("set_charger_online", {
+                  p_charger: c.id,
+                  p_online: c.operational_status !== "available",
+                });
+                if (error) throw error;
+              })
+            }
+          >
+            {c.operational_status === "offline"
+              ? "Make available"
+              : "Take offline"}
+          </Button>
+          <Text style={s.text}>
             {c.status} · {c.connector} · ₹{c.price_per_kwh}/kWh
           </Text>
-          <Button quiet onPress={() => setSlotCharger(c.id)}>
-            Manage availability
+          <Button
+            disabled={
+              busy || verification !== "verified" || c.status !== "approved"
+            }
+            onPress={() =>
+              void run(async () => {
+                const from = new Date(),
+                  until = new Date(Date.now() + 24 * 3600000);
+                const { error } = await db!
+                  .from("availability")
+                  .insert({
+                    charger_id: c.id,
+                    starts_at: from.toISOString(),
+                    ends_at: until.toISOString(),
+                  });
+                if (error) throw error;
+                const result = await db!.rpc("set_charger_online", {
+                  p_charger: c.id,
+                  p_online: true,
+                });
+                if (result.error) throw result.error;
+                setMessage(
+                  "Open for requests for the next 24 hours. Take the charger offline when you cannot host. Existing bookings remain reserved.",
+                );
+              })
+            }
+          >
+            Open requests for the next 24 hours
           </Button>
-          {slots
-            .filter((a) => a.charger_id === c.id)
-            .map((a) => (
-              <View key={a.id} style={{ gap: 8 }}>
-                <Text style={s.text}>
-                  {new Date(a.starts_at).toLocaleString()} —{" "}
-                  {new Date(a.ends_at).toLocaleString()}
-                </Text>
-                <Button
-                  quiet
-                  disabled={busy}
-                  onPress={() =>
-                    void run(async () => {
-                      const { error } = await db!
-                        .from("availability")
-                        .delete()
-                        .eq("id", a.id);
-                      if (error) throw error;
-                    })
-                  }
-                >
-                  Remove window
-                </Button>
-              </View>
-            ))}
+          <Button quiet onPress={() => setAdvanced(!advanced)}>
+            {advanced ? "Hide scheduling details" : "Advanced scheduling"}
+          </Button>
+          {advanced && (
+            <>
+              <Button quiet onPress={() => setSlotCharger(c.id)}>
+                Manage availability
+              </Button>
+              {slots
+                .filter((a) => a.charger_id === c.id)
+                .map((a) => (
+                  <View key={a.id} style={{ gap: 8 }}>
+                    <Text style={s.text}>
+                      {new Date(a.starts_at).toLocaleString()} —{" "}
+                      {new Date(a.ends_at).toLocaleString()}
+                    </Text>
+                    <Button
+                      quiet
+                      disabled={busy}
+                      onPress={() =>
+                        void run(async () => {
+                          const { error } = await db!
+                            .from("availability")
+                            .delete()
+                            .eq("id", a.id);
+                          if (error) throw error;
+                        })
+                      }
+                    >
+                      Remove window
+                    </Button>
+                  </View>
+                ))}
+            </>
+          )}
         </Card>
       ))}
       {!!slotCharger && (

@@ -12,6 +12,9 @@ export type Charger = {
   price_per_kwh: number;
   status: string;
   distance_km?: number;
+  availability_status?: "available" | "busy" | "offline";
+  operational_status?: "available" | "offline";
+  availability_revision?: number;
 };
 export type Booking = {
   id: string;
@@ -28,7 +31,8 @@ export function inr(paise: number) {
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
-    maximumFractionDigits: 0,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(paise / 100);
 }
 export function requirePlugNear(url: string, key: string) {

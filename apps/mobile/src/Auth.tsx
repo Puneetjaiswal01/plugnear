@@ -94,7 +94,7 @@ export function Auth() {
   return (
     <>
       <Text style={s.text}>EVERY EV. EVERY JOURNEY.</Text>
-      <Text style={s.title}>{"One PlugNear.\nFor the way you move."}</Text>
+      <Text style={s.title}>{"Find. Request.\nPay your host. Charge."}</Text>
       <Text style={s.text}>
         Cars, taxis, bikes, scooters and fleets. Find a nearby charger or share
         yours — one connected charging community for India.
@@ -117,35 +117,23 @@ export function Auth() {
         <Text style={s.h2}>
           {mode === "signin" ? "Welcome back." : "Join the neighbourhood."}
         </Text>
-        <Button
-          quiet
-          disabled={busy || !providers.google}
-          onPress={() => void run(() => socialSignIn("google"))}
-        >
-          Continue with Google
-        </Button>
-        {!providers.google && (
-          <Text style={s.text}>
-            {settingsReady
-              ? "Google sign-in is awaiting provider setup. Use email for now."
-              : "Checking Google sign-in availability…"}
-          </Text>
+        {providers.google && (
+          <Button
+            quiet
+            disabled={busy}
+            onPress={() => void run(() => socialSignIn("google"))}
+          >
+            Continue with Google
+          </Button>
         )}
-        {Platform.OS === "ios" && (
-          <>
-            <Button
-              quiet
-              disabled={busy || !providers.apple}
-              onPress={() => void run(() => socialSignIn("apple"))}
-            >
-              Continue with Apple
-            </Button>
-            {!providers.apple && (
-              <Text style={s.text}>
-                Apple sign-in requires provider setup before the iPhone release.
-              </Text>
-            )}
-          </>
+        {Platform.OS === "ios" && providers.apple && (
+          <Button
+            quiet
+            disabled={busy}
+            onPress={() => void run(() => socialSignIn("apple"))}
+          >
+            Continue with Apple
+          </Button>
         )}
         <View style={{ flexDirection: "row", gap: 12, flexWrap: "wrap" }}>
           <Button

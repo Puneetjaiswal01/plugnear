@@ -19,6 +19,7 @@ import { Host } from "./src/Host";
 import { Bookings } from "./src/Bookings";
 import { Account } from "./src/Account";
 import { Auth } from "./src/Auth";
+import { PwaStatus } from "./src/PwaStatus";
 import { PasswordRecovery } from "./src/PasswordRecovery";
 import { completeNativeAuth } from "./src/oauth";
 function entryTab(): "Find a charger" | "List a charger" {
@@ -114,9 +115,11 @@ export default function App() {
           }}
         >
           <Text style={{ fontSize: 10, color: "#2449eb", textAlign: "center" }}>
-            Early access · Booking and online payments are being prepared.
+            Pilot · Direct UPI receipt is confirmed by hosts, not by a bank
+            integration.
           </Text>
         </View>
+        <PwaStatus />
         <ScrollView
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={s.body}

@@ -7,13 +7,6 @@ import { Button, Field, Card, s, palette } from "./ui";
 import ChargerMap from "./ChargerMap";
 import { type Charger, bookingWindow, inr } from "@plugnear/core/domain";
 const connectors = ["All", "Type 2", "CCS2", "Bharat AC", "CHAdeMO"];
-function distance(a: number, b: number, c: number, d: number) {
-  const r = Math.PI / 180;
-  const h =
-    Math.sin(((c - a) * r) / 2) ** 2 +
-    Math.cos(a * r) * Math.cos(c * r) * Math.sin(((d - b) * r) / 2) ** 2;
-  return 6371 * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
-}
 export function Discover() {
   const [point, setPoint] = useState<{ lat: number; lon: number } | null>(null),
     [items, setItems] = useState<Charger[]>([]),
@@ -24,12 +17,16 @@ export function Discover() {
     [selected, setSelected] = useState<Charger | null>(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [start, setStart] = useState(""),
+    [start, setStart] = useState(() =>
+      new Date(Date.now() + 5 * 60000).toISOString(),
+    ),
     [hours, setHours] = useState("1"),
     [kwh, setKwh] = useState("5"),
     [message, setMessage] = useState(""),
     [slots, setSlots] = useState<{ starts_at: string; ends_at: string }[]>([]),
-    [requestKey, setRequestKey] = useState<string | null>(null);
+    [requestKey, setRequestKey] = useState<string | null>(null),
+    [connection, setConnection] = useState("Not connected"),
+    [updated, setUpdated] = useState("");
   async function locate() {
     setBusy(true);
     setError("");
@@ -51,58 +48,102 @@ export function Discover() {
   }
   useEffect(() => {
     if (!point || !db) return;
-    let alive = true;
-    setBusy(true);
-    const km = Number(radius);
-    if (!Number.isFinite(km) || km < 1 || km > 100) {
-      setError("Search radius must be 1–100 km.");
-      setBusy(false);
-      return;
-    }
-    const delta = km / 111;
-    let query = db
-      .from("chargers")
-      .select("*")
-      .eq("status", "approved")
-      .gte("latitude", point.lat - delta)
-      .lte("latitude", point.lat + delta)
-      .gte(
-        "longitude",
-        point.lon -
-          delta / Math.max(0.01, Math.cos((point.lat * Math.PI) / 180)),
-      )
-      .lte(
-        "longitude",
-        point.lon +
-          delta / Math.max(0.01, Math.cos((point.lat * Math.PI) / 180)),
-      )
-      .lte("price_per_kwh", Number(maxPrice) || 100)
-      .gte("power_kw", Number(minPower) || 0);
-    if (connector !== "All") query = query.eq("connector", connector);
-    void query.limit(200).then(({ data, error }) => {
-      if (!alive) return;
-      if (error) setError(error.message);
-      else {
-        setError("");
-        setItems(
-          (data as Charger[])
-            .map((c) => ({
-              ...c,
-              distance_km: distance(
-                point.lat,
-                point.lon,
-                c.latitude,
-                c.longitude,
-              ),
-            }))
-            .filter((c) => c.distance_km <= km)
-            .sort((a, b) => a.distance_km - b.distance_km),
-        );
+    const client = db;
+    let alive = true,
+      sequence = 0;
+    let pending: ReturnType<typeof setTimeout> | undefined;
+    async function load() {
+      const seq = ++sequence;
+      setBusy(true);
+      try {
+        const km = Number(radius),
+          price = Number(maxPrice),
+          power = Number(minPower);
+        if (
+          !Number.isFinite(km) ||
+          km < 1 ||
+          km > 100 ||
+          !Number.isFinite(price) ||
+          price < 0 ||
+          price > 100 ||
+          !Number.isFinite(power) ||
+          power < 0 ||
+          power > 500
+        )
+          throw new Error(
+            "Check radius (1–100 km), price (0–100) and power (0–500 kW).",
+          );
+        if (typeof navigator !== "undefined" && navigator.onLine === false)
+          throw new Error(
+            "You are offline. Live availability and requests need an internet connection.",
+          );
+        const { data, error } = await client.rpc("get_nearby_chargers", {
+          p_lat: point!.lat,
+          p_lon: point!.lon,
+          p_radius_km: km,
+          p_connector: connector === "All" ? null : connector,
+          p_max_price: price,
+          p_min_power: power,
+          p_limit: 50,
+        });
+        if (error) throw error;
+        if (alive && seq === sequence) {
+          const next = data as Charger[];
+          setItems(next);
+          setSelected((old) =>
+            old ? next.find((c) => c.id === old.id) || null : null,
+          );
+          setUpdated(new Date().toLocaleTimeString());
+          setError("");
+        }
+      } catch (e) {
+        if (alive && seq === sequence) {
+          setError((e as Error).message);
+          setItems([]);
+          setSelected(null);
+        }
+      } finally {
+        if (alive && seq === sequence) setBusy(false);
       }
-      setBusy(false);
-    });
+    }
+    const schedule = () => {
+      if (pending) clearTimeout(pending);
+      pending = setTimeout(() => void load(), 250);
+    };
+    void load();
+    const channel = client
+      .channel("nearby-charger-availability")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "chargers" },
+        schedule,
+      )
+      .subscribe((status) => {
+        if (alive) {
+          setConnection(
+            status === "SUBSCRIBED"
+              ? "Live updates connected"
+              : "Reconnecting · periodic refresh active",
+          );
+          if (status === "SUBSCRIBED") schedule();
+        }
+      });
+    const interval = setInterval(() => void load(), 15000);
+    if (typeof window !== "undefined") {
+      window.addEventListener("online", schedule);
+      window.addEventListener("focus", schedule);
+      window.addEventListener("offline", schedule);
+    }
     return () => {
       alive = false;
+      clearInterval(interval);
+      if (pending) clearTimeout(pending);
+      void client.removeChannel(channel);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("online", schedule);
+        window.removeEventListener("focus", schedule);
+        window.removeEventListener("offline", schedule);
+      }
     };
   }, [point, connector, radius, maxPrice, minPower]);
   useEffect(() => {
@@ -126,12 +167,18 @@ export function Discover() {
     return () => {
       alive = false;
     };
-  }, [selected]);
+  }, [selected?.id]);
   async function book() {
     if (!db || !selected) return;
     setBusy(true);
     setError("");
     try {
+      if (typeof navigator !== "undefined" && navigator.onLine === false)
+        throw new Error("Connect to the internet before requesting a charger.");
+      if (selected.availability_status !== "available")
+        throw new Error(
+          "This charger is not available now. Refresh nearby chargers.",
+        );
       const window = bookingWindow(start, Number(hours));
       const key = requestKey || randomUUID();
       setRequestKey(key);
@@ -217,6 +264,11 @@ export function Discover() {
           onSelect={setSelected}
         />
       )}
+      <Text style={s.text}>
+        {connection}
+        {updated ? ` · Checked ${updated}` : ""}. Green: available · amber: busy
+        · grey: offline.
+      </Text>
       <Text style={s.h2}>{items.length} chargers nearby</Text>
       {point && !busy && items.length === 0 && (
         <Card>
@@ -243,7 +295,9 @@ export function Discover() {
               away
             </Text>
             <Text style={s.text}>{c.address}</Text>
-            <Text style={s.label}>View availability →</Text>
+            <Text style={s.label}>
+              {c.availability_status || "Check availability"} · View charger →
+            </Text>
           </Card>
         </Pressable>
       ))}
@@ -272,26 +326,20 @@ export function Discover() {
               The host has not published an upcoming slot.
             </Text>
           )}
-          <Field
-            label="Start (date and time with timezone)"
-            placeholder="2026-10-25T10:00:00+05:30"
-            value={start}
-            onChangeText={(v) => {
-              setStart(v);
+          <Text style={s.text}>
+            Pilot request: one hour, starting in about five minutes. The server
+            rechecks availability before reserving.
+          </Text>
+          <Button
+            quiet
+            onPress={() => {
+              setStart(new Date(Date.now() + 5 * 60000).toISOString());
               setRequestKey(null);
               setMessage("");
             }}
-          />
-          <Field
-            label="Duration (hours)"
-            value={hours}
-            keyboardType="decimal-pad"
-            onChangeText={(v) => {
-              setHours(v);
-              setRequestKey(null);
-              setMessage("");
-            }}
-          />
+          >
+            Use the next hour
+          </Button>
           <Field
             label="Energy to reserve (kWh)"
             value={kwh}
@@ -304,10 +352,16 @@ export function Discover() {
           />
           <Text style={s.text}>
             Estimate {inr(Number(kwh) * selected.price_per_kwh * 100)} ·
-            confirmed by the server. Payment is not collected at this stage.
+            confirmed by the server. After host acceptance, pay the host
+            directly by UPI and wait for receipt confirmation.
           </Text>
           <Button
-            disabled={busy || !!message || slots.length === 0}
+            disabled={
+              busy ||
+              !!message ||
+              slots.length === 0 ||
+              selected.availability_status !== "available"
+            }
             onPress={() => void book()}
           >
             Request this charger

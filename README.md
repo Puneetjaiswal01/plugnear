@@ -1,6 +1,6 @@
 # PlugNear · Mobile 0.5 development
 
-India-first peer-to-peer EV charging for Expo iOS, Android and web, with a separate React admin dashboard. This is a new codebase authorized after the v0.4 source could not be located. The public marketing website is deployed at **https://www.plugnear.in/**; the marketplace remains in early access and is **not ready for store submission**.
+India-first peer-to-peer EV charging for Expo iOS, Android and web, with a separate React admin dashboard. This is a new codebase authorized after the v0.4 source could not be located. The public website is deployed at **https://www.plugnear.in/**. Current work is focused on the **web-first PWA charging MVP**: Find → Request → direct-to-host UPI → host-confirmed receipt → Charge. See [MVP delivery and launch gates](docs/WEB_FIRST_MVP.md). It is **not ready for unrestricted paid rollout or store submission**.
 
 The only allowed backend is **PlugNear**, `yxisoddhwlzetrnfbbno`, Mumbai (`ap-south-1`). Claim360's repository, database and deployment were not modified.
 

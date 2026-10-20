@@ -5,7 +5,7 @@ async function settings(page: import('@playwright/test').Page, enabled: boolean)
 }
 test('unconfigured providers are disabled while email registration stays available',async({page})=>{
  await settings(page,false);await page.goto(app);
- await expect(page.getByRole('button',{name:'Continue with Google'})).toBeDisabled();
+ await expect(page.getByRole('button',{name:'Continue with Google'})).not.toBeVisible();
  await page.getByRole('button',{name:'Use phone number'}).click();
  await expect(page.getByRole('button',{name:'Send verification code'})).toBeDisabled();
  await expect(page.getByText('Phone OTP is awaiting SMS provider setup.',{exact:false})).toBeVisible();

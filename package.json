@@ -11,7 +11,7 @@
     "admin": "npm run dev -w @plugnear/admin",
     "build": "npm run build -w @plugnear/admin",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "test": "node --test --test-isolation=none supabase/tests/*.test.mjs packages/core/*.test.mjs tests/fleet-model.test.mjs tests/auth-input.test.mjs",
+    "test": "node --test --test-isolation=none supabase/tests/*.test.mjs packages/core/*.test.mjs tests/fleet-model.test.mjs tests/auth-input.test.mjs tests/mvp-ledger.test.mjs tests/upi.test.mjs",
     "test:e2e": "playwright test",
     "export:web": "npm exec -w @plugnear/mobile -- expo export --platform web --output-dir dist-web",
     "website": "npm run dev -w @plugnear/website",

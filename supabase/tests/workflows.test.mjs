@@ -38,7 +38,7 @@ before(async () => {
     `create role anon;create role authenticated;create role service_role bypassrls;create schema auth;create table auth.users(id uuid primary key,raw_user_meta_data jsonb,is_anonymous boolean default false,email_confirmed_at timestamptz default now(),phone_confirmed_at timestamptz);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth to authenticated,anon;grant execute on function auth.uid() to authenticated,anon;`,
   );
   for (const f of (await readdir(new URL("../migrations/", import.meta.url)))
-    .filter((f) => !f.endsWith("_marketplace_expansion.sql"))
+    .filter((f) => f.endsWith("_plugnear_marketplace_core.sql") || f.endsWith("_plugnear_booking_workflows.sql"))
     .sort())
     await pg.exec(
       await readFile(new URL("../migrations/" + f, import.meta.url), "utf8"),

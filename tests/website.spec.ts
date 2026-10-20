@@ -38,7 +38,7 @@ test("FAQs and privacy notice are usable", async ({ page }) => {
     .getByText("Can I book and pay for a charge today?", { exact: false })
     .click();
   await expect(
-    page.getByText("Not yet. The platform is in early access", {
+    page.getByText("The pilot supports requests to verified hosts", {
       exact: false,
     }),
   ).toBeVisible();
@@ -61,7 +61,7 @@ test("early-access app remains reachable under its own route", async ({
   ).toBeVisible();
   await expect(
     page.getByText(
-      "Early access · Booking and online payments are being prepared.",
+      "Pilot · Direct UPI receipt is confirmed by hosts, not by a bank integration.",
     ),
   ).toBeVisible();
 });
