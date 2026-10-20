@@ -2035,3 +2035,28 @@ dialog p {
 /* Legal and support links wrap on narrow screens. */
 .footer-bottom > div { flex-wrap: wrap; }
 @media (max-width:580px) { .footer-bottom > div { margin-left: 0; width: 100%; line-height: 2; gap: 12px 18px; } }
+
+/* Pilot information and enquiry controls follow the existing brand. */
+.review-section { padding-top: 50px; padding-bottom: 45px; scroll-margin-top: 110px; }
+.review-section h2 { font-size: clamp(28px, 3vw, 40px); letter-spacing: -1px; line-height: 1.2; margin: 18px 0; }
+.review-section > p { max-width: 850px; color: var(--muted); font-size: 15px; line-height: 1.8; margin: 16px 0; }
+.trust-points a { color: var(--blue); text-decoration: underline; }
+.pilot-enquiry-form { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; background: #eef1ff; border-radius: 16px; padding: 28px; margin-top: 25px; }
+.pilot-enquiry-form label { display: block; font-size: 14px; line-height: 1.7; }
+.pilot-enquiry-form input:not([type=checkbox]), .pilot-enquiry-form select { display: block; width: 100%; min-width: 0; min-height: 48px; box-sizing: border-box; border: 1px solid #8c98b7; border-radius: 8px; background: white; color: #182329; padding: 10px; font: inherit; margin-top: 8px; }
+.pilot-enquiry-form .enquiry-consent, #enquiry-status, #enquiry-mail { grid-column: 1 / -1; }
+.pilot-enquiry-form input[type=checkbox] { width: 20px; height: 20px; vertical-align: middle; margin-right: 8px; }
+.pilot-enquiry-form button { border: 0; cursor: pointer; justify-self: start; min-height: 48px; }
+.pilot-enquiry-form a { color: var(--blue); text-decoration: underline; }
+.pilot-enquiry-form #enquiry-status { font-size: 14px; line-height: 1.7; margin: 0; }
+.pilot-enquiry-form :focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+#early-access, #roadmap, #trust, #contact, #how-it-works { scroll-margin-top: 110px; }
+@media (max-width: 700px) { .pilot-enquiry-form { grid-template-columns: 1fr; padding: 22px; } .review-section { padding-top: 35px; padding-bottom: 30px; } }
+/* Keep small explanatory text readable on ivory, lime and blue surfaces. */
+:root { --muted: #586052; }
+.hero-description, .hero-note, .floating-card > div > span, .footer-top > p, .footer-bottom { color: #586052; }
+.closing > .eyebrow, .closing > small { color: #fff; }
+.stage-note, .map-top, .map-label, .you, .map-bottom { color: #48543c; }
+.host-copy > .eyebrow, .host-copy > p, .host-copy > small { color: #3f4b28; }
+@media (max-width: 580px) { .announcement { flex-wrap: wrap; text-align: center; } .announcement > a { display: inline-block; white-space: nowrap; } }
+.map-bottom > span { color: #48543c; }

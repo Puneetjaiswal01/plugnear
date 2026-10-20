@@ -11,7 +11,7 @@ test("public website renders its approved brand and both journeys without broken
   });
   await page.goto("http://localhost:4175");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Every EV.",
+    "Find or share",
   );
   await expect(
     page.getByRole("link", { name: "Find a charger", exact: true }),
@@ -133,4 +133,61 @@ test("search discovery pages have consistent canonical URLs and usable links", a
     ).toBeTruthy();
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
   }
+});
+
+test("homepage anchors resolve and pilot enquiry stays local until email is sent", async ({
+  page,
+}) => {
+  await page.goto("http://localhost:4175/");
+  const broken = await page
+    .locator('a[href^="#"]')
+    .evaluateAll((links) =>
+      links
+        .map((link) => link.getAttribute("href")!)
+        .filter(
+          (href) => href.length > 1 && !document.getElementById(href.slice(1)),
+        ),
+    );
+  expect(broken).toEqual([]);
+  await page
+    .getByRole("link", { name: "Explore PlugNear", exact: false })
+    .click();
+  await expect(page).toHaveURL(/#early-access$/);
+  await page.getByRole("link", { name: "Pilot enquiry", exact: true }).click();
+  const writes: string[] = [];
+  page.on("request", (request) => {
+    if (request.method() !== "GET") writes.push(request.url());
+  });
+  await page
+    .getByLabel("City or neighbourhood", { exact: true })
+    .fill("Noida & Delhi");
+  await page
+    .getByLabel("I’m interested as a", { exact: true })
+    .selectOption("Host");
+  await page.getByLabel("Vehicle type", { exact: true }).selectOption("Car");
+  const form = page.locator("#pilot-enquiry-form");
+  expect(
+    await form.evaluate((element: HTMLFormElement) => element.checkValidity()),
+  ).toBe(false);
+  await form.getByRole("checkbox").check();
+  await page
+    .getByRole("button", { name: "Prepare enquiry email", exact: false })
+    .click();
+  await expect(page.locator("#enquiry-status")).toContainText(
+    "Nothing has been submitted or added to a waitlist",
+  );
+  const href = await page
+    .getByRole("link", { name: "Open your email draft", exact: true })
+    .getAttribute("href");
+  const mail = new URL(href!);
+  expect(mail.protocol).toBe("mailto:");
+  expect(mail.pathname).toBe("puneetjaiswal@zohomail.in");
+  expect(mail.searchParams.get("body")).toContain("Noida & Delhi");
+  expect(mail.searchParams.get("body")).toContain("Role: Host");
+  expect(writes).toEqual([]);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
 });
