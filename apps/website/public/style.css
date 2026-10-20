@@ -2021,3 +2021,14 @@ dialog p {
 }
 
 @media (max-width:580px) { .hero-inset { display:none; } }
+
+.contact { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; padding-top: 65px; padding-bottom: 80px; scroll-margin-top: 100px; }
+.contact h2 { font-size: clamp(29px, 3vw, 40px); letter-spacing: -1.2px; line-height: 1.15; margin: 20px 0; }
+.contact-intro p { font-size: 14px; line-height: 1.8; max-width: 420px; color: var(--muted); }
+.contact-email { display: inline-block; color: var(--blue); font-size: clamp(15px, 1.7vw, 21px); font-weight: 600; margin-top: 22px; overflow-wrap: anywhere; }
+.contact-people { display: grid; gap: 16px; }
+.contact-people article { border: 1px solid var(--line); border-radius: 14px; padding: 25px; background: white; }
+.contact h3 { font-size: 22px; margin: 12px 0 8px; }
+.contact-people a { display: inline-flex; align-items: center; min-height: 44px; color: var(--blue); font-size: 17px; font-weight: 600; }
+.contact a:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
+@media(max-width: 700px) { .contact { grid-template-columns: 1fr; gap: 30px; padding-top: 45px; padding-bottom: 55px; } }
