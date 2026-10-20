@@ -1,3 +1,5 @@
+> **Latest verified status (20 October 2026):** See [LAUNCH_HANDOFF.md](LAUNCH_HANDOFF.md). The app DNS is now working over HTTPS; search changes are deployed. Email-only auth, no administrator/verified host/charger, and real pilot/store gates remain. Earlier entries below are historical.
+
 # Android and iPhone build results
 
 ## Current verification

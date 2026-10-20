@@ -81,3 +81,56 @@ test("navigation works at the selected viewport", async ({ page }, info) => {
       page.getByRole("button", { name: "Open menu" }),
     ).toHaveAttribute("aria-expanded", "false");
 });
+
+test("search discovery pages have consistent canonical URLs and usable links", async ({
+  page,
+}) => {
+  await page.goto("http://localhost:4175/");
+  const graph = await page
+    .locator('script[type="application/ld+json"]')
+    .textContent();
+  const entities = JSON.parse(graph!)["@graph"];
+  expect(
+    entities.map((entity: { "@type": string }) => entity["@type"]),
+  ).toEqual(["Organization", "WebSite"]);
+  expect(entities[0].email).toBe("puneetjaiswal@zohomail.in");
+  await page
+    .getByRole("link", { name: "Find EV charging near you", exact: true })
+    .click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Looking for an EV charger near you?",
+  );
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  const links = await page
+    .locator("main a[href^='/']")
+    .evaluateAll((elements) =>
+      elements.map((element) => element.getAttribute("href")!),
+    );
+  for (const href of new Set(links))
+    expect(
+      (await page.request.get(`http://localhost:4175${href}`)).status(),
+    ).toBe(200);
+  const sitemap = await (
+    await page.request.get("http://localhost:4175/sitemap.xml")
+  ).text();
+  const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(
+    (match) => match[1],
+  );
+  expect(urls.length).toBe(7);
+  for (const url of urls) {
+    const path = new URL(url).pathname;
+    await page.goto(`http://localhost:4175${path}`);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      url,
+    );
+    expect(
+      await page.locator('meta[name="description"]').getAttribute("content"),
+    ).toBeTruthy();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+  }
+});
