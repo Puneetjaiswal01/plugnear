@@ -1,6 +1,8 @@
 import type { ExpoConfig } from "expo/config";
 export default (): ExpoConfig => {
-  const projectId = process.env.EXPO_PUBLIC_EAS_PROJECT_ID;
+  const projectId =
+    process.env.EXPO_PUBLIC_EAS_PROJECT_ID ||
+    "79c1f64d-8d2d-402c-ac4f-21359de9054b";
   if (
     projectId &&
     !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(

@@ -33,3 +33,7 @@ Public booking/payment launch remains blocked by the unapplied marketplace migra
 ## Registration follow-up
 
 Google/Apple OAuth and phone OTP UI, PKCE callback handling and Account identity indicators are implemented. TypeScript, 32 tests and 32 browser tests pass; latest Android/iOS bundles and isolated prebuild also pass. Provider login browser tests use fixtures. Live Google, Apple and SMS remain disabled pending configuration. Follow [authentication setup](AUTHENTICATION_SETUP.md) before building for testers, then [store upload instructions](STORE_UPLOAD.md).
+
+## Expo project supplied by owner · 20 October 2026
+
+Project UUID `79c1f64d-8d2d-402c-ac4f-21359de9054b` is now the default in the dynamic app config and the example environment. Intended account supplied by owner: Debugdylan. The ID is public configuration; its ownership has not been independently verified because this workspace has no Expo authentication. No Expo token from chat was used or saved. Signed builds remain pending.
