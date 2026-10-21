@@ -24,3 +24,7 @@ Web/PWA first, with email accounts and direct host UPI/manual receipt confirmati
 ## Deferred or provider-dependent
 
 Phone OTP requires a supported SMS provider and applicable India sender/template setup; Google/Apple require their provider credentials. Email is the interim path. Native/TWA signed builds and stores, gateway payments, advanced scheduling, printed QR kits, broken-socket reporting, Hindi and stored waitlist remain separate work. Search Console ownership/indexing is still owner-dependent and Google controls search/AI placement. Claim360 resources are outside this work.
+
+## Confirmation recovery release
+
+Source `69dafaf` is deployed to production as `dpl_84Q1NnWug5dAEkYT6Xtyjf39PdT2` (READY). HTTPS checks on app HTML, its exact JavaScript artifact and support page returned 200 and matched local SHA-1 digests. GitHub CI run 39552240985 passed. Local validation before deployment: typecheck, 44 unit tests and 56 browser tests passed. Live email delivery is still untested until the owner configures the provider; no SMTP key or DNS value was fabricated.
