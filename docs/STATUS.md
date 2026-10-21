@@ -1,3 +1,5 @@
+> **Maps release (21 October 2026):** Real web maps now appear before GPS, support manual map-area search and recover from tile/location failures. Deployment `dpl_5oTYEd75im9zJTd7REQe6mpKkqWS` is READY; 44 unit/database/config and 54 browser tests pass. See [MAPS.md](MAPS.md) for native configuration and test limits.
+
 > **Android TWA follow-up:** Bubblewrap source and certificate-validation endpoint are prepared; PWA deployment `dpl_ALxBQprJh71Q38RQbVVhfbpQK7nQ` is READY. 44 unit/database/config and 50 browser tests pass. No AAB was compiled; SDK/signing/certificate association and physical-device tests remain pending. See [TWA_ANDROID.md](TWA_ANDROID.md).
 
 > **Latest verified status (20 October 2026):** See [LAUNCH_HANDOFF.md](LAUNCH_HANDOFF.md). The app DNS is now working over HTTPS; search changes are deployed. Email-only auth, no administrator/verified host/charger, and real pilot/store gates remain. Earlier entries below are historical.

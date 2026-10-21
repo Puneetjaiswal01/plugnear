@@ -15,3 +15,9 @@ Expo Android/iOS use the existing `react-native-maps` integration with matching 
 ## Verification and limits
 
 Map browser tests use mocked authentication/charger responses and intentionally failed tile requests to exercise denial/failure paths, manual area search, GPS coordinates, keyboard marker selection, RPC filters and navigation coordinates. These fixtures are not live charger inventory and are not inserted into the database. Real physical-device GPS, native maps, navigation handoff and charging remain pilot acceptance tests. Database/auth redirect settings and SMS-provider setup are unchanged by this release.
+
+## Actual release results
+
+Production deployment `dpl_5oTYEd75im9zJTd7REQe6mpKkqWS` is READY, source `b9e1366`. TypeScript, 44 unit/database/config tests and all 54 desktop/mobile browser tests passed. Both Android and iOS Metro/Hermes exports passed; no signed native build or physical-device map test was performed. Release CI passed: https://github.com/Puneetjaiswal01/plugnear/actions/runs/39537669168 .
+
+Live app checks at 390px and 1440px rendered the new map and received HTTP 200 OpenStreetMap tile responses, with no horizontal overflow or JavaScript page errors. Authentication was mocked only for this visual check and no real account/booking was created. Separate live checks confirmed manifest, active worker, offline reconnect navigation and no backend/map-tile responses in service-worker caches. No backend schema, provider credential or Claim360 resource changed.
