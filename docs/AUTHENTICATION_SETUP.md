@@ -1,3 +1,5 @@
+> **21 October update:** An invalid-token, read-only verification probe now returns to `https://app.plugnear.in/app/` rather than localhost. This verifies the current redirect destination, not email delivery or a real completed signup. The app now includes resend-confirmation and retry guidance. Public sender/SMTP, social and SMS setup still need live verification.
+
 # PlugNear registration setup
 
 ## Implemented

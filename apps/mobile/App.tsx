@@ -58,6 +58,7 @@ export default function App() {
       if (event === "PASSWORD_RECOVERY") setRecovering(true);
       if (event === "SIGNED_OUT") setRecovering(false);
       setSession(value);
+      if (value) setAuthError("");
       setTab(entryTab());
     });
     async function handle(url: string) {

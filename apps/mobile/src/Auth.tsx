@@ -12,6 +12,8 @@ export function Auth() {
     [otp, setOtp] = useState(""),
     [sentTo, setSentTo] = useState(""),
     [retryAt, setRetryAt] = useState(0),
+    [emailRetryAt, setEmailRetryAt] = useState(0),
+    [confirmationFor, setConfirmationFor] = useState(""),
     [now, setNow] = useState(Date.now()),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
@@ -66,10 +68,29 @@ export function Auth() {
             options: { emailRedirectTo: authRedirect() },
           });
     if (result.error) throw result.error;
-    if (!result.data.session)
+    if (!result.data.session) {
+      setConfirmationFor(email.trim().toLowerCase());
+      setEmailRetryAt(Date.now() + 60000);
       setMessage(
-        "Check your email to confirm your account, then sign in. Add your contact phone in Account after signing in.",
+        "Check your email to confirm your account, then return here and sign in. Add your contact phone in Account after signing in.",
       );
+    }
+  }
+  async function resendConfirmation() {
+    const address = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address))
+      throw new Error("Enter a valid email address first.");
+    setConfirmationFor(address.toLowerCase());
+    setEmailRetryAt(Date.now() + 60000);
+    const { error } = await db!.auth.resend({
+      type: "signup",
+      email: address,
+      options: { emailRedirectTo: authRedirect() },
+    });
+    if (error) throw error;
+    setMessage(
+      "If this email has an account awaiting confirmation, a fresh link will be sent. Use the newest email, then return here and sign in. If you already confirmed your email, try signing in instead.",
+    );
   }
   async function sendCode() {
     const normalized = normalizePhone(phone);
@@ -91,6 +112,10 @@ export function Auth() {
     if (error) throw error;
   }
   const wait = Math.max(0, Math.ceil((retryAt - now) / 1000));
+  const emailWait =
+    confirmationFor === email.trim().toLowerCase()
+      ? Math.max(0, Math.ceil((emailRetryAt - now) / 1000))
+      : 0;
   return (
     <>
       <Text style={s.text}>EVERY EV. EVERY JOURNEY.</Text>
@@ -195,6 +220,15 @@ export function Auth() {
               {mode === "signin"
                 ? "New here? Create an account"
                 : "Already registered? Sign in"}
+            </Button>
+            <Button
+              quiet
+              disabled={busy || !email.trim() || emailWait > 0}
+              onPress={() => void run(resendConfirmation)}
+            >
+              {emailWait > 0
+                ? `Resend confirmation in ${emailWait}s`
+                : "Resend confirmation email"}
             </Button>
             {mode === "signin" && (
               <Button
