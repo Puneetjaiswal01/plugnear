@@ -1,73 +1,110 @@
 import { createElement, useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import type { Charger } from "@plugnear/core/domain";
-export default function ChargerMap({
-  lat,
-  lon,
-  chargers,
-  onSelect,
-}: {
-  lat: number;
-  lon: number;
-  chargers: Charger[];
-  onSelect: (c: Charger) => void;
-}) {
-  const container = useRef<HTMLDivElement>(null),
-    map = useRef<L.Map | null>(null),
-    markers = useRef<L.LayerGroup | null>(null),
-    select = useRef(onSelect);
-  select.current = onSelect;
+import { chargerColour, type ChargerMapProps } from "./map-types";
+export default function ChargerMap(props: ChargerMapProps) {
+  const { lat, lon, chargers, selectedId, showSearchLocation } = props;
+  const container = useRef<HTMLDivElement>(null);
+  const map = useRef<L.Map | null>(null);
+  const markers = useRef<L.LayerGroup | null>(null);
+  const origin = useRef<L.CircleMarker | null>(null);
+  const callbacks = useRef(props);
+  callbacks.current = props;
   useEffect(() => {
     if (!container.current) return;
+    const initial = callbacks.current;
     const m = L.map(container.current, { scrollWheelZoom: false }).setView(
-      [lat, lon],
-      13,
+      [initial.lat, initial.lon],
+      12,
     );
     map.current = m;
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(m);
-    L.circleMarker([lat, lon], { radius: 7, color: "#2449eb", fillOpacity: 1 })
-      .addTo(m)
-      .bindTooltip("Your search location");
+    const tiles = L.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      },
+    );
+    tiles.on("tileerror", () =>
+      callbacks.current.onMapError(
+        "Map tiles could not load. You can still choose a charger from the list or retry when your connection improves.",
+      ),
+    );
+    tiles.on("tileload", () => callbacks.current.onMapError(""));
+    tiles.addTo(m);
     markers.current = L.layerGroup().addTo(m);
+    m.on("moveend", () => {
+      const center = m.getCenter().wrap();
+      callbacks.current.onCenterChange({ lat: center.lat, lon: center.lng });
+    });
+    const resize = new ResizeObserver(() => m.invalidateSize({ pan: false }));
+    resize.observe(container.current);
     return () => {
+      resize.disconnect();
       m.remove();
       map.current = null;
       markers.current = null;
+      origin.current = null;
     };
-  }, [lat, lon]);
+  }, []);
+  useEffect(() => {
+    const m = map.current;
+    if (!m) return;
+    m.setView([lat, lon], m.getZoom(), { animate: false });
+    callbacks.current.onCenterChange({ lat, lon });
+    if (origin.current) {
+      m.removeLayer(origin.current);
+      origin.current = null;
+    }
+    if (showSearchLocation)
+      origin.current = L.circleMarker([lat, lon], {
+        radius: 7,
+        color: "#2449eb",
+        fillOpacity: 1,
+      })
+        .addTo(m)
+        .bindTooltip("Search location");
+  }, [lat, lon, showSearchLocation]);
   useEffect(() => {
     const group = markers.current;
     if (!group) return;
     group.clearLayers();
-    chargers.forEach((c) => {
+    chargers.forEach((charger) => {
+      const description = `${charger.title} · ${charger.availability_status || "Check availability"}`;
       const label = document.createElement("span");
-      label.textContent = `${c.title} · ${c.availability_status || "Check availability"}`;
-      L.circleMarker([c.latitude, c.longitude], {
-        radius: 11,
-        color:
-          c.availability_status === "available"
-            ? "#247344"
-            : c.availability_status === "busy"
-              ? "#b56d17"
-              : "#6b7280",
+      label.textContent = description;
+      const selected = charger.id === selectedId;
+      const marker = L.circleMarker([charger.latitude, charger.longitude], {
+        radius: selected ? 14 : 11,
+        color: chargerColour(charger.availability_status),
         fillOpacity: 0.85,
-        weight: 3,
+        weight: selected ? 5 : 3,
       })
         .bindTooltip(label)
-        .on("click", () => select.current(c))
+        .on("click", () => callbacks.current.onSelect(charger))
         .addTo(group);
+      const element = marker.getElement();
+      if (element) {
+        element.setAttribute("tabindex", "0");
+        element.setAttribute("role", "button");
+        element.setAttribute("aria-label", `View ${description}`);
+        element.setAttribute("aria-pressed", String(selected));
+        element.addEventListener("keydown", (event) => {
+          if (!(event instanceof KeyboardEvent)) return;
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            callbacks.current.onSelect(charger);
+          }
+        });
+      }
     });
-  }, [chargers, lat, lon]);
+  }, [chargers, selectedId]);
   return createElement("div", {
     ref: container,
     role: "region",
     "aria-label":
-      "Nearby charger map. Select a marker or choose a charger from the list below.",
+      "Nearby charger map. Move the map and search this area, or select a charger marker.",
     style: { height: 340, width: "100%", borderRadius: 16, zIndex: 0 },
   });
 }

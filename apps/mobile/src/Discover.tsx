@@ -5,10 +5,15 @@ import * as Location from "expo-location";
 import { db } from "./client";
 import { Button, Field, Card, s, palette } from "./ui";
 import ChargerMap from "./ChargerMap";
+import type { MapPoint } from "./map-types";
+const delhiNcr = { lat: 28.6139, lon: 77.209 };
 import { type Charger, bookingWindow, inr } from "@plugnear/core/domain";
 const connectors = ["All", "Type 2", "CCS2", "Bharat AC", "CHAdeMO"];
 export function Discover() {
-  const [point, setPoint] = useState<{ lat: number; lon: number } | null>(null),
+  const [point, setPoint] = useState<MapPoint | null>(null),
+    [mapCenter, setMapCenter] = useState<MapPoint>(delhiNcr),
+    [showUserLocation, setShowUserLocation] = useState(false),
+    [mapError, setMapError] = useState(""),
     [items, setItems] = useState<Charger[]>([]),
     [connector, setConnector] = useState("All"),
     [radius, setRadius] = useState("10"),
@@ -32,12 +37,31 @@ export function Discover() {
     setError("");
     try {
       const permission = await Location.requestForegroundPermissionsAsync();
-      if (permission.status !== "granted")
+      if (permission.status !== "granted") {
+        setShowUserLocation(false);
         throw Error(
-          "Allow location to discover chargers around you. You can change this in device settings.",
+          "Location permission is off. Move the map and choose Search this map area, or enable location in your browser/device settings.",
         );
-      const p = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Balanced,
+      }
+      setShowUserLocation(true);
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      const p = await Promise.race([
+        Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Balanced,
+        }),
+        new Promise<never>((_, reject) => {
+          timer = setTimeout(
+            () =>
+              reject(
+                new Error(
+                  "Location took too long. Search a map area instead, or try GPS again.",
+                ),
+              ),
+            15000,
+          );
+        }),
+      ]).finally(() => {
+        if (timer) clearTimeout(timer);
       });
       setPoint({ lat: p.coords.latitude, lon: p.coords.longitude });
     } catch (e) {
@@ -256,13 +280,45 @@ export function Discover() {
           />
         </View>
       </View>
-      {point && (
-        <ChargerMap
-          lat={point.lat}
-          lon={point.lon}
-          chargers={items}
-          onSelect={setSelected}
-        />
+      <Text style={s.text}>
+        {point
+          ? "Blue marks the search location. Move the map to explore another area."
+          : "Map starts in Delhi NCR, not your GPS location. Move it to an area and search, or use the location button above."}
+      </Text>
+      <ChargerMap
+        lat={point?.lat ?? delhiNcr.lat}
+        lon={point?.lon ?? delhiNcr.lon}
+        chargers={items}
+        selectedId={selected?.id}
+        showSearchLocation={!!point}
+        showUserLocation={showUserLocation}
+        onSelect={setSelected}
+        onCenterChange={setMapCenter}
+        onMapError={setMapError}
+      />
+      <Button
+        quiet
+        disabled={busy}
+        onPress={() => {
+          if (
+            !Number.isFinite(mapCenter.lat) ||
+            !Number.isFinite(mapCenter.lon) ||
+            Math.abs(mapCenter.lat) > 90 ||
+            Math.abs(mapCenter.lon) > 180
+          ) {
+            setError("Choose a map area within the supported coordinates.");
+            return;
+          }
+          setError("");
+          setPoint({ ...mapCenter });
+        }}
+      >
+        Search this map area
+      </Button>
+      {!!mapError && (
+        <Text accessibilityRole="alert" style={s.error}>
+          {mapError}
+        </Text>
       )}
       <Text style={s.text}>
         {connection}
@@ -309,6 +365,10 @@ export function Discover() {
             onPress={() =>
               void Linking.openURL(
                 `https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}&travelmode=driving`,
+              ).catch(() =>
+                setError(
+                  "Directions could not open. Use the listed address in your navigation app.",
+                ),
               )
             }
           >
