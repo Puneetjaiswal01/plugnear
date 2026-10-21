@@ -28,3 +28,9 @@ Phone OTP requires a supported SMS provider and applicable India sender/template
 ## Confirmation recovery release
 
 Source `69dafaf` is deployed to production as `dpl_84Q1NnWug5dAEkYT6Xtyjf39PdT2` (READY). HTTPS checks on app HTML, its exact JavaScript artifact and support page returned 200 and matched local SHA-1 digests. GitHub CI run 39552240985 passed. Local validation before deployment: typecheck, 44 unit tests and 56 browser tests passed. Live email delivery is still untested until the owner configures the provider; no SMTP key or DNS value was fabricated.
+
+## Homepage journey update
+
+Source `9f5212a` deployed as `dpl_AbPpbQnqAG4QiARPTfzqSzMrMrHk` (READY). Homepage now explains find → request/accept → direct UPI/manual receipt confirmation → charge, with a practical host review/availability/cost guide. Brand, public contacts, Delhi NCR recruitment status and fleet route remain. Co Charger was supplied as a reference; its homepage returned HTTP 403, so no claim is made to a visual audit or reproduced assets.
+
+Static website build and all 12 existing homepage browser checks passed across mobile and desktop. Live browser checks at 390px and 1440px confirmed the new content, no horizontal overflow and no script errors. This is a public website update, not proof of live email delivery or a real charging/payment session.
