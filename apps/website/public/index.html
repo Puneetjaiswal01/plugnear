@@ -33,6 +33,7 @@
     />
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/fleet-pilot/planner.css" />
+    <link rel="stylesheet" href="/future.css" />
     <script src="/script.js" defer></script>
     <meta name="twitter:card" content="summary_large_image" />
     <meta property="og:site_name" content="PlugNear" />
@@ -77,7 +78,7 @@
       }
     </script>
   </head>
-  <body>
+  <body class="future-home">
     <svg
       class="icon-defs"
       xmlns="http://www.w3.org/2000/svg"
@@ -184,41 +185,138 @@
             ><span>Made for India. Powered by people.</span>
           </div>
         </div>
-        <div class="hero-visual">
-          <img
-            class="hero-photo"
-            src="/assets/neighbourhood-charging.webp"
-            width="1448"
-            height="1086"
-            alt="Illustrative electric car charging at a neighbourhood site"
-            fetchpriority="high"
-          />
-          <img
-            class="hero-inset"
-            src="/assets/microhost-scooter.webp"
-            alt="Illustrative electric delivery scooter charging beside a local shop"
-            width="1448"
-            height="1086"
-          />
-          <div class="photo-label">
-            <span class="status-dot"></span> LESS DETOUR. MORE EVERYDAY.
+        <div
+          class="hero-visual energy-scene"
+          role="img"
+          aria-label="Concept illustration of a charging point connecting homes, drivers and fleets; not a map of live chargers"
+        >
+          <div class="scene-top">
+            <span><i></i> THE NEIGHBOURHOOD NETWORK</span
+            ><span>01 / CONCEPT</span>
           </div>
-          <div class="floating-card">
-            <div class="floating-icon">
-              <svg><use href="#plug" /></svg>
-            </div>
-            <div>
-              <span>Find. Request. Charge.</span
-              ><strong>Or share your charger.</strong>
-            </div>
-            <span class="card-arrow">↗</span>
+          <div class="energy-orbit orbit-one"></div>
+          <div class="energy-orbit orbit-two"></div>
+          <svg class="energy-art" viewBox="0 0 600 530" aria-hidden="true">
+            <defs>
+              <linearGradient id="charger-body" x1="0" y1="0" x2="1" y2="1">
+                <stop stop-color="#465672" />
+                <stop offset=".45" stop-color="#172238" />
+                <stop offset="1" stop-color="#080e1a" />
+              </linearGradient>
+              <linearGradient id="charger-edge" x1="0" y1="0" x2="1" y2="1">
+                <stop stop-color="#baff85" />
+                <stop offset=".5" stop-color="#526eff" />
+                <stop offset="1" stop-color="#121d35" />
+              </linearGradient>
+              <linearGradient id="ground-glow">
+                <stop stop-color="#2449eb" stop-opacity="0" />
+                <stop offset=".5" stop-color="#a5ff89" stop-opacity=".5" />
+                <stop offset="1" stop-color="#2449eb" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <g stroke="#66819b" stroke-opacity=".22" fill="none">
+              <path d="M50 365 300 215 550 365 300 510Z" />
+              <path
+                d="M90 390 340 240M150 425 400 275M210 460 460 310M90 340 340 490M150 305 400 455M210 270 460 420"
+              />
+            </g>
+            <ellipse
+              cx="300"
+              cy="408"
+              rx="160"
+              ry="49"
+              fill="url(#ground-glow)"
+              stroke="none"
+            />
+            <path
+              d="M120 275 120 350 300 450 470 345 470 240"
+              stroke="#a7e77b"
+              stroke-width="1.2"
+              stroke-dasharray="5 8"
+              opacity=".65"
+            />
+            <path
+              d="m220 375 80-45 83 46-82 48Z"
+              fill="#19243b"
+              stroke="#657c9c"
+            />
+            <path
+              d="m220 375 81 49v15l-81-48Zm81 49 82-48v15l-82 48Z"
+              fill="#111b2d"
+              stroke="#41516a"
+            />
+            <path
+              d="m258 162 63-35 50 28v217l-63 37-50-29Z"
+              fill="url(#charger-body)"
+              stroke="url(#charger-edge)"
+              stroke-width="2"
+            />
+            <path
+              d="m321 127 50 28-63 36-50-29Z"
+              fill="#57697d"
+              stroke="#7b8ca0"
+            />
+            <path d="M308 191v218" stroke="#7d90ad" opacity=".5" />
+            <path
+              d="m271 182 25 14v68l-25-14Z"
+              fill="#09111e"
+              stroke="#788eac"
+            />
+            <path
+              d="m281 202-6 15 7 4-4 16 13-19-8-4 5-9"
+              fill="#d4f54a"
+              stroke="none"
+            />
+            <path
+              d="m321 217 32-18v76l-32 18Z"
+              fill="#101c2c"
+              stroke="#708aa3"
+            />
+            <path
+              d="m329 229 16-9m-16 19 16-9m-16 19 12-7"
+              stroke="#bdff9c"
+              stroke-width="2"
+            />
+            <path
+              d="M360 292c45-27 72 12 63 54-7 35-41 56-43 13l1-44"
+              stroke="#090f1b"
+              stroke-width="12"
+            />
+            <path
+              d="M360 292c45-27 72 12 63 54-7 35-41 56-43 13l1-44"
+              stroke="#7489a3"
+              stroke-width="2"
+            />
+            <path
+              d="m375 305 11-6 4 17-11 6Z"
+              fill="#d4f54a"
+              stroke="#d4f54a"
+            />
+            <circle cx="120" cy="275" r="5" fill="#d4f54a" stroke="none" />
+            <circle cx="470" cy="240" r="5" fill="#d4f54a" stroke="none" />
+          </svg>
+          <div class="network-node node-home">
+            <svg><use href="#plug" /></svg><span>YOUR CHARGER</span>
           </div>
-          <div class="photo-caption">
-            A vision of neighbourhood charging · illustrative image
+          <div class="network-node node-driver">
+            <svg><use href="#car" /></svg><span>YOUR JOURNEY</span>
           </div>
-          <div class="spark" aria-hidden="true">✳</div>
+          <div class="scene-bottom">
+            <strong>A little power.<br />A closer connection.</strong
+            ><span>HOMES · RIDERS · TAXIS · FLEETS</span>
+          </div>
+          <div class="scene-caption">
+            Original concept illustration · not live inventory
+          </div>
         </div>
       </section>
+      <div class="vehicle-strip section-wrap" aria-label="Vehicle groups">
+        <span>BUILT AROUND YOUR EVERYDAY</span>
+        <div>
+          Cars <i>↗</i> Taxis <i>↗</i> Bikes <i>↗</i> Three-wheelers
+          <i>↗</i> Fleets
+        </div>
+      </div>
       <section class="ribbon" aria-label="PlugNear principles">
         <div>
           <svg><use href="#pin" /></svg> Closer to home <span>✳</span> Built

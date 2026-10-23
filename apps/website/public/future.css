@@ -1,0 +1,494 @@
+/* PlugNear's original visual system. Scoped to the public homepage. */
+.future-home {
+  --paper: #f6f8f8;
+  --ink: #111c28;
+  --line: #dce3e6;
+  background: var(--paper);
+}
+.future-home .announcement {
+  background: #102035;
+  min-height: 36px;
+}
+.future-home .header {
+  height: 82px;
+  margin-top: 20px;
+  padding: 0 25px;
+  border: 1px solid #dce3e7;
+  border-radius: 48px;
+  background: #ffffffed;
+  position: relative;
+  z-index: 10;
+}
+.future-home .nav-cta {
+  background: #122035;
+  border-radius: 30px;
+  padding: 13px 18px;
+  color: #fff;
+}
+.future-home .hero {
+  padding-top: 70px;
+  padding-bottom: 55px;
+  gap: 55px;
+  align-items: center;
+}
+.future-home .hero h1 {
+  font-size: clamp(48px, 5.4vw, 78px);
+  letter-spacing: -0.065em;
+  line-height: 1.04;
+  font-weight: 650;
+}
+.future-home .hero .eyebrow {
+  color: #3f5269;
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  margin-bottom: 25px;
+}
+.future-home .hero .underline {
+  background: none;
+  color: #2449eb;
+}
+.future-home .hero .underline::after {
+  display: none;
+}
+.future-home .hero-description {
+  font-size: 14px;
+  line-height: 1.8;
+  max-width: 450px;
+  margin-top: 25px;
+}
+.future-home .hero .button {
+  border-radius: 30px;
+  padding: 15px 22px;
+  min-height: 52px;
+}
+.future-home .hero-note {
+  margin-top: 22px;
+}
+.future-home .energy-scene {
+  min-height: 520px;
+  aspect-ratio: 1.02;
+  border-radius: 28px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 75% 25%, #28505a70, transparent 55%),
+    radial-gradient(ellipse at 15% 80%, #283c9b80, transparent 60%), #0a1423;
+  color: #e9f0f7;
+  box-shadow: 0 22px 65px #12203518;
+  isolation: isolate;
+}
+.scene-top {
+  position: absolute;
+  inset: 28px 25px auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  font: 8px/1.6 monospace;
+  letter-spacing: 1.1px;
+  color: #c0d0df;
+  z-index: 2;
+}
+.scene-top i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #d4f54a;
+  border-radius: 50%;
+  margin-right: 7px;
+}
+.energy-art {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 90px);
+  stroke-width: 1;
+  overflow: visible;
+}
+.energy-orbit {
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  border: 1px solid #92bcdb1c;
+  border-radius: 50%;
+  top: 60px;
+  left: calc(50% - 180px);
+}
+.orbit-two {
+  width: 470px;
+  height: 470px;
+  left: calc(50% - 235px);
+  top: 5px;
+  border-style: dashed;
+  opacity: 0.6;
+}
+.network-node {
+  position: absolute;
+  padding: 13px 15px;
+  background: #182d40eb;
+  border: 1px solid #6c8f9d6b;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 10px 30px #0003;
+}
+.network-node svg {
+  color: #d4f54a;
+  width: 24px;
+  height: 24px;
+}
+.network-node span {
+  font: 8px/1.4 monospace;
+  letter-spacing: 1px;
+}
+.node-home {
+  top: 38%;
+  left: 7%;
+  transform: rotate(-6deg);
+}
+.node-driver {
+  top: 26%;
+  right: 6%;
+  transform: rotate(6deg);
+}
+.scene-bottom {
+  position: absolute;
+  bottom: 44px;
+  left: 25px;
+  right: 25px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+.scene-bottom strong {
+  font-family: Manrope, sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+}
+.scene-bottom > span {
+  max-width: 120px;
+  font: 8px/1.8 monospace;
+  color: #bbcfdf;
+  letter-spacing: 1px;
+}
+.scene-caption {
+  position: absolute;
+  bottom: 16px;
+  left: 25px;
+  font-size: 8px;
+  color: #b2c3d4;
+}
+.vehicle-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding-top: 12px;
+  padding-bottom: 40px;
+}
+.vehicle-strip > span {
+  font: 9px/1.7 monospace;
+  color: #4e6274;
+  letter-spacing: 1px;
+}
+.vehicle-strip > div {
+  font-family: Manrope, sans-serif;
+  font-size: 19px;
+  letter-spacing: -0.6px;
+}
+.vehicle-strip i {
+  color: #2449eb;
+  font-style: normal;
+  margin: 0 20px;
+}
+.future-home .ribbon {
+  display: none;
+}
+.future-home .offerings {
+  background: #101e30;
+  color: #f5f7fa;
+  border-radius: 28px;
+  padding: 65px 45px;
+  margin-top: 12px;
+}
+.future-home .offerings > .eyebrow {
+  color: #d4f54a;
+}
+.future-home .offerings-intro,
+.future-home .offerings-note {
+  color: #bfcbd8;
+}
+.future-home .offerings-grid {
+  gap: 16px;
+}
+.future-home .offerings-grid > a {
+  background: #1b2b40;
+  color: #f5f7fa;
+  border: 1px solid #36465b;
+  border-radius: 18px;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+}
+.future-home .offerings-grid > a:hover {
+  transform: translateY(-4px);
+  border-color: #d4f54a;
+}
+.future-home .offerings-grid > a span,
+.future-home .offerings-grid > a strong {
+  color: #dcf788;
+}
+.future-home .offerings-grid > a p,
+.future-home .offerings-grid > a small {
+  color: #c3cdda;
+}
+.future-home .how {
+  padding-top: 100px;
+}
+.future-home .charging-steps {
+  gap: 18px;
+}
+.future-home .charging-steps article {
+  background: #fff;
+  border: 1px solid #dce3e7;
+  border-radius: 18px;
+  padding: 24px 20px;
+}
+.future-home .charging-steps .step-top {
+  margin-bottom: 35px;
+}
+.future-home .charging-steps h3 {
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: -0.7px;
+}
+.future-home .host-band {
+  background: #d4f54a;
+}
+.future-home .host-poster {
+  border-radius: 20px;
+  box-shadow: 14px 16px 0 #aac937;
+}
+.future-home .hosting-guide-cards article {
+  background: #fff;
+  border-color: #dce3e7;
+  border-radius: 18px;
+}
+.future-home .fleet-priorities {
+  background: #e9edf8;
+  border-radius: 22px;
+}
+.future-home .trust {
+  border-top: 1px solid #dce3e7;
+  border-bottom: 1px solid #dce3e7;
+}
+.future-home .stage-note {
+  color: #49594e;
+}
+.future-home .review-section,
+.future-home .contact {
+  scroll-margin-top: 24px;
+}
+.future-home a:focus-visible,
+.future-home button:focus-visible {
+  outline: 3px solid #2449eb;
+  outline-offset: 5px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .energy-scene .orbit-one {
+    animation: energy-arrive 1.5s ease-out both;
+  }
+  @keyframes energy-arrive {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+@media (max-width: 1100px) {
+  .future-home .hero {
+    gap: 30px;
+  }
+  .future-home .energy-scene {
+    min-height: 460px;
+  }
+  .vehicle-strip i {
+    margin: 0 10px;
+  }
+  .vehicle-strip > div {
+    font-size: 16px;
+  }
+}
+@media (max-width: 800px) {
+  .future-home .header {
+    width: calc(100% - 32px);
+    height: 70px;
+    padding: 0 18px;
+    margin-top: 12px;
+  }
+  .future-home .header nav {
+    border-radius: 20px;
+    background: #fff;
+  }
+  .future-home .hero {
+    padding-top: 42px;
+    gap: 32px;
+  }
+  .future-home .hero h1 {
+    font-size: clamp(46px, 8vw, 68px);
+  }
+  .future-home .hero-description {
+    font-size: 14px;
+  }
+  .future-home .energy-scene {
+    min-height: 420px;
+    aspect-ratio: 1.08;
+  }
+  .future-home .hero .eyebrow {
+    font-size: 8px;
+    margin-bottom: 20px;
+  }
+  .vehicle-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-bottom: 28px;
+  }
+  .vehicle-strip > div {
+    font-size: 15px;
+    line-height: 2;
+  }
+  .vehicle-strip i {
+    margin: 0 7px;
+  }
+  .future-home .offerings {
+    padding: 35px 22px;
+    border-radius: 22px;
+  }
+  .future-home .offerings h2 {
+    font-size: 32px;
+  }
+  .future-home .how {
+    padding-top: 65px;
+  }
+}
+@media (max-width: 480px) {
+  .future-home .hero {
+    padding-top: 35px;
+  }
+  .future-home .hero h1 {
+    font-size: 48px;
+  }
+  .future-home .energy-scene {
+    min-height: 385px;
+  }
+  .scene-top {
+    inset: 22px 18px auto;
+    font-size: 7px;
+    letter-spacing: 0.5px;
+  }
+  .scene-top span:last-child {
+    display: none;
+  }
+  .network-node {
+    padding: 10px;
+  }
+  .network-node span {
+    font-size: 6px;
+  }
+  .scene-bottom {
+    left: 18px;
+    right: 18px;
+  }
+  .scene-bottom strong {
+    font-size: 19px;
+  }
+  .scene-bottom > span {
+    max-width: 85px;
+    font-size: 7px;
+  }
+  .scene-caption {
+    left: 18px;
+    font-size: 7px;
+  }
+  .vehicle-strip > div {
+    font-size: 14px;
+  }
+  .vehicle-strip i {
+    margin: 0 4px;
+  }
+  .future-home .host-poster {
+    box-shadow: 8px 10px 0 #aac937;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .future-home {
+    scroll-behavior: auto;
+  }
+  .future-home *,
+  .future-home *::before,
+  .future-home *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* Allow the illustration to shrink inside grid tracks at every viewport. */
+.future-home .hero {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+}
+.future-home .energy-scene {
+  width: 100%;
+  min-width: 0;
+}
+@media (max-width: 900px) {
+  .future-home .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .future-home .energy-scene {
+    height: 500px;
+    aspect-ratio: auto;
+  }
+}
+@media (max-width: 480px) {
+  .future-home .energy-scene {
+    height: 400px;
+  }
+  .future-home .nav-cta {
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+  .future-home .header {
+    gap: 12px;
+  }
+}
+@media (max-width: 700px) {
+  .future-home .charging-steps .step-top {
+    position: static;
+    margin-bottom: 24px;
+  }
+  .future-home .charging-steps .step-top svg {
+    display: block;
+  }
+  .future-home .hero h1 {
+    font-size: clamp(40px, 12.3vw, 48px);
+  }
+}
+@media (max-width: 360px) {
+  .future-home .nav-cta {
+    display: none;
+  }
+  .future-home .menu-button {
+    margin-left: auto;
+  }
+  .vehicle-strip > div {
+    font-size: 12px;
+  }
+}
