@@ -37,3 +37,5 @@
     grid-template-columns: 1fr;
   }
 }
+/* Legal-page link colour must not override primary button text. */
+.legal-page a.button.primary { color: #fff; }
