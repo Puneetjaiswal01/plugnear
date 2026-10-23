@@ -48,3 +48,11 @@ Static build and 12 homepage browser checks passed. Live HTTPS browser checks at
 See COMPETITOR_RESEARCH.md for the 20-reference source review and execution priorities. Source `7eaa4a1` deployed READY as `dpl_9H284eVTqEH1xhhPwCA4jfkKWVEZ`. Added public host guide/cost calculator and explicit request windows, duration and pricing. Typecheck, 49 unit/database tests, 60 browser tests and web build passed. Live mobile/desktop guide checks and two deployed-frontend request tests with mocked Auth/database passed. No real payment or host session was tested. No database migration or Claim360 resource was changed. Existing launch gates remain.
 
 Final visual follow-up `e5324f0`: deployment `dpl_5g87nAHChLKHP5YK1zRmggTGaGZp` READY; live mobile/desktop host application text contrast and overflow checks passed. Main research source CI 39921313503 was still in progress at final review.
+
+## Mobile entry and launch-review release — 23 October 2026
+
+Source `4094253` deployed READY as `dpl_Fxjxt7XufbzWXGxUDgzisfTWBUhg`. Added entry aliases, no-JavaScript/delayed-start recovery, actionable zero-inventory state and separate backend-error state. Personal phone numbers removed from public homepage/structured data/support/discovery guide; existing business enquiry email retained pending a provisioned domain mailbox.
+
+Typecheck and Expo web/static build passed; all 68 local Chromium desktop/mobile browser tests passed. Eight live-domain tests passed for entry aliases, contacts, startup failure/no-JavaScript and empty-vs-failed discovery. Auth/database calls were intercepted for live discovery fixtures: no real account/booking/payment created. Source CI https://github.com/Puneetjaiswal01/plugnear/actions/runs/39923523616 passed. Browser screenshots reviewed. WebKit could not launch because required shared libraries were unavailable; no Safari or physical-phone acceptance is claimed.
+
+See PHONE_PILOT_ACCEPTANCE.md for owner-led iPhone/Android and real charging/payment acceptance. Existing SMTP, confirmed administrator, real inventory, legal/provider and physical pilot gates remain. No new database, merchant, WhatsApp, company, stored waitlist or analytics service was provisioned, and no Claim360 resource changed.
