@@ -185,7 +185,7 @@ A successful supervised session is stronger proof than a redesigned nationwide m
 - Clarified straight-line distance and the distinction between host/booking status and hardware telemetry; added practical pre-arrival/payment guidance.
 - Linked the host guide/calculator from the homepage and added its canonical URL to the sitemap.
 
-These are source changes pending the validation/deployment record below; do not infer a live feature from this section alone.
+These changes are deployed; see the validation/deployment record below. They do not establish operational launch readiness.
 
 ### Next, with backend and operational design
 
@@ -210,3 +210,13 @@ Record consented operational observations, not invented launch numbers: successf
 ## Practical launch recommendation
 
 Use the new guide to recruit and prepare a small real host cohort. Complete email delivery and owner/admin setup, then perform the physical acceptance test. Keep broader ads and automated-service promises on hold. Research suggests where to improve, but it cannot prove local demand, legality, insurance coverage, interoperability rights or a bank transfer.
+
+## Validation and deployment record
+
+- Source: `7eaa4a1`, pushed to main.
+- Production: Vercel `dpl_9H284eVTqEH1xhhPwCA4jfkKWVEZ`, READY, serving www.plugnear.in and app.plugnear.in.
+- Local checks: typecheck, 49 unit/database tests, 60 browser tests and Expo web/static website build passed. New tests cover invalid/gapped windows, energy/rate bounds, IST display, cost losses, negative contribution and invalid inputs.
+- Live browser checks at 390/1440px: host guide/calculator loaded, calculated negative contribution correctly, made no form writes, and showed no overflow/script errors. Homepage guide/calculator links present.
+- Two additional tests exercised the deployed app frontend with intercepted Auth/database fixtures: selected a published future start, rejected a duration beyond the window and submitted the expected start/end after correction. No real account, booking or money transfer was created by those tests.
+- CI run 39921313503 was still running at this record. Native store signing/builds, provider SMTP delivery and physical charging/payment UAT were not performed by this release.
+- Existing near-term map status rules, database authorisation and manual UPI limitations remain. No claim is made that recurring/future-date discovery, hardware telemetry, insurance, gateway refunds or full paid launch are complete.
