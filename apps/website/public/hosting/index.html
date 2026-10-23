@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Share Your EV Charger in Delhi NCR | PlugNear Host Guide</title>
+    <meta
+      name="description"
+      content="Prepare your EV charger for PlugNear’s Delhi NCR pilot. Check hosting permission, equipment, access, availability and illustrative charging costs before applying."
+    />
+    <link rel="canonical" href="https://www.plugnear.in/hosting/" />
+    <meta name="theme-color" content="#2449eb" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/legal.css" />
+    <link rel="stylesheet" href="/hosting/hosting.css" />
+    <script type="module" src="/hosting/calculator.mjs"></script>
+  </head>
+  <body>
+    <main class="section-wrap legal-page" id="main">
+      <a href="/">← PlugNear home</a
+      ><span class="eyebrow">DELHI NCR · PILOT HOST GUIDE</span>
+      <h1>Share your charger.<br />Make the details clear.</h1>
+      <p>
+        Help a neighbour, taxi driver or fleet find a suitable place to charge.
+        Start with an approved installation, permission to host and reliable
+        access. We are recruiting pilot hosts; applying does not guarantee
+        approval or bookings.
+      </p>
+      <nav aria-label="Guide sections">
+        <a href="#readiness">Host checklist</a
+        ><a href="#costs">Cost calculator</a
+        ><a href="#first-session">First session</a>
+      </nav>
+      <section id="readiness">
+        <h2>Before you apply</h2>
+        <ol>
+          <li>
+            <strong>Permission:</strong> confirm you can share the site and
+            parking space. Obtain landlord, society or business permission where
+            needed. Check your electricity arrangement and applicable local
+            requirements with qualified advisers.
+          </li>
+          <li>
+            <strong>Equipment:</strong> record the charger’s make/model,
+            connector and available power. Have a qualified electrician assess
+            the installation, protection and load. A generic socket, adapter or
+            vehicle category does not establish compatibility.
+          </li>
+          <li>
+            <strong>Access:</strong> describe parking position, vehicle
+            clearance, opening hours, cable reach and how a driver meets you. Do
+            not place gate codes, passwords, ID documents or bank details in
+            public listing text.
+          </li>
+          <li>
+            <strong>Availability:</strong> publish windows you can honour,
+            review requests and keep the charger offline when it cannot be used.
+            A request needs host acceptance; a map status is not a guarantee
+            that equipment works.
+          </li>
+          <li>
+            <strong>Price and payment:</strong> choose your rate with actual
+            electricity and site costs in mind. Use a UPI VPA you control. Check
+            funds in your own banking/UPI app before confirming receipt; a
+            screenshot or driver report is not proof.
+          </li>
+          <li>
+            <strong>Insurance and support:</strong> check your cover with your
+            insurer. PlugNear does not provide a charger-sharing insurance
+            policy, damage guarantee or emergency response service. Review
+            <a href="/terms/">pilot terms</a> before hosting.
+          </li>
+        </ol>
+        <a class="button primary" href="/app/?mode=host">Apply to host →</a>
+      </section>
+      <section id="costs">
+        <h2>Understand a session’s costs</h2>
+        <p>
+          Change the assumptions below to explore a single illustrative session.
+          These are editable examples, not PlugNear fees, expected demand or an
+          earnings forecast. Nothing is stored or sent.
+        </p>
+        <form id="host-cost">
+          <div class="cost-grid">
+            <label
+              >Energy delivered (kWh)<input
+                type="number"
+                name="energy"
+                value="5"
+                min="0.01"
+                max="500"
+                step="any"
+                required /></label
+            ><label
+              >Host selling rate (₹/kWh)<input
+                type="number"
+                name="rate"
+                value="15"
+                min="0"
+                max="100"
+                step="any"
+                required /></label
+            ><label
+              >Electricity input tariff (₹/kWh)<input
+                type="number"
+                name="tariff"
+                value="9"
+                min="0"
+                max="100"
+                step="any"
+                required /></label
+            ><label
+              >Assumed energy loss (%)<input
+                type="number"
+                name="loss"
+                value="10"
+                min="0"
+                max="40"
+                step="any"
+                required /></label
+            ><label
+              >Other assumed session costs (₹)<input
+                type="number"
+                name="other"
+                value="0"
+                min="0"
+                max="100000"
+                step="any"
+                required
+            /></label>
+          </div>
+          <button class="button primary" type="submit">
+            Calculate session example
+          </button>
+          <p id="cost-result" role="status" aria-live="polite"></p>
+          <noscript
+            ><p>
+              Enable JavaScript to use the calculator. You can calculate gross
+              as energy × rate, and subtract electricity input cost and other
+              costs manually.
+            </p></noscript
+          >
+        </form>
+        <p>
+          For illustration, delivering 5 kWh with 10% of input energy lost needs
+          about 5.56 kWh from the supply. Site charges, demand/fixed charges,
+          equipment, maintenance, insurance, payment costs and taxes may still
+          apply. Zero in “other costs” is an assumption, not a promise of no
+          fees.
+        </p>
+        <p>
+          <strong>The pilot is not independently metered.</strong> Its booking
+          amount uses the requested energy estimate and listed rate. The
+          calculator does not change that amount or reconcile delivered energy.
+          Agree the estimate and access before starting; differences, refunds
+          and disputes require manual resolution.
+        </p>
+      </section>
+      <section id="first-session">
+        <h2>Make the first session a supported handover</h2>
+        <ol>
+          <li>
+            Review the request, compatibility and parking arrangements before
+            accepting. Meet the driver for the first visit where practical.
+          </li>
+          <li>
+            After acceptance, the driver uses the booking’s UPI checkout. Verify
+            the actual recipient, amount and receipt before confirming.
+          </li>
+          <li>
+            Check equipment and access together. Start only when the booking and
+            payment steps permit it. Stop using equipment if damaged or unsafe;
+            contact the host and appropriate qualified help.
+          </li>
+          <li>
+            Finish the session, release the space on time and raise any issue
+            through Bookings or <a href="/support/">support</a>. Do not pay an
+            unsolicited “refund fee” or share a UPI PIN.
+          </li>
+        </ol>
+      </section>
+      <nav aria-label="Further help">
+        <a href="/app/?mode=host">Apply to host</a
+        ><a href="/ev-charger-near-me/">Driver compatibility guide</a
+        ><a href="/support/">Support</a><a href="/terms/">Pilot terms</a
+        ><a href="/privacy/">Privacy</a>
+      </nav>
+    </main>
+  </body>
+</html>

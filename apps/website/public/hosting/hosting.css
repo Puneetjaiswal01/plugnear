@@ -1,0 +1,39 @@
+.legal-page > .eyebrow {
+  margin-top: 40px;
+  color: #2449eb;
+}
+.cost-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 24px;
+}
+.cost-grid input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  margin-top: 6px;
+  font: inherit;
+  border: 1px solid #86958d;
+  border-radius: 8px;
+}
+#cost-result {
+  margin-top: 24px;
+  color: #172925;
+  font-weight: 600;
+}
+.legal-page strong {
+  color: #25342d;
+}
+.legal-page section {
+  scroll-margin-top: 24px;
+}
+.legal-page input:focus-visible {
+  outline: 3px solid #2449eb;
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .cost-grid {
+    grid-template-columns: 1fr;
+  }
+}

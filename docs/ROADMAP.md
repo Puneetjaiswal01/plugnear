@@ -9,3 +9,7 @@
 7. **Later option:** white-label management for RWAs, hotels and office/parking sites, using the validated host/session stack. Do not split the first release across three unvalidated businesses.
 
 [Strategy](STRATEGY.md) records the market assumptions and pilot learning goals. [Implementation requirements](MICROHOST_REQUIREMENTS.md) define the upcoming domain model and authorisation contract. The local planner is a planning aid, not evidence of deployed fleet integrations or smart hardware.
+
+## Competitive review — 23 October 2026
+
+See [COMPETITOR_RESEARCH.md](COMPETITOR_RESEARCH.md) for the 20-reference evidence review, status corrections and prioritized backend/operational acceptance criteria. This stage adds a local host cost guide and explicit request time/duration/price planning; recurring calendars, privacy-separated access instructions, session-linked incident reports, reviews, telemetry and automatic refunds remain separate work.

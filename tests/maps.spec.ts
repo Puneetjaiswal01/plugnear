@@ -176,3 +176,72 @@ test("GPS centers nearby search, markers support keyboard selection and filters 
   await page.getByLabel("Within (km)", { exact: true }).fill("25");
   await expect.poll(() => requests.at(-1)?.p_radius_km).toBe(25);
 });
+
+test("driver chooses a published host window, checks the estimate and cannot request across its boundary", async ({
+  page,
+}) => {
+  const windows = [
+    {
+      starts_at: new Date(Date.now() - 3600000).toISOString(),
+      ends_at: new Date(Date.now() + 86400000).toISOString(),
+    },
+    {
+      starts_at: new Date(Date.now() + 2 * 86400000).toISOString(),
+      ends_at: new Date(Date.now() + 2 * 86400000 + 3 * 3600000).toISOString(),
+    },
+  ];
+  await prepare(page);
+  await page.route("**/rest/v1/availability?*", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(windows),
+    }),
+  );
+  const reservations: Record<string, unknown>[] = [];
+  await page.route("**/rest/v1/rpc/reserve_charger", async (route) => {
+    reservations.push(route.request().postDataJSON());
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: '{"id":"fixture-reservation"}',
+    });
+  });
+  await page
+    .getByRole("button", { name: "Search this map area", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: /Fixture Delhi charger.*View charger/ })
+    .click();
+  await page
+    .getByRole("button", { name: /Start in window:/ })
+    .nth(1)
+    .click();
+  await page.getByLabel("Session duration (hours)", { exact: true }).fill("4");
+  await expect(
+    page.getByText(
+      "Your session must fit inside one host availability window.",
+      { exact: false },
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Request this charger", exact: true }),
+  ).toBeDisabled();
+  expect(reservations).toEqual([]);
+  await page.getByLabel("Session duration (hours)", { exact: true }).fill("2");
+  await expect(
+    page.getByText("Estimate ₹75.00 = 5 kWh", { exact: false }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Request this charger", exact: true })
+    .click();
+  await expect(page.getByText("Request sent.", { exact: false })).toBeVisible();
+  expect(reservations).toHaveLength(1);
+  expect(reservations[0].p_start).toBe(
+    new Date(windows[1].starts_at).toISOString(),
+  );
+  expect(
+    Date.parse(String(reservations[0].p_end)) -
+      Date.parse(String(reservations[0].p_start)),
+  ).toBe(2 * 3600000);
+});

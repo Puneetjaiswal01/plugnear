@@ -120,7 +120,7 @@ test("search discovery pages have consistent canonical URLs and usable links", a
   const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(
     (match) => match[1],
   );
-  expect(urls.length).toBe(7);
+  expect(urls.length).toBe(8);
   for (const url of urls) {
     const path = new URL(url).pathname;
     await page.goto(`http://localhost:4175${path}`);
@@ -190,4 +190,34 @@ test("homepage anchors resolve and pilot enquiry stays local until email is sent
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
+});
+
+test("host guide calculator is local, exposes assumptions and handles negative contributions", async ({
+  page,
+}) => {
+  const writes: string[] = [];
+  page.on("request", (r) => {
+    if (r.method() !== "GET") writes.push(r.url());
+  });
+  await page.goto("http://localhost:4175/hosting/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "Share your charger",
+  );
+  await expect(page.getByRole("status")).toContainText("₹25.00 contribution");
+  await page
+    .getByLabel("Other assumed session costs (₹)", { exact: true })
+    .fill("30");
+  await expect(page.getByRole("status")).toContainText("-₹5.00 contribution");
+  await page.getByLabel("Energy delivered (kWh)", { exact: true }).fill("");
+  await expect(page.getByRole("status")).toContainText("valid energy");
+  await expect(page.getByRole("status")).not.toContainText("NaN");
+  expect(writes).toEqual([]);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await expect(
+    page.getByRole("link", { name: "Apply to host →", exact: true }),
+  ).toHaveAttribute("href", "/app/?mode=host");
 });

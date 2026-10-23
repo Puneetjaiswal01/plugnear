@@ -7,7 +7,8 @@ import { Button, Field, Card, s, palette } from "./ui";
 import ChargerMap from "./ChargerMap";
 import type { MapPoint } from "./map-types";
 const delhiNcr = { lat: 28.6139, lon: 77.209 };
-import { type Charger, bookingWindow, inr } from "@plugnear/core/domain";
+import { type Charger, inr } from "@plugnear/core/domain";
+import { earliestStart, sessionEstimate, indiaTime } from "./session-plan";
 const connectors = ["All", "Type 2", "CCS2", "Bharat AC", "CHAdeMO"];
 export function Discover() {
   const [point, setPoint] = useState<MapPoint | null>(null),
@@ -185,7 +186,19 @@ export function Discover() {
       .then(({ data, error }) => {
         if (alive) {
           if (error) setError(error.message);
-          else setSlots(data || []);
+          else {
+            const windows = data || [];
+            setSlots(windows);
+            const first = windows.find((slot) => {
+              try {
+                earliestStart(slot);
+                return true;
+              } catch {
+                return false;
+              }
+            });
+            if (first) setStart(earliestStart(first));
+          }
         }
       });
     return () => {
@@ -203,7 +216,13 @@ export function Discover() {
         throw new Error(
           "This charger is not available now. Refresh nearby chargers.",
         );
-      const window = bookingWindow(start, Number(hours));
+      const window = sessionEstimate(
+        start,
+        Number(hours),
+        Number(kwh),
+        selected.price_per_kwh,
+        slots,
+      );
       const key = requestKey || randomUUID();
       setRequestKey(key);
       const { error } = await db.rpc("reserve_charger", {
@@ -221,6 +240,21 @@ export function Discover() {
       setError((e as Error).message);
     } finally {
       setBusy(false);
+    }
+  }
+  let estimate: ReturnType<typeof sessionEstimate> | null = null;
+  let planningError = "";
+  if (selected && slots.length) {
+    try {
+      estimate = sessionEstimate(
+        start,
+        Number(hours),
+        Number(kwh),
+        selected.price_per_kwh,
+        slots,
+      );
+    } catch (e) {
+      planningError = (e as Error).message;
     }
   }
   return (
@@ -323,7 +357,8 @@ export function Discover() {
       <Text style={s.text}>
         {connection}
         {updated ? ` · Checked ${updated}` : ""}. Green: available · amber: busy
-        · grey: offline.
+        · grey: offline. Status reflects host settings and bookings, not live
+        electrical telemetry.
       </Text>
       <Text style={s.h2}>{items.length} chargers nearby</Text>
       {point && !busy && items.length === 0 && (
@@ -348,7 +383,7 @@ export function Discover() {
             </View>
             <Text style={s.text}>
               {c.connector} · {c.power_kw} kW · {c.distance_km?.toFixed(1)} km
-              away
+              away (straight-line distance)
             </Text>
             <Text style={s.text}>{c.address}</Text>
             <Text style={s.label}>
@@ -376,10 +411,22 @@ export function Discover() {
           </Button>
           <Text style={s.label}>Host availability</Text>
           {slots.map((a, i) => (
-            <Text key={i} style={s.text}>
-              {new Date(a.starts_at).toLocaleString()} —{" "}
-              {new Date(a.ends_at).toLocaleString()}
-            </Text>
+            <Button
+              key={`${a.starts_at}-${i}`}
+              quiet
+              onPress={() => {
+                try {
+                  setStart(earliestStart(a));
+                  setRequestKey(null);
+                  setMessage("");
+                  setError("");
+                } catch (e) {
+                  setError((e as Error).message);
+                }
+              }}
+            >
+              {`Start in window: ${indiaTime(a.starts_at)} – ${indiaTime(a.ends_at)} IST`}
+            </Button>
           ))}
           {slots.length === 0 && (
             <Text style={s.text}>
@@ -387,19 +434,19 @@ export function Discover() {
             </Text>
           )}
           <Text style={s.text}>
-            Pilot request: one hour, starting in about five minutes. The server
-            rechecks availability before reserving.
+            Choose a host window above. All times below are India Standard Time
+            (IST). The server rechecks the slot before reserving.
           </Text>
-          <Button
-            quiet
-            onPress={() => {
-              setStart(new Date(Date.now() + 5 * 60000).toISOString());
+          <Field
+            label="Session duration (hours)"
+            value={hours}
+            keyboardType="decimal-pad"
+            onChangeText={(v) => {
+              setHours(v);
               setRequestKey(null);
               setMessage("");
             }}
-          >
-            Use the next hour
-          </Button>
+          />
           <Field
             label="Energy to reserve (kWh)"
             value={kwh}
@@ -410,15 +457,42 @@ export function Discover() {
               setMessage("");
             }}
           />
+          {estimate && (
+            <>
+              <Text style={s.label}>
+                {indiaTime(estimate.starts_at)} – {indiaTime(estimate.ends_at)}{" "}
+                IST
+              </Text>
+              <Text style={s.text}>
+                Estimate {inr(estimate.amount_paise)} = {kwh} kWh ×{" "}
+                {inr(selected.price_per_kwh * 100)}/kWh. The server confirms the
+                booking amount; this is not a metered bill.
+              </Text>
+              {Number(kwh) > Number(hours) * selected.power_kw && (
+                <Text style={s.error}>
+                  Your requested energy exceeds the advertised power × time.
+                  Allow more time or reduce your energy estimate. Your vehicle’s
+                  charging limit and losses may reduce delivery further.
+                </Text>
+              )}
+            </>
+          )}
+          {!!planningError && (
+            <Text accessibilityRole="alert" style={s.error}>
+              {planningError}
+            </Text>
+          )}
           <Text style={s.text}>
-            Estimate {inr(Number(kwh) * selected.price_per_kwh * 100)} ·
-            confirmed by the server. After host acceptance, pay the host
-            directly by UPI and wait for receipt confirmation.
+            Before requesting: check your vehicle’s connector and charging
+            limit, parking/site access and the host’s instructions. Do not
+            travel or pay before the host accepts. UPI receipt is manually
+            host-confirmed; refunds require manual resolution.
           </Text>
           <Button
             disabled={
               busy ||
               !!message ||
+              !estimate ||
               slots.length === 0 ||
               selected.availability_status !== "available"
             }

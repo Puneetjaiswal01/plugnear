@@ -4,13 +4,13 @@
 
 ## Delivered scope
 
-Find a compatible approved charger → request a one-hour pilot session → verified host accepts → driver opens fixed server-priced direct UPI checkout → driver reports the transfer reference → host checks their bank/UPI app and confirms actual receipt → host starts/finishes the physical charging session.
+Find a compatible approved charger → choose a published host window/start and request a 0.5–12 hour pilot session → verified host accepts → driver opens fixed server-priced direct UPI checkout → driver reports the transfer reference → host checks their bank/UPI app and confirms actual receipt → host starts/finishes the physical charging session.
 
 This is a manual direct-to-host payment pilot, not a bank-verified gateway integration. There is no escrow, automatic settlement, automatic refund, hardware relay control or measured-energy verification. No platform commission is collected by this flow. A QR or a driver screenshot is not proof of receipt. Requests retain exclusion constraints, server pricing, account checks and host verification.
 
 ## Backend applied
 
-Only `yxisoddhwlzetrnfbbno` was changed. PostGIS 3.3.7 is installed in extensions; charger geography is generated from longitude/latitude with a GiST index. `get_nearby_chargers` validates coordinates/filter bounds, returns only RLS-visible approved verified-host listings and computes available/busy/offline status without exposing other drivers' bookings. The pilot searches the next hour; it is not a promise of future-slot availability.
+Only `yxisoddhwlzetrnfbbno` was changed. PostGIS 3.3.7 is installed in extensions; charger geography is generated from longitude/latitude with a GiST index. `get_nearby_chargers` validates coordinates/filter bounds, returns only RLS-visible approved verified-host listings and computes available/busy/offline status without exposing other drivers' bookings. The map status still evaluates the near-term window; the client can select published starts, but this does not make future-date discovery independent of that current status. Server revalidation remains authoritative.
 
 Migrations `20261020092659_web_first_charging_mvp` and `20261020093245_mvp_checkout_hardening` were applied. Charger INSERT/UPDATE requires a verified owner via restrictive policies. Direct booking INSERT remains revoked: drivers use the guarded reservation RPC. Realtime publication contains chargers and bookings. Booking/window changes bump a non-sensitive charger revision so discovery refetches; subscriptions reconnect and a 15-second refresh handles missed events and time boundaries. The server always rechecks before reserving.
 
