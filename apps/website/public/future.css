@@ -199,11 +199,7 @@
   font-size: 19px;
   letter-spacing: -0.6px;
 }
-.vehicle-strip i {
-  color: #2449eb;
-  font-style: normal;
-  margin: 0 20px;
-}
+
 .future-home .ribbon {
   display: none;
 }
@@ -319,9 +315,7 @@
   .future-home .energy-scene {
     min-height: 460px;
   }
-  .vehicle-strip i {
-    margin: 0 10px;
-  }
+
   .vehicle-strip > div {
     font-size: 16px;
   }
@@ -365,9 +359,7 @@
     font-size: 15px;
     line-height: 2;
   }
-  .vehicle-strip i {
-    margin: 0 7px;
-  }
+
   .future-home .offerings {
     padding: 35px 22px;
     border-radius: 22px;
@@ -421,9 +413,7 @@
   .vehicle-strip > div {
     font-size: 14px;
   }
-  .vehicle-strip i {
-    margin: 0 4px;
-  }
+
   .future-home .host-poster {
     box-shadow: 8px 10px 0 #aac937;
   }
@@ -490,5 +480,43 @@
   }
   .vehicle-strip > div {
     font-size: 12px;
+  }
+}
+
+.vehicle-strip .vehicle-types {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 26px;
+}
+.vehicle-types > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.vehicle-types svg {
+  width: 25px;
+  height: 25px;
+  color: #2449eb;
+  stroke-width: 1.5;
+}
+@media (max-width: 1100px) {
+  .vehicle-strip {
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  .vehicle-strip .vehicle-types {
+    gap: 14px 20px;
+  }
+}
+@media (max-width: 480px) {
+  .vehicle-strip .vehicle-types {
+    gap: 14px 18px;
+    font-size: 14px;
+  }
+  .vehicle-types svg {
+    width: 22px;
+    height: 22px;
   }
 }
