@@ -140,7 +140,7 @@ export default function App() {
           ) : recovering ? (
             <PasswordRecovery onDone={() => setRecovering(false)} />
           ) : tab === "Find a charger" ? (
-            <Discover />
+            <Discover onHost={() => setTab("List a charger")} />
           ) : tab === "List a charger" ? (
             <Host uid={session.user.id} />
           ) : tab === "Bookings" ? (

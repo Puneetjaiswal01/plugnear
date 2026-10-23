@@ -76,8 +76,12 @@ await writeFile(
     })),
   }),
 );
+await cp(new URL("./pwa/startup.js", root), new URL("./app/startup.js", dist));
 const appHtmlUrl = new URL("./app/index.html", dist);
-const html = await readFile(appHtmlUrl, "utf8");
+const startupHelp = await readFile(new URL("./pwa/startup.html", root), "utf8");
+const html = (await readFile(appHtmlUrl, "utf8"))
+  .replace(/<noscript>[\s\S]*?<\/noscript>/, "")
+  .replace('<div id="root"></div>', '<div id="root"></div>' + startupHelp);
 await writeFile(
   appHtmlUrl,
   html.replace(
@@ -122,6 +126,15 @@ await writeFile(
     {
       cleanUrls: true,
       redirects: [
+        { source: "/find", destination: "/app/?mode=find", permanent: false },
+        { source: "/host", destination: "/app/?mode=host", permanent: false },
+        { source: "/fleet", destination: "/fleet-pilot/", permanent: false },
+        {
+          source: "/fleet-planner",
+          destination: "/fleet-pilot/",
+          permanent: false,
+        },
+
         {
           source: "/",
           has: [{ type: "host", value: "app.plugnear.in" }],

@@ -1,3 +1,5 @@
+> Historical handoff below is dated 20 October. For the latest implementation/deployment record, use FULL_LAUNCH_STATUS.md. Physical-phone acceptance is still pending; follow PHONE_PILOT_ACCEPTANCE.md.
+
 > **Android TWA follow-up:** Bubblewrap source and certificate-validation endpoint are prepared; PWA deployment `dpl_ALxBQprJh71Q38RQbVVhfbpQK7nQ` is READY. 44 unit/database/config and 50 browser tests pass. No AAB was compiled; SDK/signing/certificate association and physical-device tests remain pending. See [TWA_ANDROID.md](TWA_ANDROID.md).
 
 # PlugNear launch handoff · 20 October 2026

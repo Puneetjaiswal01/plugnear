@@ -1,3 +1,24 @@
+# Follow-up to launch review · 23 October 2026
+
+The review includes useful launch gates and some items already delivered. Current release has email/password sign-in, an installable PWA, Delhi NCR recruitment messaging, compatibility guidance (not a model checker), a local host cost calculator, fleet planner and a structured request/UPI flow. Email form availability is not proof of transactional delivery; no SMS provider or Google OAuth configuration was created by this work.
+
+## This follow-up
+
+- Removed personal telephone links/numbers from homepage, structured contact data, support and discovery guide. Kept the existing functioning business enquiry email until a real domain mailbox/WhatsApp Business channel is provisioned. No `hello@` address was invented.
+- Added `/find`, `/host`, `/fleet` and `/fleet-planner` aliases to the existing routes, plus app startup recovery and JavaScript-disabled public help. The app requires JavaScript and authentication; a text-only crawler cannot inspect it like a static page.
+- Replaced vague discovery-screen heading with a direct charging search description. Zero matches now offer wider search, host switching and an enquiry route. Backend failure is a separate state and does not claim zero inventory.
+- Retained one recruitment identity and the safety-critical payment/compatibility limitations. Did not claim a working pilot, site safety certification, insurance, refunds, verified hardware status or live nationwide coverage.
+- Typecheck and Expo web/static build passed; all 68 Chromium desktop/mobile browser tests passed, including new route, no-JavaScript, startup failure, zero supply and service-error cases. A stale local preview process initially served the previous redirect handler; restarting that process and rerunning the complete suite passed.
+- WebKit downloaded, but the runtime lacked required shared libraries; that test engine was not run. Browser viewport tests do not replace a real iPhone/Android acceptance test. See PHONE_PILOT_ACCEPTANCE.md.
+
+## Owner/operational work still needed
+
+Verify transactional SMTP and the registered administrator; onboard a genuine reviewed host and run physical charging/payment UAT. The proposed 20–30 hosts / 50–100 drivers are recruitment targets, not achieved inventory. Select a real society/RWA cluster within Delhi NCR before broader acquisition. Provider-backed stored waitlist, funnel analytics, Google/SMS, domain email/WhatsApp, gateway refunds, real photographs/reviews, reviewed legal/privacy/insurance arrangements and roaming remain on hold. Existing public enquiry is an email draft, not a stored waitlist.
+
+The prior 20 October review below is historical; the preference then to retain phone numbers has been superseded by this review's request to remove them.
+
+---
+
 # Homepage review follow-up · 20 October 2026
 
 ## Ready changes

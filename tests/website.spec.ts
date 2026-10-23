@@ -221,3 +221,80 @@ test("host guide calculator is local, exposes assumptions and handles negative c
     page.getByRole("link", { name: "Apply to host →", exact: true }),
   ).toHaveAttribute("href", "/app/?mode=host");
 });
+
+test("public contacts omit personal phone numbers and common entry URLs open the intended routes", async ({
+  page,
+}) => {
+  for (const path of ["/", "/support/", "/ev-charger-near-me/"]) {
+    await page.goto(`http://localhost:4175${path}`);
+    expect(await page.locator('a[href^="tel:"]').count()).toBe(0);
+    const html = await page.content();
+    expect(html).not.toMatch(/9650238165|8278136027|96502 38165|82781 36027/);
+  }
+  for (const [alias, target] of [
+    ["find", "/app/?mode=find"],
+    ["host", "/app/?mode=host"],
+    ["fleet", "/fleet-pilot/"],
+    ["fleet-planner", "/fleet-pilot/"],
+  ]) {
+    await page.goto(`http://localhost:4175/${alias}`);
+    expect(new URL(page.url()).pathname + new URL(page.url()).search).toBe(
+      target,
+    );
+    if (alias === "find" || alias === "host")
+      await expect(
+        page.getByRole("button", { name: "Sign in", exact: true }),
+      ).toBeVisible();
+    else
+      await expect(page.getByRole("heading", { level: 1 })).toContainText(
+        "Start with your routes",
+      );
+  }
+});
+
+test("app loading failure offers recovery and public guides instead of a blank page", async ({
+  page,
+}) => {
+  await page.clock.install();
+  await page.route("**/_expo/static/js/web/*.js", (r) => r.abort());
+  await page.goto("http://localhost:4175/app/?mode=host");
+  await expect(
+    page.getByRole("heading", { name: "Opening PlugNear…", exact: true }),
+  ).toBeVisible();
+  await page.clock.fastForward(10001);
+  await expect(
+    page.getByRole("heading", {
+      name: "Taking longer than expected?",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Fleet planner", exact: true }),
+  ).toHaveAttribute("href", "https://www.plugnear.in/fleet-pilot/");
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+});
+
+test("app with JavaScript disabled explains the requirement and keeps public help reachable", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 390, height: 844 },
+  });
+  try {
+    const page = await context.newPage();
+    await page.goto("http://localhost:4175/app/");
+    await expect(
+      page.getByText("JavaScript is disabled.", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Host guide", exact: true }),
+    ).toHaveAttribute("href", "https://www.plugnear.in/hosting/");
+  } finally {
+    await context.close();
+  }
+});

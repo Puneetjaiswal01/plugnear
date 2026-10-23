@@ -245,3 +245,57 @@ test("driver chooses a published host window, checks the estimate and cannot req
       Date.parse(String(reservations[0].p_start)),
   ).toBe(2 * 3600000);
 });
+
+test("empty supply gives useful actions and a failed search does not claim zero inventory", async ({
+  page,
+}, info) => {
+  const requests = await prepare(page);
+  await page.route("**/rest/v1/rpc/get_nearby_chargers", (route) =>
+    route.fulfill({ status: 200, contentType: "application/json", body: "[]" }),
+  );
+  await page
+    .getByRole("button", { name: "Search this map area", exact: true })
+    .click();
+  await expect(
+    page.getByText("No approved chargers match this search yet.", {
+      exact: false,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Request this charger", exact: true }),
+  ).toHaveCount(0);
+  await page
+    .getByRole("button", { name: "Search a wider area", exact: true })
+    .click();
+  await expect(page.getByLabel("Within (km)", { exact: true })).toHaveValue(
+    "25",
+  );
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: `/tmp/plugnear-empty-${info.project.name}.png`,
+    fullPage: true,
+  });
+  await page.route("**/rest/v1/rpc/get_nearby_chargers", (route) =>
+    route.fulfill({
+      status: 503,
+      contentType: "application/json",
+      body: '{"message":"Service temporarily unavailable"}',
+    }),
+  );
+  await page
+    .getByRole("button", { name: "Search this map area", exact: true })
+    .click();
+  await expect(
+    page.getByText("Charger search unavailable", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("No approved chargers match this search yet.", {
+      exact: false,
+    }),
+  ).toHaveCount(0);
+  expect(requests).toEqual([]);
+});

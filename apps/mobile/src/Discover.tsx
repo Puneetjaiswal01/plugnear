@@ -10,7 +10,7 @@ const delhiNcr = { lat: 28.6139, lon: 77.209 };
 import { type Charger, inr } from "@plugnear/core/domain";
 import { earliestStart, sessionEstimate, indiaTime } from "./session-plan";
 const connectors = ["All", "Type 2", "CCS2", "Bharat AC", "CHAdeMO"];
-export function Discover() {
+export function Discover({ onHost }: { onHost?: () => void }) {
   const [point, setPoint] = useState<MapPoint | null>(null),
     [mapCenter, setMapCenter] = useState<MapPoint>(delhiNcr),
     [showUserLocation, setShowUserLocation] = useState(false),
@@ -261,9 +261,10 @@ export function Discover() {
     <>
       <View>
         <Text style={s.text}>YOUR NEXT STOP, SORTED</Text>
-        <Text style={s.title}>{"A little closer.\nA lot more charged."}</Text>
+        <Text style={s.title}>{"Find a charger.\nPlan your next stop."}</Text>
         <Text style={s.text}>
-          Find a trusted charger in your neighbourhood.
+          Search approved listings by connector, power and price. Availability
+          depends on verified hosts.
         </Text>
       </View>
       <Button disabled={busy} onPress={() => void locate()}>
@@ -360,14 +361,53 @@ export function Discover() {
         · grey: offline. Status reflects host settings and bookings, not live
         electrical telemetry.
       </Text>
-      <Text style={s.h2}>{items.length} chargers nearby</Text>
-      {point && !busy && items.length === 0 && (
+      <Text style={s.h2}>
+        {busy
+          ? "Searching for chargers…"
+          : error
+            ? "Charger search unavailable"
+            : point
+              ? `${items.length} chargers nearby`
+              : "Choose an area to search"}
+      </Text>
+      {point && !busy && !error && items.length === 0 && (
         <Card>
           <Text style={s.h2}>Room for a new connection.</Text>
           <Text style={s.text}>
-            No approved chargers match this search yet. Try a wider radius or
-            list your own charger.
+            No approved chargers match this search yet. You have not made a
+            booking or payment. Delhi NCR host recruitment is open.
           </Text>
+          {Number(radius) < 100 && (
+            <Button
+              quiet
+              onPress={() =>
+                setRadius(
+                  String(Math.min(100, Math.max(25, Number(radius) * 2))),
+                )
+              }
+            >
+              Search a wider area
+            </Button>
+          )}
+          {onHost && (
+            <Button quiet onPress={onHost}>
+              I have a charger to share
+            </Button>
+          )}
+          <Button
+            quiet
+            onPress={() =>
+              void Linking.openURL(
+                "https://www.plugnear.in/#pilot-enquiry",
+              ).catch(() =>
+                setError(
+                  "Open www.plugnear.in and choose Pilot enquiry to contact the team.",
+                ),
+              )
+            }
+          >
+            Tell us where you need charging
+          </Button>
         </Card>
       )}
       {items.map((c) => (

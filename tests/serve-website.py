@@ -11,6 +11,12 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         url = urlsplit(self.path)
+        aliases = {"/find": "/app/?mode=find", "/host": "/app/?mode=host", "/fleet": "/fleet-pilot/", "/fleet-planner": "/fleet-pilot/"}
+        if url.path.rstrip("/") in aliases:
+            self.send_response(307)
+            self.send_header("Location", aliases[url.path.rstrip("/")])
+            self.end_headers()
+            return
         candidate = root / url.path.lstrip("/")
         if url.path.endswith(".html") and candidate.is_file():
             self.send_response(308)
