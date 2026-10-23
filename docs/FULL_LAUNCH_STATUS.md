@@ -34,3 +34,11 @@ Source `69dafaf` is deployed to production as `dpl_84Q1NnWug5dAEkYT6Xtyjf39PdT2`
 Source `9f5212a` deployed as `dpl_AbPpbQnqAG4QiARPTfzqSzMrMrHk` (READY). Homepage now explains find → request/accept → direct UPI/manual receipt confirmation → charge, with a practical host review/availability/cost guide. Brand, public contacts, Delhi NCR recruitment status and fleet route remain. Co Charger was supplied as a reference; its homepage returned HTTP 403, so no claim is made to a visual audit or reproduced assets.
 
 Static website build and all 12 existing homepage browser checks passed across mobile and desktop. Live browser checks at 390px and 1440px confirmed the new content, no horizontal overflow and no script errors. This is a public website update, not proof of live email delivery or a real charging/payment session.
+
+## Reference-led visual update — 23 October 2026
+
+Source `c8fbde1` deployed as `dpl_37fdpYH1Yh8S4NA6PXNEY9n5Abzq` (READY). Original SVG/CSS charging artwork replaces the illustrative hero photos; rounded navigation, large blue typography, dark audience cards and restrained entrance motion give the homepage a more futuristic visual direction. Public contacts, driver/host routes, fleet offering and pilot/payment limitations remain. The homepage-only stylesheet does not restyle the app/admin/legal pages.
+
+Reviewed the user-supplied websites through text browsing; browser screenshots were captured for Plaid, NAKA, WorldQuant Foundry, Acorns and Cerebrium. The Foundry capture remained on its loading screen, and Nullmask exposed no substantive text. No claim is made to fully inspect every frame, interaction or design. No third-party branding, code, artwork, customer logos or commercial claims were copied.
+
+Static build and 12 homepage browser checks passed. Live HTTPS browser checks at 320/390/768/1440px passed with no horizontal overflow or script errors, and reduced-motion settings disabled the entrance animation. Live mobile menu/host anchor and app sign-in reachability passed. GitHub source pushed; CI run 39919504287 was still running at this check. This is a visual release; SMTP/confirmed admin, genuine inventory and a physical charging/payment acceptance test remain launch prerequisites.
