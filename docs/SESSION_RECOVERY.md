@@ -21,3 +21,7 @@ Typecheck, web build, 52 unit/database tests and 72 Chromium browser tests passe
 The live rollback-only SQL smoke passed PostGIS discovery, available/busy state, reservation and manual-UPI session lifecycle under authenticated roles; all fixtures were rolled back and no transfer sent. This confirms database behaviour, not a real owner login or physical charging test. The owner must sign in privately after deployment and retry the map search with a fresh session.
 
 Security advisors still flag leaked-password protection as disabled; it is a separate configuration follow-up: https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection . Private tables with RLS/no direct policy remain intentionally inaccessible via direct client queries. No Claim360 resource was involved.
+
+## Deployment
+
+Source `8f544c7` deployed READY as `dpl_FmVybMPNw5PvvyLv9JCsbdFLE2ze` on app.plugnear.in / www.plugnear.in. Six deployed-frontend desktop/mobile tests passed for missing-session blocking, server-401 recovery/polling stop and successful window selection/request. Auth/database endpoints were intercepted in those browser checks; no real user credentials or new bookings were used. Source CI run 40271667422 was still running at the final check. Refresh/reopen and sign in privately to retry the owner's actual session.

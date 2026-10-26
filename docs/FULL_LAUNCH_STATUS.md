@@ -58,3 +58,7 @@ Typecheck and Expo web/static build passed; all 68 local Chromium desktop/mobile
 See PHONE_PILOT_ACCEPTANCE.md for owner-led iPhone/Android and real charging/payment acceptance. Existing SMTP, confirmed administrator, real inventory, legal/provider and physical pilot gates remain. No new database, merchant, WhatsApp, company, stored waitlist or analytics service was provisioned, and no Claim360 resource changed.
 
 Vehicle strip update: source `7e66d92`, deployment `dpl_AkH1TUNn2dAoctVeF6oZPZQfmdfW` READY. Replaced arrow separators with five labelled vehicle line icons; 20 homepage browser checks passed. Live 390/1440px checks verified five SVG icons, no arrows in the strip and no overflow.
+
+## Nearby-search session incident — 26 October 2026
+
+Live logs showed public-key bearer fallback and HTTP 401 while the search screen remained mounted. The authenticated nearby-function EXECUTE grant was already correct; no database grant or RLS change was made. Source `8f544c7` adds protected-fetch/session recovery, deployed READY as `dpl_FmVybMPNw5PvvyLv9JCsbdFLE2ze`. Typecheck/build, 52 unit/database tests and 72 browser tests passed; live rollback SQL smoke passed with fixtures removed. Six deployed-frontend mobile/desktop checks with mocked Auth/database passed. CI run 40271667422 was still running at final check. See SESSION_RECOVERY.md. A real owner sign-in must be retried privately; physical charging/payment acceptance remains pending.
