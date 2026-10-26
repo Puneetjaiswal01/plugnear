@@ -1,6 +1,7 @@
 import { createClient, processLock } from "@supabase/supabase-js";
 import { AppState, Platform } from "react-native";
 import * as SecureStore from "expo-secure-store";
+import { sessionFetch, hasSessionToken } from "./session-fetch";
 import { requirePlugNear } from "@plugnear/core/domain";
 const url =
   process.env.EXPO_PUBLIC_SUPABASE_URL ||
@@ -50,8 +51,25 @@ const storage =
           }
         },
       };
+const sessionRequiredListeners = new Set<() => void>();
+export function onSessionRequired(listener: () => void) {
+  sessionRequiredListeners.add(listener);
+  return () => {
+    sessionRequiredListeners.delete(listener);
+  };
+}
+function requireSignIn() {
+  // Run outside the Auth lock/callback stack. Never log or expose tokens.
+  queueMicrotask(() =>
+    sessionRequiredListeners.forEach((listener) => listener()),
+  );
+}
+export function usableSession(session: Parameters<typeof hasSessionToken>[0]) {
+  return hasSessionToken(session, key);
+}
 export const db = configured
   ? createClient(url, key, {
+      global: { fetch: sessionFetch(url, key, requireSignIn) },
       auth: {
         storage,
         flowType: "pkce",

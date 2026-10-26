@@ -12,7 +12,7 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import type { Session } from "@supabase/supabase-js";
-import { db, configured } from "./src/client";
+import { db, configured, onSessionRequired, usableSession } from "./src/client";
 import { Card, s, palette } from "./src/ui";
 import { Discover } from "./src/Discover";
 import { Host } from "./src/Host";
@@ -21,6 +21,7 @@ import { Account } from "./src/Account";
 import { Auth } from "./src/Auth";
 import { PwaStatus } from "./src/PwaStatus";
 import { PasswordRecovery } from "./src/PasswordRecovery";
+import { SESSION_REQUIRED } from "./src/session-fetch";
 import { completeNativeAuth } from "./src/oauth";
 function entryTab(): "Find a charger" | "List a charger" {
   return Platform.OS === "web" &&
@@ -47,9 +48,27 @@ export default function App() {
       return;
     }
     const client = db;
+    let active = true;
+    let clearingSession = false;
+    const stopSessionRecovery = onSessionRequired(() => {
+      if (!active) return;
+      setSession(null);
+      setRecovering(false);
+      setAuthError(SESSION_REQUIRED);
+      if (!clearingSession) {
+        clearingSession = true;
+        void client.auth
+          .signOut({ scope: "local" })
+          .catch(() => {})
+          .finally(() => {
+            clearingSession = false;
+          });
+      }
+    });
     void client.auth.getSession().then(({ data, error }) => {
       if (error) setAuthError(error.message);
-      setSession(data.session);
+      if (!active) return;
+      setSession(usableSession(data.session) ? data.session : null);
       setReady(true);
     });
     const {
@@ -57,8 +76,9 @@ export default function App() {
     } = client.auth.onAuthStateChange((event, value) => {
       if (event === "PASSWORD_RECOVERY") setRecovering(true);
       if (event === "SIGNED_OUT") setRecovering(false);
-      setSession(value);
-      if (value) setAuthError("");
+      const signedIn = usableSession(value);
+      setSession(signedIn ? value : null);
+      if (signedIn) setAuthError("");
       setTab(entryTab());
     });
     async function handle(url: string) {
@@ -73,6 +93,8 @@ export default function App() {
       if (url) void handle(url);
     });
     return () => {
+      active = false;
+      stopSessionRecovery();
       subscription.unsubscribe();
       link.remove();
     };
@@ -125,6 +147,11 @@ export default function App() {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={s.body}
         >
+          {!!authError && (
+            <Text accessibilityRole="alert" style={s.error}>
+              {authError}
+            </Text>
+          )}
           {!ready ? (
             <ActivityIndicator color={palette.green} />
           ) : !configured ? (
@@ -148,7 +175,6 @@ export default function App() {
           ) : (
             <Account uid={session.user.id} />
           )}{" "}
-          {!!authError && <Text style={s.error}>{authError}</Text>}
         </ScrollView>
         {session && !recovering && (
           <View

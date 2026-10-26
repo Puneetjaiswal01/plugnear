@@ -299,3 +299,79 @@ test("empty supply gives useful actions and a failed search does not claim zero 
   ).toHaveCount(0);
   expect(requests).toEqual([]);
 });
+
+test("a missing stored session returns the stale discovery screen to sign-in without sending an anonymous search", async ({
+  page,
+}) => {
+  await prepare(page);
+  let searches = 0;
+  await page.route("**/rest/v1/rpc/get_nearby_chargers", (route) => {
+    searches++;
+    return route.fulfill({
+      status: 401,
+      contentType: "application/json",
+      body: '{"code":"42501","message":"permission denied for function get_nearby_chargers"}',
+    });
+  });
+  await page.route("**/auth/v1/logout**", (route) =>
+    route.fulfill({ status: 204 }),
+  );
+  await page.evaluate(() => {
+    for (const key of Object.keys(localStorage)) {
+      if (key.startsWith("sb-") && key.endsWith("-auth-token"))
+        localStorage.removeItem(key);
+    }
+  });
+  await page
+    .getByRole("button", { name: "Search this map area", exact: true })
+    .click();
+  await expect(
+    page.getByText(
+      "Your session ended. Sign in again to search chargers or manage bookings.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Sign in", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("region", { name: /Nearby charger map/ }),
+  ).toHaveCount(0);
+  expect(searches).toBe(0);
+});
+
+test("a server-rejected session stops discovery polling and offers a fresh sign-in", async ({
+  page,
+}) => {
+  await page.clock.install();
+  await prepare(page);
+  let searches = 0;
+  await page.route("**/rest/v1/rpc/get_nearby_chargers", (route) => {
+    searches++;
+    expect(route.request().headers().authorization).toBe(
+      "Bearer fixture-map-token",
+    );
+    return route.fulfill({
+      status: 401,
+      contentType: "application/json",
+      body: '{"code":"PGRST301","message":"JWT expired"}',
+    });
+  });
+  await page.route("**/auth/v1/logout**", (route) =>
+    route.fulfill({ status: 204 }),
+  );
+  await page
+    .getByRole("button", { name: "Search this map area", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Sign in", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Your session ended. Sign in again to search chargers or manage bookings.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await page.clock.fastForward(31000);
+  expect(searches).toBe(1);
+});
