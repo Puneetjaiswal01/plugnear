@@ -62,3 +62,7 @@ Vehicle strip update: source `7e66d92`, deployment `dpl_AkH1TUNn2dAoctVeF6oZPZQf
 ## Nearby-search session incident — 26 October 2026
 
 Live logs showed public-key bearer fallback and HTTP 401 while the search screen remained mounted. The authenticated nearby-function EXECUTE grant was already correct; no database grant or RLS change was made. Source `8f544c7` adds protected-fetch/session recovery, deployed READY as `dpl_FmVybMPNw5PvvyLv9JCsbdFLE2ze`. Typecheck/build, 52 unit/database tests and 72 browser tests passed; live rollback SQL smoke passed with fixtures removed. Six deployed-frontend mobile/desktop checks with mocked Auth/database passed. CI run 40271667422 was still running at final check. See SESSION_RECOVERY.md. A real owner sign-in must be retried privately; physical charging/payment acceptance remains pending.
+
+## Dubai preparation update · 29 October 2026
+
+Code pushed as `ced58c3`: Dubai partnership page, local consented enquiry draft, country-aware fleet briefs and partnership-only web app entry. 56 unit and 78 browser tests passed; TypeScript and web/native bundle exports passed. Production deployment was not confirmed: artifact creation reported missing files and retry uploads stalled. Keep Dubai charging on hold pending operating approvals, licensed/site partners, AED payments, server-side market isolation and supervised real sessions. See [DUBAI_LAUNCH.md](DUBAI_LAUNCH.md).

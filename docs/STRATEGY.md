@@ -36,3 +36,7 @@ Test a transparent fee on verified sessions, then fleet operational software/ser
 - Existing app host screen distinguishes current connector-based prototype listings from future socket-based micro-host onboarding.
 
 The backend supports guarded pilot reservations and direct UPI receipt confirmation, while metering and commercial settlement remain unimplemented. No claim is made that 2W/3W compatibility filtering, micro-host review, fleet tracking, organisation billing, smart sockets, live queues or CPO integrations are already operational.
+
+## Dubai exploration · 29 October 2026
+
+Dubai partnership preparation is implemented, with AED/time-zone planning context and a partnership-only app entry. Publication remains unconfirmed after interrupted deployment uploads. See [DUBAI_LAUNCH.md](DUBAI_LAUNCH.md) for validation, regulatory research, server market-isolation limits and launch gates. India remains the operational pilot scope; no UAE inventory, licence or payments are represented as ready.

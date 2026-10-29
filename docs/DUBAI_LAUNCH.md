@@ -56,3 +56,9 @@ Start with one approved site/operator and a small consenting cohort. Expand only
 ## Source and implementation limits
 
 The public website and published DEWA regulation were reviewed; no regulator, lawyer, insurer or provider has approved PlugNear. The statutory portal access limitation is recorded above. The provided country settings and public enquiry path are preparation, not a live Dubai charging marketplace. Validation/deployment results are appended after checks complete.
+
+## Validation and publication result · 29 October 2026
+
+Implementation commit: `ced58c319f59381f20213a290627e999ea2d4ac1`, pushed to `Puneetjaiswal01/plugnear` main. TypeScript checks passed; 56 unit tests and 78 desktop/mobile browser tests passed. Dubai page screenshots were visually reviewed at desktop and mobile widths. Expo web build and Android/iOS bundle exports succeeded. Bundle exports are not signed store builds. Browser tests use backend fixtures and are not a real Dubai charging/payment acceptance test.
+
+**Deployment remains unconfirmed.** Production artifact creation returned `400 missing_files`; subsequent upload attempts stalled/interrupted before a confirmed successful deployment. No Dubai production READY result or live acceptance test was obtained. Do not describe the Dubai page or UAE charging as live. Retry the dedicated PlugNear web deployment from this reviewed commit, then verify the public page, local enquiry draft, region-specific app entry and fleet export on desktop/mobile. No Supabase migration, merchant setup, role change or Claim360 change was performed.
