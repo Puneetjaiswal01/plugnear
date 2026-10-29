@@ -23,6 +23,13 @@ import { PwaStatus } from "./src/PwaStatus";
 import { PasswordRecovery } from "./src/PasswordRecovery";
 import { SESSION_REQUIRED } from "./src/session-fetch";
 import { completeNativeAuth } from "./src/oauth";
+import { MarketEntry } from "./src/MarketEntry";
+import { type MarketCode } from "@plugnear/core/markets";
+function entryMarket(): MarketCode | null {
+  if (Platform.OS !== "web" || typeof window === "undefined") return "IN";
+  const value = new URLSearchParams(window.location.search).get("market");
+  return value === null || value === "IN" ? "IN" : value === "AE" ? "AE" : null;
+}
 function entryTab(): "Find a charger" | "List a charger" {
   return Platform.OS === "web" &&
     typeof window !== "undefined" &&
@@ -37,13 +44,14 @@ const tabs = [
   "Account",
 ] as const;
 export default function App() {
+  const [market] = useState(entryMarket);
   const [session, setSession] = useState<Session | null>(null),
     [ready, setReady] = useState(false),
     [tab, setTab] = useState<(typeof tabs)[number]>(entryTab),
     [authError, setAuthError] = useState(""),
     [recovering, setRecovering] = useState(false);
   useEffect(() => {
-    if (!db) {
+    if (market !== "IN" || !db) {
       setReady(true);
       return;
     }
@@ -128,7 +136,13 @@ export default function App() {
               resizeMode="contain"
             />
           </View>
-          <Text style={s.label}>MADE FOR INDIA</Text>
+          <Text style={[s.label, { flexShrink: 1, textAlign: "right" }]}>
+            {market === "IN"
+              ? "MADE FOR INDIA"
+              : market === "AE"
+                ? "DUBAI · PARTNERSHIPS"
+                : "CHOOSE REGION"}
+          </Text>
         </View>
         <View
           style={{
@@ -138,11 +152,12 @@ export default function App() {
           }}
         >
           <Text style={{ fontSize: 10, color: "#2449eb", textAlign: "center" }}>
-            Pilot · Direct UPI receipt is confirmed by hosts, not by a bank
-            integration.
+            {market === "IN"
+              ? "Pilot · Direct UPI receipt is confirmed by hosts, not by a bank integration."
+              : "Dubai · Partnership enquiries only. Booking and payment are not available."}
           </Text>
         </View>
-        <PwaStatus />
+        {market === "IN" && <PwaStatus />}
         <ScrollView
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={s.body}
@@ -154,6 +169,8 @@ export default function App() {
           )}
           {!ready ? (
             <ActivityIndicator color={palette.green} />
+          ) : market !== "IN" ? (
+            <MarketEntry market={market} />
           ) : !configured ? (
             <Card>
               <Text style={s.h2}>Connect PlugNear</Text>

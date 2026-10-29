@@ -14,6 +14,9 @@ export function SupportLinks() {
   }
   return (
     <>
+      <Button quiet onPress={() => void open("dubai")}>
+        Dubai partnerships
+      </Button>
       <Button quiet onPress={() => void open("privacy")}>
         Privacy policy
       </Button>

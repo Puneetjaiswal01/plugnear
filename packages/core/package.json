@@ -4,6 +4,10 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./domain": "./domain.ts"
+    "./domain": "./domain.ts",
+    "./markets": {
+      "types": "./markets.d.mts",
+      "default": "./markets.mjs"
+    }
   }
 }

@@ -1,10 +1,40 @@
+import { getMarket } from "../markets.mjs";
 import { planFleet, pilotBrief, VEHICLE_PRESETS } from "./model.mjs";
 const form = document.querySelector("#fleet-form"),
   error = document.querySelector("#planner-error"),
   download = document.querySelector("#download-brief");
 let latest = null;
+const marketSelect = document.querySelector("#planning-market");
+const requestedMarket = new URLSearchParams(location.search).get("market");
+if (requestedMarket !== null)
+  marketSelect.value = ["IN", "AE"].includes(requestedMarket)
+    ? requestedMarket
+    : "";
+function updateMarket() {
+  let m;
+  try {
+    m = getMarket(marketSelect.value);
+  } catch {
+    document.querySelector("#market-status").textContent =
+      "Choose a supported planning region before calculating.";
+    return;
+  }
+  document.querySelector("#market-status").textContent =
+    m.code === "AE"
+      ? `Dubai partnership planning · ${m.currency} · ${m.timeZone}. No UAE bookings or payments are available.`
+      : `India pilot planning · ${m.currency} · ${m.timeZone}. Estimates do not reserve capacity.`;
+}
+marketSelect.addEventListener("change", () => {
+  updateMarket();
+  latest = null;
+  download.disabled = true;
+  document.querySelector("#planner-state").textContent =
+    "Region changed. Recalculate before using these results.";
+});
+updateMarket();
 function calculate() {
   try {
+    getMarket(marketSelect.value);
     const data = new FormData(form);
     const input = Object.fromEntries(
       ["vehicles", "kmPerDay", "whPerKm", "powerKw", "hours"].map((k) => [
@@ -12,6 +42,7 @@ function calculate() {
         Number(data.get(k)),
       ]),
     );
+    input.market = marketSelect.value;
     input.vehicleGroup =
       document.querySelector("#vehicle-type").selectedOptions[0].textContent;
     const plan = planFleet(input);

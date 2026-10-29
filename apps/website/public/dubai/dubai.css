@@ -1,0 +1,244 @@
+body {
+  background: #f6f8f8;
+}
+.header nav {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+}
+.header nav a[aria-current] {
+  color: #2449eb;
+  font-weight: 700;
+}
+.dubai-page > section {
+  padding: 70px 0;
+}
+.dubai-hero {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.dubai-hero h1 {
+  font-size: clamp(40px, 4.5vw, 68px);
+  letter-spacing: -3px;
+  margin: 24px 0;
+}
+.dubai-page h2 {
+  margin: 18px 0 30px;
+}
+.dubai-page p {
+  max-width: 700px;
+  color: #465668;
+  line-height: 1.8;
+  margin: 16px 0;
+}
+.dubai-status {
+  background: #eaf0ff;
+  border: 1px solid #c4d2f5;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 13px;
+}
+.dubai-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 26px;
+}
+.dubai-concept {
+  position: relative;
+  overflow: hidden;
+  background: #112035;
+  border-radius: 26px;
+  min-height: 430px;
+  padding: 30px;
+  color: #f5f8fc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.dubai-concept > span {
+  font: 10px monospace;
+  letter-spacing: 1.5px;
+  color: #d4f54a;
+}
+.dubai-concept strong {
+  font-size: 50px;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  z-index: 1;
+}
+.dubai-concept small {
+  font-size: 10px;
+  color: #c5d1de;
+  z-index: 1;
+}
+.dubai-skyline {
+  position: absolute;
+  right: 15px;
+  bottom: 35px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  transform: skewY(-8deg);
+  opacity: 0.4;
+}
+.dubai-skyline i {
+  display: block;
+  background: linear-gradient(#5675a4, #1c324f);
+  border: 1px solid #88a5c3;
+  width: 35px;
+  height: 130px;
+}
+.dubai-skyline i:nth-child(2) {
+  height: 210px;
+}
+.dubai-skyline i:nth-child(3) {
+  height: 300px;
+  width: 28px;
+  clip-path: polygon(
+    45% 0,
+    55% 0,
+    60% 20%,
+    75% 25%,
+    75% 40%,
+    100% 45%,
+    100% 100%,
+    0 100%,
+    0 45%,
+    25% 40%,
+    25% 25%,
+    40% 20%
+  );
+}
+.dubai-skyline i:nth-child(4) {
+  height: 160px;
+}
+.dubai-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.dubai-cards article {
+  padding: 25px;
+  background: #fff;
+  border: 1px solid #dce3e7;
+  border-radius: 18px;
+}
+.dubai-cards h3 {
+  font-size: 21px;
+}
+.dubai-readiness {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  border-top: 1px solid #dce3e7;
+  border-bottom: 1px solid #dce3e7;
+}
+.dubai-readiness li {
+  margin: 0 0 20px;
+  line-height: 1.8;
+  color: #465668;
+}
+.dubai-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+#dubai-enquiry-form {
+  padding: 28px;
+  background: #fff;
+  border: 1px solid #dce3e7;
+  border-radius: 18px;
+  max-width: 900px;
+}
+#dubai-enquiry-form label {
+  display: block;
+  font-size: 14px;
+  line-height: 1.7;
+}
+#dubai-enquiry-form input:not([type="checkbox"]),
+#dubai-enquiry-form select {
+  display: block;
+  margin-top: 8px;
+  width: 100%;
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid #8a9baa;
+  border-radius: 8px;
+  font: inherit;
+  background: #fff;
+}
+#dubai-enquiry-form .dubai-consent {
+  margin-top: 24px;
+}
+#dubai-enquiry-form p {
+  font-size: 13px;
+}
+#dubai-enquiry-form a,
+.dubai-reference a {
+  color: #2449eb;
+  text-decoration: underline;
+}
+.dubai-footer {
+  padding: 30px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  border-top: 1px solid #dce3e7;
+  font-size: 13px;
+}
+.dubai-page a:focus-visible,
+.dubai-page input:focus-visible,
+.dubai-page select:focus-visible,
+.dubai-page button:focus-visible {
+  outline: 3px solid #2449eb;
+  outline-offset: 4px;
+}
+@media (max-width: 800px) {
+  .dubai-hero,
+  .dubai-readiness {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .dubai-cards {
+    grid-template-columns: 1fr;
+  }
+  .dubai-page > section {
+    padding: 40px 0;
+  }
+  .dubai-hero h1 {
+    letter-spacing: -2px;
+  }
+  .dubai-concept {
+    min-height: 330px;
+  }
+  .header nav {
+    display: flex !important;
+    position: static;
+    background: none;
+    padding: 0;
+    gap: 8px;
+    flex-direction: column;
+    border: 0;
+    font-size: 11px;
+  }
+  .dubai-fields {
+    grid-template-columns: 1fr;
+  }
+  #dubai-enquiry-form {
+    padding: 20px;
+  }
+  .dubai-concept strong {
+    font-size: 44px;
+  }
+}
+@media (max-width: 800px) {
+  .header {
+    gap: 12px;
+  }
+  .header nav a {
+    padding: 0;
+  }
+}

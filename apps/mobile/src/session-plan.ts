@@ -1,3 +1,4 @@
+import { marketTime } from "@plugnear/core/markets";
 /** Client planning only. Reservation authority and pricing remain on the server. */
 export type AvailabilityWindow = { starts_at: string; ends_at: string };
 export function earliestStart(slot: AvailabilityWindow, now = Date.now()) {
@@ -60,12 +61,5 @@ export function sessionEstimate(
   };
 }
 export function indiaTime(value: string) {
-  return new Intl.DateTimeFormat("en-IN", {
-    timeZone: "Asia/Kolkata",
-    day: "numeric",
-    month: "short",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  }).format(new Date(value));
+  return marketTime("IN", value);
 }

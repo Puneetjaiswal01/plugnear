@@ -120,7 +120,7 @@ test("search discovery pages have consistent canonical URLs and usable links", a
   const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(
     (match) => match[1],
   );
-  expect(urls.length).toBe(8);
+  expect(urls.length).toBe(9);
   for (const url of urls) {
     const path = new URL(url).pathname;
     await page.goto(`http://localhost:4175${path}`);
