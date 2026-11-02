@@ -6,7 +6,8 @@ permissions:
   contents: read
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    # Keep the runner compatible with the pinned Playwright browser dependencies.
+    runs-on: ubuntu-24.04
     env:
       # Public test fixtures, intentionally invalid against the real service.
       # All browser backend requests are denied unless a test mocks them.
