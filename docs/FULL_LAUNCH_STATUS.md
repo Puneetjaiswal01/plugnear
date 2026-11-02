@@ -66,3 +66,7 @@ Live logs showed public-key bearer fallback and HTTP 401 while the search screen
 ## Dubai preparation update · 29 October 2026
 
 Code pushed as `ced58c3`: Dubai partnership page, local consented enquiry draft, country-aware fleet briefs and partnership-only web app entry. 56 unit and 78 browser tests passed; TypeScript and web/native bundle exports passed. Production deployment was not confirmed: artifact creation reported missing files and retry uploads stalled. Keep Dubai charging on hold pending operating approvals, licensed/site partners, AED payments, server-side market isolation and supervised real sessions. See [DUBAI_LAUNCH.md](DUBAI_LAUNCH.md).
+
+## Discovery deployment · 2 November 2026
+
+Published connector entry, app sorting/available-only controls, clearer charger details and charging guide. 56 unit/database, 82 local browser and 10 production-site browser checks passed; the production app checks use backend fixtures and do not replace supervised real sessions. Web and Android/iOS bundle exports passed. Production `dpl_EfUmyCX8UNbA3527ZTPRcEyzfAgS` is READY. Prior Dubai publication blocker is resolved for partnership pages/planning only. See [DISCOVERY_UPDATE.md](DISCOVERY_UPDATE.md) for exact scope, CI runner fix and evidence. Existing India operational launch and UAE regulatory/payment/server-isolation gates remain.
