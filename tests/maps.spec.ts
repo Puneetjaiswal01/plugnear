@@ -5,6 +5,7 @@ const host = "00000000-0000-4000-8000-000000000001",
 async function prepare(
   page: import("@playwright/test").Page,
   state = "available",
+  path = "/app/",
 ) {
   await page.route("**/auth/v1/settings", (r) =>
     r.fulfill({
@@ -69,7 +70,7 @@ async function prepare(
       body: JSON.stringify([charger]),
     });
   });
-  await page.goto("http://localhost:4175/app/");
+  await page.goto(`http://localhost:4175${path}`);
   await page.getByLabel("Email", { exact: true }).fill("maps@example.test");
   await page.getByLabel("Password", { exact: true }).fill("fixture-password");
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
@@ -257,7 +258,7 @@ test("empty supply gives useful actions and a failed search does not claim zero 
     .getByRole("button", { name: "Search this map area", exact: true })
     .click();
   await expect(
-    page.getByText("No approved chargers match this search yet.", {
+    page.getByText("No approved chargers match these filters.", {
       exact: false,
     }),
   ).toBeVisible();
@@ -293,7 +294,7 @@ test("empty supply gives useful actions and a failed search does not claim zero 
     page.getByText("Charger search unavailable", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("No approved chargers match this search yet.", {
+    page.getByText("No approved chargers match these filters.", {
       exact: false,
     }),
   ).toHaveCount(0);
@@ -374,4 +375,93 @@ test("a server-rejected session stops discovery polling and offers a fresh sign-
   ).toBeVisible();
   await page.clock.fastForward(31000);
   expect(searches).toBe(1);
+});
+
+test("connector deep links and local result controls keep map, list and selected details consistent", async ({
+  page,
+}) => {
+  await prepare(page, "available", "/app/?mode=find&connector=CCS2");
+  const requests: Record<string, unknown>[] = [];
+  const rows = [
+    {
+      id: cid,
+      title: "Near expensive",
+      distance_km: 0.1,
+      price_per_kwh: 25,
+      power_kw: 7.4,
+      availability_status: "available",
+    },
+    {
+      id: "10000000-0000-4000-8000-000000000002",
+      title: "Cheap busy",
+      distance_km: 0.5,
+      price_per_kwh: 8,
+      power_kw: 50,
+      availability_status: "busy",
+    },
+    {
+      id: "10000000-0000-4000-8000-000000000003",
+      title: "Far fast",
+      distance_km: 1,
+      price_per_kwh: 20,
+      power_kw: 60,
+      availability_status: "available",
+    },
+  ].map((row) => ({
+    owner_id: host,
+    address: "Fixture site, Delhi",
+    latitude: 28.614,
+    longitude: 77.209,
+    connector: "CCS2",
+    status: "approved",
+    ...row,
+  }));
+  await page.route("**/rest/v1/rpc/get_nearby_chargers", async (route) => {
+    requests.push(route.request().postDataJSON());
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(rows),
+    });
+  });
+  await page
+    .getByRole("button", { name: "Search this map area", exact: true })
+    .click();
+  await expect(
+    page.getByText("3 chargers nearby", { exact: true }),
+  ).toBeVisible();
+  expect(requests[0].p_connector).toBe("CCS2");
+  const cards = page.getByRole("button", { name: /View charger/ });
+  await expect(cards.first()).toContainText("Near expensive");
+  await page.getByRole("button", { name: "Lowest rate", exact: true }).click();
+  await expect(cards.first()).toContainText("Cheap busy");
+  await cards.first().click();
+  await expect(
+    page.getByText("CHARGER DETAILS", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Request this charger", exact: true }),
+  ).toBeDisabled();
+  await page.getByRole("checkbox", { name: /Available now only/ }).click();
+  await expect(
+    page.getByText("2 chargers nearby", { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText("CHARGER DETAILS", { exact: true })).toHaveCount(
+    0,
+  );
+  await expect(cards).toHaveCount(2);
+  await page
+    .getByRole("button", { name: "Highest power", exact: true })
+    .click();
+  await expect(cards.first()).toContainText("Far fast");
+  await expect(
+    page.getByRole("button", { name: /^View Cheap busy/ }),
+  ).toHaveCount(0);
+  await page.getByRole("button", { name: "Nearest", exact: true }).click();
+  await expect(cards.first()).toContainText("Near expensive");
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
 });

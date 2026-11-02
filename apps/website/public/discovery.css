@@ -1,0 +1,116 @@
+.discovery-hub {
+  padding-top: 88px;
+  padding-bottom: 88px;
+  scroll-margin-top: 100px;
+}
+.discovery-heading {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 44px;
+  align-items: end;
+}
+.discovery-heading h2 {
+  margin: 18px 0 0;
+}
+.discovery-heading p {
+  color: #52625e;
+  max-width: 490px;
+  line-height: 1.8;
+}
+.discovery-start {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: end;
+  padding: 28px;
+  margin: 32px 0;
+  background: #eef1ff;
+  border: 1px solid #dce2fa;
+  border-radius: 22px;
+}
+.discovery-start label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.discovery-start select {
+  width: 100%;
+  min-height: 52px;
+  font: inherit;
+  font-size: 16px;
+  color: #172925;
+  background: #fff;
+  border: 1px solid #b5c0d0;
+  border-radius: 10px;
+  padding: 12px;
+}
+.discovery-start small {
+  grid-column: 1/-1;
+  line-height: 1.7;
+  color: #52625e;
+}
+.discovery-start a {
+  color: #2449eb;
+  text-decoration: underline;
+}
+.discovery-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-bottom: 24px;
+}
+.discovery-facts article {
+  border-bottom: 1px solid #dce3d9;
+  padding: 12px 0 24px;
+}
+.discovery-facts svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: #2449eb;
+  stroke-width: 1.7;
+}
+.discovery-facts h3 {
+  font-size: 21px;
+  margin: 15px 0 10px;
+}
+.discovery-facts p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #52625e;
+}
+.discovery-start button {
+  cursor: pointer;
+  font: inherit;
+}
+.discovery-start :focus-visible {
+  outline: 3px solid #2449eb;
+  outline-offset: 4px;
+}
+@media (max-width: 700px) {
+  .discovery-hub {
+    padding-top: 52px;
+    padding-bottom: 52px;
+  }
+  .discovery-heading,
+  .discovery-start,
+  .discovery-facts {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .discovery-start {
+    padding: 20px;
+  }
+  .discovery-start .button {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+  .discovery-facts article {
+    padding-bottom: 16px;
+  }
+  .discovery-heading h2 {
+    font-size: 36px;
+  }
+}

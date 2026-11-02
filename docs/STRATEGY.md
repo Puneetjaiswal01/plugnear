@@ -40,3 +40,9 @@ The backend supports guarded pilot reservations and direct UPI receipt confirmat
 ## Dubai exploration · 29 October 2026
 
 Dubai partnership preparation is implemented, with AED/time-zone planning context and a partnership-only app entry. Publication remains unconfirmed after interrupted deployment uploads. See [DUBAI_LAUNCH.md](DUBAI_LAUNCH.md) for validation, regulatory research, server market-isolation limits and launch gates. India remains the operational pilot scope; no UAE inventory, licence or payments are represented as ready.
+
+## Discovery and local charging update · 2 November 2026
+
+Use Statiq for journey clarity, PlugShare for discovery context and ElectricPe for local education/support as reference patterns. PlugNear retains neighbourhood host sharing, host-approved requests, direct host UPI for the India pilot and mixed-vehicle fleet planning. This is our product focus, not a claim of exclusive features or an operator partnership.
+
+Implemented: connector selection on the homepage with validated app handoff; nearest/rate/power sorting and available-only refinement over fetched results; consistent map/list selection; clearer charger details and a practical charging guide. Network roaming, community ratings/photos/check-ins, bank-verified payments, hardware control and national operational inventory remain later work. Current public scope is Delhi NCR pilot recruitment; Dubai is partnership exploration only. See [COMPETITOR_RESEARCH.md](COMPETITOR_RESEARCH.md) for sources and limitations.

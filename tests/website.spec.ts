@@ -120,7 +120,7 @@ test("search discovery pages have consistent canonical URLs and usable links", a
   const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(
     (match) => match[1],
   );
-  expect(urls.length).toBe(9);
+  expect(urls.length).toBe(10);
   for (const url of urls) {
     const path = new URL(url).pathname;
     await page.goto(`http://localhost:4175${path}`);
@@ -297,4 +297,40 @@ test("app with JavaScript disabled explains the requirement and keeps public hel
   } finally {
     await context.close();
   }
+});
+
+test("homepage discovery form passes a connector and charging guide explains the pilot boundaries", async ({
+  page,
+}) => {
+  await page.goto("http://localhost:4175/");
+  await page
+    .getByLabel("Your charging connector", { exact: true })
+    .selectOption("Type 2");
+  await page
+    .getByRole("button", { name: "Explore matching chargers", exact: false })
+    .click();
+  const url = new URL(page.url());
+  expect(url.pathname).toBe("/app/");
+  expect(url.searchParams.get("mode")).toBe("find");
+  expect(url.searchParams.get("connector")).toBe("Type 2");
+  await expect(
+    page.getByRole("button", { name: "Sign in", exact: true }),
+  ).toBeVisible();
+  await page.goto("http://localhost:4175/charging-guide/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "Know what to check",
+  );
+  await expect(
+    page.getByText("These are app records, not live electrical telemetry.", {
+      exact: false,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Public ratings, community photos", { exact: false }),
+  ).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
 });

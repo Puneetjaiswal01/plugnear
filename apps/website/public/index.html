@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/fleet-pilot/planner.css" />
     <link rel="stylesheet" href="/future.css" />
+    <link rel="stylesheet" href="/discovery.css" />
     <script src="/script.js" defer></script>
     <meta name="twitter:card" content="summary_large_image" />
     <meta property="og:site_name" content="PlugNear" />
@@ -131,7 +132,7 @@
           height="83"
       /></a>
       <nav aria-label="Main navigation" id="navigation">
-        <a href="#how-it-works">How it works</a
+        <a href="#discover">Discover</a><a href="#how-it-works">How it works</a
         ><a href="#for-drivers">For drivers</a
         ><a href="#for-hosts">Become a host</a
         ><a href="#for-fleets">Fleets & businesses</a
@@ -160,9 +161,9 @@
             >
           </h1>
           <p class="hero-description">
-            No charger at home? Find a compatible charging point nearby. Have a
-            charger to share? Welcome drivers when it suits you. Built for
-            drivers, riders, taxis and fleets in India.
+            Find a charging stop that fits your vehicle. Share a suitable
+            charger at home or at your business. Plan the charging needs of your
+            fleet. One place for India’s everyday EV journeys.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="/app/?mode=find"
@@ -402,6 +403,80 @@
           Check vehicle compatibility and site access before requesting. Only
           approved chargers from verified hosts appear in discovery.
         </p>
+      </section>
+      <section
+        class="section-wrap discovery-hub"
+        id="discover"
+        aria-labelledby="discovery-title"
+      >
+        <div class="discovery-heading">
+          <div>
+            <span class="eyebrow">FIND THE RIGHT CONNECTION</span>
+            <h2 id="discovery-title">
+              A clearer picture.<br /><span class="blue"
+                >Before you set off.</span
+              >
+            </h2>
+          </div>
+          <p>
+            Start with your connector. In the app, compare nearby approved
+            listings by distance, advertised power and rate, then check a host’s
+            open window.
+          </p>
+        </div>
+        <form class="discovery-start" action="/app/" method="get">
+          <input type="hidden" name="mode" value="find" />
+          <div>
+            <label for="discovery-connector">Your charging connector</label
+            ><select id="discovery-connector" name="connector">
+              <option value="All">Help me explore</option>
+              <option>Type 2</option>
+              <option>CCS2</option>
+              <option>Bharat AC</option>
+              <option>CHAdeMO</option>
+            </select>
+          </div>
+          <button class="button primary" type="submit">
+            Explore matching chargers
+            <svg aria-hidden="true"><use href="#pin" /></svg>
+          </button>
+          <small
+            >Email sign-in opens the map. This choice sets a filter, not a
+            vehicle compatibility approval.
+            <a href="/charging-guide/#connectors">Check your connector</a
+            >.</small
+          >
+        </form>
+        <div class="discovery-facts">
+          <article>
+            <svg aria-hidden="true"><use href="#pin" /></svg>
+            <h3>Discover with context</h3>
+            <p>
+              Map and list together. Filter connector, search radius, rate and
+              power; sort the returned results your way.
+            </p>
+          </article>
+          <article>
+            <svg aria-hidden="true"><use href="#plug" /></svg>
+            <h3>Know what a status means</h3>
+            <p>
+              Available, busy and offline reflect host settings and bookings.
+              Open a listing to check its published session windows.
+            </p>
+          </article>
+          <article>
+            <svg aria-hidden="true"><use href="#shield" /></svg>
+            <h3>Make an informed request</h3>
+            <p>
+              Review the location, advertised equipment and estimated cost. Wait
+              for host acceptance before travelling or paying.
+            </p>
+          </article>
+        </div>
+        <a class="text-link" href="/charging-guide/"
+          >Read the charging guide
+          <svg aria-hidden="true"><use href="#plug" /></svg
+        ></a>
       </section>
       <section class="how section-wrap" id="how-it-works">
         <div class="section-heading">
@@ -964,6 +1039,7 @@
           <a class="legal-link" href="/ev-charger-near-me/"
             >Find EV charging near you</a
           >
+          <a class="legal-link" href="/charging-guide/">Charging guide</a>
           <a class="legal-link" href="/privacy/">Privacy policy</a>
           <a class="legal-link" href="/support/">Support</a>
           <a class="legal-link" href="/delete-account/">Delete account</a>

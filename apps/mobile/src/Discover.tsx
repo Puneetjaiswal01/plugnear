@@ -1,6 +1,6 @@
 import { randomUUID } from "expo-crypto";
 import { useEffect, useState } from "react";
-import { View, Text, Pressable, Linking } from "react-native";
+import { View, Text, Pressable, Linking, Platform } from "react-native";
 import * as Location from "expo-location";
 import { db } from "./client";
 import { Button, Field, Card, s, palette } from "./ui";
@@ -10,13 +10,20 @@ const delhiNcr = { lat: 28.6139, lon: 77.209 };
 import { type Charger, inr } from "@plugnear/core/domain";
 import { earliestStart, sessionEstimate, indiaTime } from "./session-plan";
 const connectors = ["All", "Type 2", "CCS2", "Bharat AC", "CHAdeMO"];
+function entryConnector() {
+  if (Platform.OS !== "web" || typeof window === "undefined") return "All";
+  const value = new URLSearchParams(window.location.search).get("connector");
+  return value && connectors.includes(value) ? value : "All";
+}
 export function Discover({ onHost }: { onHost?: () => void }) {
   const [point, setPoint] = useState<MapPoint | null>(null),
     [mapCenter, setMapCenter] = useState<MapPoint>(delhiNcr),
     [showUserLocation, setShowUserLocation] = useState(false),
     [mapError, setMapError] = useState(""),
     [items, setItems] = useState<Charger[]>([]),
-    [connector, setConnector] = useState("All"),
+    [connector, setConnector] = useState(entryConnector),
+    [availableOnly, setAvailableOnly] = useState(false),
+    [sort, setSort] = useState<"distance" | "price" | "power">("distance"),
     [radius, setRadius] = useState("10"),
     [maxPrice, setMaxPrice] = useState("30"),
     [minPower, setMinPower] = useState("0"),
@@ -257,6 +264,23 @@ export function Discover({ onHost }: { onHost?: () => void }) {
       planningError = (e as Error).message;
     }
   }
+  // These controls only refine this fetched set; they do not promise network-wide coverage.
+  const visibleItems = items
+    .filter((c) => !availableOnly || c.availability_status === "available")
+    .slice()
+    .sort((a, b) => {
+      const delta =
+        sort === "price"
+          ? a.price_per_kwh - b.price_per_kwh
+          : sort === "power"
+            ? b.power_kw - a.power_kw
+            : (a.distance_km ?? Infinity) - (b.distance_km ?? Infinity);
+      return (Number.isNaN(delta) ? 0 : delta) || a.id.localeCompare(b.id);
+    });
+  const visibleSelected =
+    selected && visibleItems.some((c) => c.id === selected.id)
+      ? selected
+      : null;
   return (
     <>
       <View>
@@ -279,6 +303,7 @@ export function Discover({ onHost }: { onHost?: () => void }) {
           <Pressable
             key={c}
             accessibilityRole="button"
+            accessibilityState={{ selected: connector === c }}
             onPress={() => setConnector(c)}
             style={[
               s.pill,
@@ -320,11 +345,50 @@ export function Discover({ onHost }: { onHost?: () => void }) {
           ? "Blue marks the search location. Move the map to explore another area."
           : "Map starts in Delhi NCR, not your GPS location. Move it to an area and search, or use the location button above."}
       </Text>
+      <View style={{ gap: 10 }}>
+        <Pressable
+          accessibilityRole="checkbox"
+          accessibilityState={{ checked: availableOnly }}
+          onPress={() => setAvailableOnly((value) => !value)}
+          style={s.pill}
+        >
+          <Text style={s.label}>
+            {availableOnly ? "☑" : "☐"} Available now only
+          </Text>
+        </Pressable>
+        <Text style={s.label}>Sort search results</Text>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+          {(
+            [
+              ["distance", "Nearest"],
+              ["price", "Lowest rate"],
+              ["power", "Highest power"],
+            ] as const
+          ).map(([value, label]) => (
+            <Pressable
+              key={value}
+              accessibilityRole="button"
+              accessibilityState={{ selected: sort === value }}
+              onPress={() => setSort(value)}
+              style={[
+                s.pill,
+                sort === value && { backgroundColor: palette.lime },
+              ]}
+            >
+              <Text style={s.label}>{label}</Text>
+            </Pressable>
+          ))}
+        </View>
+        <Text style={s.text}>
+          Refines up to 50 listings returned for this search. Available now is
+          host/booking status, not a future slot guarantee.
+        </Text>
+      </View>
       <ChargerMap
         lat={point?.lat ?? delhiNcr.lat}
         lon={point?.lon ?? delhiNcr.lon}
-        chargers={items}
-        selectedId={selected?.id}
+        chargers={visibleItems}
+        selectedId={visibleSelected?.id}
         showSearchLocation={!!point}
         showUserLocation={showUserLocation}
         onSelect={setSelected}
@@ -367,14 +431,15 @@ export function Discover({ onHost }: { onHost?: () => void }) {
           : error
             ? "Charger search unavailable"
             : point
-              ? `${items.length} chargers nearby`
+              ? `${visibleItems.length} chargers nearby`
               : "Choose an area to search"}
       </Text>
-      {point && !busy && !error && items.length === 0 && (
+      {point && !busy && !error && visibleItems.length === 0 && (
         <Card>
           <Text style={s.h2}>Room for a new connection.</Text>
           <Text style={s.text}>
-            No approved chargers match this search yet. You have not made a
+            No approved chargers match these filters. Try another connector, a
+            wider area or turn off Available now only. You have not made a
             booking or payment. Delhi NCR host recruitment is open.
           </Text>
           {Number(radius) < 100 && (
@@ -410,7 +475,7 @@ export function Discover({ onHost }: { onHost?: () => void }) {
           </Button>
         </Card>
       )}
-      {items.map((c) => (
+      {visibleItems.map((c) => (
         <Pressable
           key={c.id}
           onPress={() => setSelected(c)}
@@ -432,14 +497,25 @@ export function Discover({ onHost }: { onHost?: () => void }) {
           </Card>
         </Pressable>
       ))}
-      {selected && (
+      {visibleSelected && (
         <Card>
-          <Text style={s.h2}>{selected.title}</Text>
+          <Text style={s.h2}>{visibleSelected.title}</Text>
+          <Text style={s.label}>CHARGER DETAILS</Text>
+          <Text style={s.text}>
+            {visibleSelected.connector} · {visibleSelected.power_kw} kW
+            advertised · {inr(visibleSelected.price_per_kwh * 100)}/kWh
+          </Text>
+          <Text style={s.text}>{visibleSelected.address}</Text>
+          <Text style={s.text}>
+            Approved listing · host verified for the pilot. This is not a
+            guarantee of electrical safety or vehicle compatibility. No
+            community reliability score is available.
+          </Text>
           <Button
             quiet
             onPress={() =>
               void Linking.openURL(
-                `https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}&travelmode=driving`,
+                `https://www.google.com/maps/dir/?api=1&destination=${visibleSelected.latitude},${visibleSelected.longitude}&travelmode=driving`,
               ).catch(() =>
                 setError(
                   "Directions could not open. Use the listed address in your navigation app.",
@@ -505,10 +581,10 @@ export function Discover({ onHost }: { onHost?: () => void }) {
               </Text>
               <Text style={s.text}>
                 Estimate {inr(estimate.amount_paise)} = {kwh} kWh ×{" "}
-                {inr(selected.price_per_kwh * 100)}/kWh. The server confirms the
-                booking amount; this is not a metered bill.
+                {inr(visibleSelected.price_per_kwh * 100)}/kWh. The server
+                confirms the booking amount; this is not a metered bill.
               </Text>
-              {Number(kwh) > Number(hours) * selected.power_kw && (
+              {Number(kwh) > Number(hours) * visibleSelected.power_kw && (
                 <Text style={s.error}>
                   Your requested energy exceeds the advertised power × time.
                   Allow more time or reduce your energy estimate. Your vehicle’s
@@ -534,7 +610,7 @@ export function Discover({ onHost }: { onHost?: () => void }) {
               !!message ||
               !estimate ||
               slots.length === 0 ||
-              selected.availability_status !== "available"
+              visibleSelected.availability_status !== "available"
             }
             onPress={() => void book()}
           >

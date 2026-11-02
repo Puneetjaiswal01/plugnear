@@ -222,3 +222,19 @@ Use the new guide to recruit and prepare a small real host cohort. Complete emai
 - Existing near-term map status rules, database authorisation and manual UPI limitations remain. No claim is made that recurring/future-date discovery, hardware telemetry, insurance, gateway refunds or full paid launch are complete.
 
 Final visual follow-up: source `e5324f0` deployed READY as `dpl_5g87nAHChLKHP5YK1zRmggTGaGZp`, superseding the initial deployment. Fixed primary link text inheriting the legal-page link colour. Live browser computed-style checks at 390/1440px verified white text on the blue host application button and no overflow. Core source CI run 39921313503 remained in progress on the final check; no green CI claim is made.
+
+## Focused refresh: Statiq, PlugShare and ElectricPe · 2 November 2026
+
+Re-read official public pages: [Statiq](https://www.statiq.in/), [PlugShare product](https://company.plugshare.com/plugshare.html), and [ElectricPe company story](https://www.electricpe.com/about-us). This remains a public-page review, not authenticated app testing or a network/data partnership. No competitor artwork, listings, reviews, coordinates or proprietary copy was imported.
+
+- **Statiq:** its public journey combines discovery, filters/navigation, charging and payments, alongside infrastructure/property partnerships. Apply clearer discovery and separate host/business routes. Do not adopt its network scale, equipment control or integrated payment claims.
+- **PlugShare:** its product page describes filters, navigation and community observations/photos/reviews. Apply charger context and explicit status provenance. Community scores, check-ins and photos need genuine sessions, permission, moderation and backend policies before launch. No fabricated scores are introduced.
+- **ElectricPe:** the current company page emphasises EV retail, scooters, stores and service, and describes an evolution from a charging app. Apply practical education and reachable support. PlugNear does not sell vehicles, offer warranties or have an ElectricPe retail/service partnership.
+
+### Changes in this release
+
+Homepage connector entry opens the existing email sign-in/app route and retains a validated connector preference after authentication. Discovery adds nearest, lowest-rate and highest-power sorting plus an Available now filter over the fetched result set. Map and list use the same refined set; hiding a selected charger hides its request panel. Controls are presentation filters, not booking authority. Existing RLS, spatial RPC, host acceptance and UPI workflow remain unchanged. The charging guide explains connectors, status provenance, advertised power, estimated prices and manual support. Homepage, guide and existing host/fleet journeys retain PlugNear’s broad vehicle audience and neighbourhood sharing focus.
+
+### Identity and honest next steps
+
+PlugNear combines approved neighbourhood-host sharing, request-based sessions, direct host UPI in the India pilot and local fleet planning. This is a product focus, not a claim that competitors lack these features. Delhi NCR is the pilot recruitment geography. Dubai remains partnership exploration. Planned later: evidence-linked reviews/photos and moderated issue reports; licensed operator data/roaming agreements; gateway-verified payments/refunds and hardware integration. No network interoperability, national inventory, live telemetry or store release is claimed.
